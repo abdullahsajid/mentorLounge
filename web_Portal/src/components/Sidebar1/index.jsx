@@ -81,21 +81,21 @@ const Sidebar1 = (props) => {
         <i class="fa-solid fa-magnifying-glass"></i>
       ),
       label: "Search",
-      href: '/search'
+      href:`${((user?.role === 'mentor')||(user?.data?.role === 'mentor')) ? '/mtrsearch' : '/search'}`
     },
     {
       icon: (
         <i class="fa-solid fa-folder"></i>
       ),
       label: "Sessions",
-      href: "/session"
+      href: `${(user?.role === 'mentor') || (user?.data?.role === 'mentor') ? '/mtrsession' : 'session'}`
     },
     {
       icon: (
         <i class="fa-solid fa-gear"></i>
       ),
       label: "Settings",
-      href: "/settings",
+      href: `${(user?.role === 'mentor') || (user?.data?.role === 'mentor') ? 'mtrsettings' : '/settings'}`,
       // active: window.location.pathname === "/settingsone",
     },
   ];

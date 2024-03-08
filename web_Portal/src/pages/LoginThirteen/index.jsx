@@ -14,7 +14,8 @@ const LoginThirteenPage = ({ close }) => {
   const [userData, setUserData] = useState({
     email: '',
     password: '',
-    signinFromWeb: true
+    platform: "email",
+    signintype: "web"
   })
   const [isFormValid, setIsFormValid] = useState(false)
   const [validation, setValidation] = useState({
@@ -55,9 +56,9 @@ const LoginThirteenPage = ({ close }) => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }
         })
-        if(data.data.role === 'mentor'){
+        if (data.data.role === 'mentor') {
           navigation('/mentor')
-        }else if (data.data.role === 'mentee'){
+        } else if (data.data.role === 'mentee') {
           navigation('/mentee')
         }
         cookie.set('loungeToken', data.token, { path: '/' })
@@ -91,22 +92,24 @@ const LoginThirteenPage = ({ close }) => {
       <div className="w-full h-screen flex justify-center items-center fixed z-[110]"
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }} onClick={() => close()}>
         <div className="md:h-[741px] flex justify-center items-center
-            md:mx-3 rounded-[26px] shadow-bs3 w-[41%] sm:w-full h-[650px] relative sm:h-[550px]"
+            md:mx-3 rounded-[26px] shadow-bs3 w-[41%] sm:w-full h-[500px] relative sm:h-[500px]"
           onClick={e => { e.stopPropagation() }}>
           <div className=" bg-white-A700 flex flex-col font-proximasoft 
               h-full justify-center m-auto rounded-[26px] shadow-bs10 w-full items-center sm:p-[12px] p-[30px] gap-5">
-            <Img
+            {/* <Img
               className="h-[209px] md:h-auto md:ml-[0] rounded-[50%] w-[209px] sm:w-[120px]"
               src="images/img_ellipse19.png"
               alt="ellipseNineteen"
-            />
-            <Text
-              className="md:ml-[0] sm:text-[30px] md:text-[34.91px] text-[36.91px] text-gray-900"
-              size="txtProximaSoftSemiBold3691"
-            >
-              Welcome Back, Imani!
-            </Text>
-            <div className="flex flex-1 flex-col items-center justify-start w-full">
+            /> */}
+
+            <div className="flex flex-1 flex-col items-center justify-center w-full gap-5">
+              <Text
+                className="md:ml-[0] sm:text-[30px] md:text-[34.91px] text-[36.91px] text-gray-900 mb-5"
+                size="txtProximaSoftSemiBold3691"
+              >
+                {/* Welcome Back, Imani! */}
+                Login
+              </Text>
               <div className="flex flex-col items-center justify-center w-full gap-3">
                 {formFields.map(({ name, type, label }, index) => (
                   <div className="bg-gray-100_03 border border-gray-900_1e border-solid md:px-10 sm:px-5  h-[69px] px-[50px] py-[12px] 
@@ -126,14 +129,15 @@ const LoginThirteenPage = ({ close }) => {
                   </div>
                 ))}
               </div>
-            </div>
-            <Button className={`!text-gray-100 bottom-[0] cursor-pointer font-poppins h-[66px] 
+              <Button className={`!text-gray-100 bottom-[0] cursor-pointer font-poppins h-[66px] 
                     leading-[normal] mx-auto rounded-[33px] shadow-bs5 sm:text-[20.61px] md:text-[22.61px]
-                    text-[24.61px] text-center w-[450px] sm:w-full mt-3 ${!isFormValid && "opacity-60 cursor-not-allowed"}`}
-              onClick={handlerLogin}
-              disabled={!isFormValid} >
-              Login
-            </Button>
+                    text-[24.61px] text-center w-full sm:w-full mt-3 ${!isFormValid && "opacity-60 cursor-not-allowed"}`}
+                onClick={handlerLogin}
+                disabled={!isFormValid} >
+                Login
+              </Button>
+            </div>
+
           </div>
         </div>
       </div>

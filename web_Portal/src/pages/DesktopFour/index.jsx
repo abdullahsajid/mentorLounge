@@ -1,54 +1,85 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { Menu, MenuItem } from "react-pro-sidebar";
-
 import { Button, Img, Line, Text } from "components";
-import Sidebar1 from "components/Sidebar1";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useGetMenteeByIdMutation } from "features/apis/mentee";
+import { useSelector } from "react-redux";
 
 const DesktopFourPage = () => {
+  const location = useLocation()
+  const [getMenteeById] = useGetMenteeByIdMutation()
+  const { user } = useSelector((state) => state.user)
+  // const { menteeData } = useSelector((state) => state.menteeData)
   const navigate = useNavigate()
   const navigatehandler = () => {
-    navigate('/booksession')
+    navigate('/booksession', { state: {id:location.state.id, available:location.state.available, name:location.state.name, price:location.state.mentorPrice} })
   }
+  // let data = {
+  //   critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
+  //   menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
+  //   menteeRefersSkip: 0,
+  //   menteeRefersLimit: 10,
+  //   menteeRefersSessionFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+  //   menteeRefersSessionSkip: 0,
+  //   menteeRefersSessionLimit: 10,
+  //   sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+  //   sessionRequestsSkip: 0,
+  //   sessionRequestsLimit: 10,
+  //   recentSearchesFields: "searchKeyWords mentors",
+  //   recentSearchesSkip: 0,
+  //   recentSearchesLimit: 10,
+  //   userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
+  //   userCreditCardsSkip: 0,
+  //   userCreditCardsLimit: 10,
+  //   userFields: "_id email name",
+  //   addedby: "_id email name",
+  //   lastModifiedBy: "_id email name"
+  // }
+  // useEffect(() => {
+  //   getMenteeById(data)
+  // }, [])
   return (
     <>
       <div className="bg-white-A700 font-poppins ml-auto w-full sm:!w-full" style={{
-        width:"calc(100% - 316px)"
+        width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#f8f5f9] flex flex-col h-full p-[29px] sm:px-5 w-full">
-          <div className="flex flex-col items-start justify-start mr-5 md:px-5 w-full md:w-full">
-            <div className="flex sm:flex-col flex-row gap-[29px] items-center justify-start w-[52%] md:w-full">
+          <div className="flex flex-col items-start justify-start mr-5 md:px-5 sm:px-0 w-full md:w-full">
+            <div className="flex sm:flex-col flex-row gap-[29px] sm:gap-[10px] items-center justify-start w-[52%] md:w-full">
               <div className="h-[167px] relative w-[167px]">
                 <Img
-                  className="h-[167px] m-auto rounded-[50%] w-[167px]"
-                  src="images/img_ellipse25.png"
+                  className="h-[167px] m-auto rounded-[50%] w-[167px] sm:w-[148px] sm:h-[148px]"
+                  src={`${location.state.img ? `http://localhost:5873/${location.state.img}` : "images/default.png"}`}
                   alt="ellipseTwentyFive"
                 />
                 <Img
-                  className="absolute bottom-[0] h-10 right-[9%] w-10"
+                  className="absolute bottom-[0] h-10 right-[9%] w-10 sm:bottom-[16px]"
                   src="images/img_checkmark.svg"
                   alt="checkmark"
                 />
               </div>
-              <div className="flex flex-col gap-[7px] items-start justify-start">
+              <div className="flex flex-col gap-[7px] items-start justify-start sm:justify-center sm:items-center">
                 <Text
                   className="text-5xl sm:text-[38px] md:text-[44px] text-black-900"
                   size="txtProximaSoftMedium48"
                 >
-                  Adiel Omari
+                  {location.state.name}
                 </Text>
-                <Text
-                  className="text-[19px] text-black-900"
-                  size="txtPoppinsRegular19"
-                >
-                  Product Designer . Design Mentor
-                </Text>
+                <div className="flex flex-row gap-3">
+                  {location.state.mentorFields.map((item) => (
+                    <Text
+                      className="text-[19px] text-black-900"
+                      size="txtPoppinsRegular19"
+                    >
+                      {item}
+                    </Text>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between mt-[55px] w-full">
+            <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between mt-[55px] sm:mt-[25px] w-full">
               <div className="bg-[#EBDCC1] flex md:flex-1 flex-col items-start justify-start rounded-[7px] w-[52%] md:w-full">
-                <div className="flex sm:flex-col flex-row gap-[13px] items-center justify-start w-3/4 md:w-full">
+                <div className="flex flex-row gap-[13px] sm:gap-[7px] items-center justify-start w-3/4 md:w-full">
                   <Img
                     className="h-[71px]"
                     src="images/img_lightbulb.svg"
@@ -56,7 +87,7 @@ const DesktopFourPage = () => {
                   />
                   <div className="flex flex-col items-start justify-start">
                     <Text
-                      className="text-[19.53px] text-blue_gray-700"
+                      className="text-[19.53px] text-blue_gray-700 sm:text-[15px]"
                       size="txtPoppinsMedium1953"
                     >
                       Next Available Session on 17th October
@@ -83,7 +114,7 @@ const DesktopFourPage = () => {
                   className="border border-purple-700 border-solid cursor-pointer h-[47px] leading-[normal] rounded-[23px] shadow-bs5 text-[14.14px] text-center w-40"
                   shape="round"
                   size="lg"
-                  onClick={() =>navigatehandler()}
+                  onClick={() => navigatehandler()}
                 >
                   Book a Session
                 </Button>
@@ -99,7 +130,7 @@ const DesktopFourPage = () => {
               className="md:ml-[0] ml-[3px] mt-1 text-base text-blue_gray-700"
               size="txtPoppinsMedium16"
             >
-              $50 per Session
+              ${location.state.mentorPrice} per Session
             </Text>
             <Text
               className="md:ml-[0] ml-[3px] mt-[7px] text-[19px] text-black-900"
@@ -112,43 +143,46 @@ const DesktopFourPage = () => {
               size="txtPoppinsMedium16"
             >
               <>
-                I&#39;m your Product Design Mentor. With a passion for defining
-                aesthetics, functionality, and user experiences, I&#39;m here to
-                guide you through the art and science of product design.
-                Let&#39;s redefine boundaries together!
+                {location.state.mentorDescription}
               </>
             </Text>
-            <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-[9px] w-[57%] md:w-full">
-              <div className="flex flex-col items-center justify-start mt-0.5">
-                <Text
-                  className="text-[19px] text-black-900"
-                  size="txtPoppinsMedium19"
-                >
-                  Rating
-                </Text>
+            <div className="grid grid-cols-2 sm:grid-cols-1 gap-7 sm:gap-1 items-center w-full">
+              <div className="flex flex-col sm:gap-0 items-start justify-between w-full">
+                <div className="flex flex-col items-center justify-start mt-0.5">
+                  <Text
+                    className="text-[19px] text-black-900"
+                    size="txtPoppinsMedium19"
+                  >
+                    Rating
+                  </Text>
+                </div>
+                <div className="flex flex-col items-center justify-start mb-0.5">
+                  <Text
+                    className="text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
+                  >
+                    Verified User Based on Reviews and Ratings
+                  </Text>
+                </div>
               </div>
-              <div className="flex flex-col items-center justify-start mb-0.5">
-                <Text
-                  className="text-[19px] text-black-900"
-                  size="txtPoppinsMedium19"
-                >
-                  Education
-                </Text>
+              <div className="flex flex-col sm:gap-0 md:ml-[0] ml-[3px] mt-0.5 w-[57%] md:w-full">
+                <div className="flex flex-col">
+                  <Text
+                    className="text-[19px] text-black-900"
+                    size="txtPoppinsMedium19"
+                  >
+                    Education
+                  </Text>
+                </div>
+                <div className="flex flex-col">
+                  <Text
+                    className="text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
+                  >
+                    {location.state.mentorEducation}
+                  </Text>
+                </div>
               </div>
-            </div>
-            <div className="flex sm:flex-col flex-row sm:gap-10 items-center justify-between md:ml-[0] ml-[3px] mt-0.5 w-[69%] md:w-full">
-              <Text
-                className="text-base text-blue_gray-700"
-                size="txtPoppinsMedium16"
-              >
-                Verified User Based on Reviews and Ratings
-              </Text>
-              <Text
-                className="text-base text-blue_gray-700"
-                size="txtPoppinsMedium16"
-              >
-                Masters in Visual Designing
-              </Text>
             </div>
             <div className="flex flex-col items-center justify-start ml-0.5 md:ml-[0] mt-[9px]">
               <Text
@@ -162,7 +196,7 @@ const DesktopFourPage = () => {
               className="ml-0.5 md:ml-[0] mt-0.5 text-base text-blue_gray-700"
               size="txtPoppinsMedium16"
             >
-              Masters in Visual Designing
+              {location.state.mentorExperience}
             </Text>
             <Text
               className="md:ml-[0] ml-[3px] mt-[33px] text-[19px] text-black-900"
@@ -176,15 +210,15 @@ const DesktopFourPage = () => {
                 src="images/img_ellipse7.png"
                 alt="ellipseSeven"
               />
-              <div className="md:h-[35px] h-[43px] mt-0.5 relative w-[56%]">
+              <div className="md:h-[35px] h-[43px] mt-0.5 w-[56%]">
                 <Text
-                  className="absolute left-[0] sm:text-[17.48px] md:text-[19.48px] text-[21.48px] text-black-900 top-[0]"
+                  className="sm:text-[17.48px] md:text-[19.48px] text-[21.48px] text-black-900"
                   size="txtPoppinsMedium2148"
                 >
                   Taraji
                 </Text>
                 <Img
-                  className="absolute bottom-[0] h-[17px] inset-x-[0] mx-auto"
+                  className="h-[17px] sm:mx-0 sm:bottom-[-8px]"
                   src="images/img_group10.svg"
                   alt="groupTen"
                 />
@@ -206,15 +240,15 @@ const DesktopFourPage = () => {
                 src="images/img_ellipse26.png"
                 alt="ellipseTwentySix"
               />
-              <div className="md:h-[33px] h-[46px] relative w-[56%]">
+              <div className="md:h-[33px] h-[46px] w-[56%]">
                 <Text
-                  className="absolute left-[0] sm:text-[17.63px] md:text-[19.63px] text-[21.63px] text-black-900 top-[0]"
+                  className="sm:text-[17.63px] md:text-[19.63px] text-[21.63px] text-black-900"
                   size="txtPoppinsMedium2163"
                 >
                   Eshe
                 </Text>
                 <Img
-                  className="absolute bottom-[0] h-[17px] inset-x-[0] mx-auto"
+                  className="-[17px] sm:mx-0"
                   src="images/img_group10.svg"
                   alt="groupNinetyFour"
                 />
@@ -227,27 +261,12 @@ const DesktopFourPage = () => {
               I had a great experience. The session was a profound learning
               experience, seamlessly blending theory with practical insights
             </Text>
-            <div className="flex flex-row items-center justify-center md:ml-[0] ml-[396px] mt-[41px] w-[24%] md:w-full">
-              <Img
-                className="h-[46px] w-[46px]"
-                src="images/img_evabehancefill.svg"
-                alt="evabehancefill"
-              />
-              <Img
-                className="h-[46px] ml-[18px] w-[46px]"
-                src="images/img_icroundfacebook.svg"
-                alt="icroundfacebook"
-              />
-              <Img
-                className="h-[46px] ml-[18px] w-[46px]"
-                src="images/img_fegithub.svg"
-                alt="fegithub"
-              />
-              <Img
-                className="h-[46px] ml-[18px] w-[46px]"
-                src="images/img_entyposociall.svg"
-                alt="entyposociall"
-              />
+            <div className="flex flex-row items-center justify-center gap-2 mt-7 w-full">
+              {location.state.links.map((item) => (
+                <a href={`${item.socialPlatformLink}`} className="bg-[#000] p-2 rounded-lg">
+                  <i class="fa-solid fa-link text-[#fff]"></i>
+                </a>
+              ))}
             </div>
           </div>
         </div>

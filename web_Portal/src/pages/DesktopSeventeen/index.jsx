@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-
-import { Menu, MenuItem } from "react-pro-sidebar";
-
+import React, { lazy, useEffect, useState } from "react";
 import { Button, Img, Input, Line, Text } from "components";
-import Sidebar1 from "components/Sidebar1";
-import DesktopNineteenPage from "pages/DesktopNineteen";
-import DesktopThreePage from "pages/DesktopThree";
+import { useSelector } from "react-redux";
+import { useGetMentorByIdMutation } from "features/apis/mentor";
+import { Oval } from 'react-loader-spinner'
+const RequestMentee = lazy(() => import("components/RequestMentee"));
+const DesktopNineteenPage = lazy(() => import("pages/DesktopNineteen"));
+const DesktopThreePage = lazy(() => import("pages/DesktopThree"))
+
 
 const DesktopSeventeenPage = () => {
+  const { user } = useSelector((state) => state.user)
+  const { mentorData } = useSelector((state) => state.mentorData)
+  const [getMentorById] = useGetMentorByIdMutation()
   const [toggleNotification, setNotificationToggle] = useState(false)
   const [toggleCalender, setCalenderToggle] = useState(false)
   const toggleHandler = () => {
@@ -18,60 +22,45 @@ const DesktopSeventeenPage = () => {
     setCalenderToggle(!toggleCalender)
     setNotificationToggle(false)
   }
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-[29px] w-[29px]"
-          src="images/img_profile.svg"
-          alt="profile"
-        />
-      ),
-      label: "Home",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[26px] w-[26px]"
-          src="images/img_rewind.svg"
-          alt="rewind"
-        />
-      ),
-      label: "Search",
-    },
-    {
-      icon: (
-        <Img className="h-[26px] w-[26px]" src="images/img_bag.svg" alt="bag" />
-      ),
-      label: "Sessions",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[26px] w-[26px]"
-          src="images/img_search.svg"
-          alt="search_One"
-        />
-      ),
-      label: "Settings",
-      href: "/settingsone",
-      active: window.location.pathname === "/settingsone",
-    },
-  ];
+
+  let mentorpayload = {
+    critarion: { _id: `${user?.mentorModel?._id || user?.data?.mentorModel?._id}` },
+    mentorReviewsFields: "reviewStars reviewDescription reviewBy",
+    mentorReviewsSkip: 0,
+    mentorReviewsLimit: 10,
+    sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    sessionRequestsSkip: 0,
+    sessionRequestsLimit: 10,
+    mentorsAvailabilityFields: "availabilityStartTime availabilityEndTime availabilityDuration availabilityBooked availabilityExpired availabilityRequested",
+    mentorsAvailabilitySkip: 0,
+    mentorsAvailabilityLimit: 10,
+    userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
+    userCreditCardsSkip: 0,
+    userCreditCardsLimit: 10,
+    userFields: "_id email name profile_picture_url",
+    addedby: "_id email name",
+    lastModifiedBy: "_id email name profile_picture_url"
+  }
+
+  useEffect(() => {
+    getMentorById(mentorpayload)
+  }, [])
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft">
-        <div className={`bg-[#f8f5f9] flex flex-col items-end justify-center p-7 sm:px-5 w-full ${toggleNotification && "opacity-[.2]"} ${toggleCalender && "opacity-[.2]"}`}>
-          <div className="flex flex-col items-start justify-start mb-[157px] mt-[35px] md:px-5 w-[77%] md:w-full">
+      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full" style={{
+        width: "calc(100% - 316px)"
+      }}>
+        <div className={`bg-[#f8f5f9] flex flex-col items-end justify-center p-7 sm:px-3 w-full ${toggleNotification && "opacity-[.2]"} ${toggleCalender && "opacity-[.2]"}`}>
+          <div className="flex flex-col items-start justify-start mb-[157px] mt-[35px] md:px-5 sm:px-0 w-full md:w-full">
             <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between w-full">
               <Text
                 className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900"
                 size="txtProximaSoftSemiBold48"
               >
-                Hello, Antonio
+                Hello, {mentorData?.data?.user?.name}
               </Text>
-              
+
               <div className="flex flex-row items-center gap-5">
                 <Button
                   className={`bg-[#fff] border border-purple-700 border-solid flex h-[51px] items-center justify-center
@@ -99,19 +88,19 @@ const DesktopSeventeenPage = () => {
                 <Button
                   name="inputfield"
                   placeholder="Update Profile"
-                  className="leading-[normal] text-base flex rounded-2xl"
+                  className="leading-[normal] text-base flex rounded-2xl w-full"
                   wrapClassName="flex rounded-[27px] w-full"
                   color="purple_700"
                   size="2xl"
                   variant="outline"
                 >
                   <div className="mr-3">
-                      <Img
-                        className="my-auto"
-                        src="images/img_settings.svg"
-                        alt="settings"
-                      />
-                    </div>
+                    <Img
+                      className="my-auto"
+                      src="images/img_settings.svg"
+                      alt="settings"
+                    />
+                  </div>
                   Update Profile
                 </Button>
               </div>
@@ -125,155 +114,46 @@ const DesktopSeventeenPage = () => {
             <div className="flex flex-row w-full gap-5 sm:flex-col-reverse">
               <div className="flex flex-col gap-3 w-full">
                 {/* start */}
-                <div className="flex md:flex-col flex-row font-poppins md:gap-[58px] items-center justify-between mt-2.5 w-full">
-                  <div className="bg-white-A700 border border-gray-900_1e border-solid flex md:flex-1 flex-col items-center
-                  justify-end p-[19px] rounded-[14px] w-full md:w-full">
-                    <div className="flex sm:flex-col flex-row gap-[15px] items-start mt-2.5 w-full relative">
-                      <Img
-                        className="h-[87px] md:h-auto rounded-[50%] w-[87px]"
-                        src="images/img_ellipse43.png"
-                        alt="ellipseFortyThree"
-                      />
-                      <div className="flex flex-col items-center w-full">
-                        <div className="flex flex-row items-start justify-between w-full">
-                          <Text
-                            className="mt-1 text-[18.84px] text-black-900 sm:text-[15px]"
-                            size="txtPoppinsSemiBold1884"
-                          >
-                            Product Designer Career Discussion
-                          </Text>
-                        </div>
-                        <div className="w-full">
-                            <Text
-                              className="text-[18.84px] text-blue_gray-700 sm:text-[15px]"
-                              size="txtPoppinsMedium1884"
-                            >
-                              Request By Dakarai
-                            </Text>
-                        </div>
-                        <div className="flex sm:flex-col flex-row items-center w-full">
-                          <div className="flex flex-row mb-[15px] gap-3 w-full">
-                            <div className="flex flex-row items-center gap-2 mt-[-0.32px]">
-                                <Img
-                                  className="h-[19px] w-[19px] sm:h-[14px] sm:w-[14px]"
-                                  src="images/img_clock.svg"
-                                  alt="clock"
-                                />
-                                <Text
-                                  className="text-[14.68px] text-blue_gray-700 sm:text-[12px]"
-                                  size="txtPoppinsRegular1468"
-                                >
-                                  30 minutes
-                                </Text>
-                              </div>
-                              <div className="flex flex-row items-center gap-2">
-                                <Img
-                                  className="h-[17px] rounded-[3px] w-[17px] sm:h-[14px] sm:w-[14px]"
-                                  src="images/img_outlinetime.svg"
-                                  alt="outlinetime"
-                                />
-                                <Text
-                                  className="text-[14.68px] text-blue_gray-700 sm:text-[12px]"
-                                  size="txtPoppinsRegular1468"
-                                >
-                                  Wednesday,3 October
-                                </Text>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-auto flex flex-col justify-between items-end h-full absolute right-0 bottom-0 sm:bottom-[-8px]">
-                          <Text
-                              className="text-[15.7px] text-blue_gray-700"
-                              size="txtPoppinsMedium157"
-                            >
-                            3m
-                          </Text>
-                          <Text
-                            className="text-[15.7px] text-purple-700 underline w-max"
-                            size="txtPoppinsMedium157Purple700"
-                          >
-                            View Details
-                          </Text>
-                        </div>
-                    </div>
+                {!mentorData ? (
+                  <div className="flex justify-center items-center text-[24px] h-full">
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
+                    />
                   </div>
-                </div>
+                ) : (
+                  <React.Suspense fallback={<div>
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
+                    />
+                  </div>}>
+                    {mentorData?.data?.sessionRequests.length === 0 ? (
+                      <div className="flex justify-center items-center text-[24px] h-full">No Requests at the Moment</div>
+                    ) : (
+                      mentorData?.data?.sessionRequests.map((item, index) => (
+                        <RequestMentee
+                          key={index}
+                          id={item?._id}
+                          name={item?.requestBy?.name}
+                          img={item?.requestBy?.profile_picture_url}
+                          title={item?.sessionRequestTitle}
+                          duration={item?.requestDuration}
+                          startTime={item?.requestStartTime}
+                          endTime={item?.requestEndTime}
+                          questions={item?.preSessionQuestions}
+                        />
+                      ))
+                    )}
+                  </React.Suspense>
+                )}
                 {/* end */}
-                <div className="flex md:flex-col flex-row font-poppins md:gap-[58px] items-center justify-between mt-2.5 w-full">
-                  <div className="bg-white-A700 border border-gray-900_1e border-solid flex md:flex-1 flex-col items-center
-                  justify-end p-[19px] rounded-[14px] w-full md:w-full">
-                    <div className="flex sm:flex-col flex-row gap-[15px] items-start mt-2.5 w-full relative">
-                      <Img
-                        className="h-[87px] md:h-auto rounded-[50%] w-[87px]"
-                        src="images/img_ellipse43.png"
-                        alt="ellipseFortyThree"
-                      />
-                      <div className="flex flex-col items-center w-full">
-                        <div className="flex flex-row items-start justify-between w-full">
-                          <Text
-                            className="mt-1 text-[18.84px] text-black-900 sm:text-[15px]"
-                            size="txtPoppinsSemiBold1884"
-                          >
-                            Product Designer Career Discussion
-                          </Text>
-                        </div>
-                        <div className="w-full">
-                            <Text
-                              className="text-[18.84px] text-blue_gray-700 sm:text-[15px]"
-                              size="txtPoppinsMedium1884"
-                            >
-                              Request By Dakarai
-                            </Text>
-                        </div>
-                        <div className="flex sm:flex-col flex-row items-center w-full">
-                          <div className="flex flex-row mb-[15px] gap-3 w-full">
-                            <div className="flex flex-row items-center gap-2 mt-[-0.32px]">
-                                <Img
-                                  className="h-[19px] w-[19px] sm:h-[14px] sm:w-[14px]"
-                                  src="images/img_clock.svg"
-                                  alt="clock"
-                                />
-                                <Text
-                                  className="text-[14.68px] text-blue_gray-700 sm:text-[12px]"
-                                  size="txtPoppinsRegular1468"
-                                >
-                                  30 minutes
-                                </Text>
-                              </div>
-                              <div className="flex flex-row items-center gap-2">
-                                <Img
-                                  className="h-[17px] rounded-[3px] w-[17px] sm:h-[14px] sm:w-[14px]"
-                                  src="images/img_outlinetime.svg"
-                                  alt="outlinetime"
-                                />
-                                <Text
-                                  className="text-[14.68px] text-blue_gray-700 sm:text-[12px]"
-                                  size="txtPoppinsRegular1468"
-                                >
-                                  Wednesday,3 October
-                                </Text>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-auto flex flex-col justify-between items-end h-full absolute right-0 bottom-0 sm:bottom-[-8px]">
-                          <Text
-                              className="text-[15.7px] text-blue_gray-700"
-                              size="txtPoppinsMedium157"
-                            >
-                            3m
-                          </Text>
-                          <Text
-                            className=" text-[15.7px] text-purple-700 underline w-max"
-                            size="txtPoppinsMedium157Purple700"
-                          >
-                            View Details
-                          </Text>
-                        </div>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div className="w-[1px] h-auto border border-solid border-[#545454] sm:hidden"></div>
               <div className="flex flex-col gap-3 w-full">
@@ -339,14 +219,14 @@ const DesktopSeventeenPage = () => {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
-        <Sidebar1 className="!fixed !w-[316px] bg-white-A700 flex font-poppins md:hidden inset-y-[0]
-         justify-start left-[0] my-auto overflow-auto md:px-5 shadow-bs1 top-[0]" />
+        {/* <Sidebar1 className="!fixed !w-[316px] bg-white-A700 flex font-poppins md:hidden inset-y-[0]
+         justify-start left-[0] my-auto overflow-auto md:px-5 shadow-bs1 top-[0]" /> */}
         {/* <Line className="absolute bg-blue_gray-700 bottom-[0] h-[768px] right-[33%] w-px" /> */}
-        {toggleNotification && <DesktopNineteenPage handler={toggleHandler}/>}
-        {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler}/>}
+        {toggleNotification && <DesktopNineteenPage handler={toggleHandler} />}
+        {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler} />}
       </div>
     </>
   );

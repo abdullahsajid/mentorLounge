@@ -153,7 +153,7 @@ const ContentManagementPage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft gap-[30px] items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[30px] items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -185,7 +185,7 @@ const ContentManagementPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row gap-[23px] w-[96%] md:w-full">
+            <div className="flex md:flex-col flex-row gap-[23px] w-[96%] md:w-full sm:px-2">
               <div className="w-[62%] md:w-full">
                 <div className=" bg-white-A700 flex flex-col h-full rounded-[26px] py-7 shadow-bs5 w-full">
                   <div className="flex flex-col gap-[23px] justify-start mb-[324px] w-full">
@@ -195,15 +195,15 @@ const ContentManagementPage = () => {
                     >
                       FAQ’s
                     </Text>
-                    <div className="flex flex-col items-center justify-center w-full px-7" style={{borderTop:"1px solid #000",borderBottom:"1px solid #000"}}>
-                      <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between mt-[26px] w-full">
+                    <div className="flex flex-col items-center justify-center w-full px-7" style={{ borderTop: "1px solid #000", borderBottom: "1px solid #000" }}>
+                      <div className="flex flex-row md:gap-5 items-center justify-between mt-[26px] w-full">
                         <div className="flex w-full">
                           <CheckBox
                             className="font-semibold leading-[normal] md:ml-[0] ml-[7px] text-left text-lg"
                             inputClassName="h-5 mr-[5px] w-5"
                             name="excitingappupda_One"
                             id="faq1"
-                          
+
                           ></CheckBox>
                           <label
                             className="ml-4 md:ml-[0] text-[22px] text-black-900_01 sm:text-lg md:text-xl"
@@ -244,7 +244,7 @@ const ContentManagementPage = () => {
               </div>
               <div className="bg-white-A700 flex flex-col items-center justify-start pl-1 py-1 rounded-[26px] shadow-bs5 w-[36%] md:w-full">
                 <div className="flex flex-col gap-[22px] items-center justify-start mb-[487px] mt-[26px] w-full">
-                  <div className="flex flex-row items-start justify-between w-[87%] md:w-full">
+                  <div className="flex flex-row items-center px-2 justify-between w-[87%] md:w-full">
                     <Text
                       className="text-3xl sm:text-[26px] md:text-[28px] text-black-900_01"
                       size="txtProximaSoftSemiBold30"
@@ -252,7 +252,7 @@ const ContentManagementPage = () => {
                       Announcements
                     </Text>
                     <Button
-                      className="flex items-center justify-center rounded-[15px] w-[31px]"
+                      className="flex items-center justify-center rounded-xl"
                       size="sm"
                     >
                       <Img
@@ -261,8 +261,8 @@ const ContentManagementPage = () => {
                       />
                     </Button>
                   </div>
-                  <div className="flex flex-col items-start justify-start w-full" style={{borderTop:"1px solid #000",borderBottom:"1px solid #000"}}>
-                    <div className="flex flex-col w-full">
+                  <div className="flex flex-col items-start justify-start w-full" style={{ borderTop: "1px solid #000", borderBottom: "1px solid #000" }}>
+                    <div className="flex flex-col w-full px-2">
                       <CheckBox
                         className="font-semibold leading-[normal] md:ml-[0] ml-[7px] mt-[13px] text-left text-lg
                         flex items-center"
@@ -272,7 +272,7 @@ const ContentManagementPage = () => {
                         label="Exciting App Update!"
                       ></CheckBox>
                       <p className="mx-[2rem] mt-3 mb-[13px]">The app uses a smart algorithm to match mentors and mentees based on shared interests, expertise, and goals,
-                         ensuring a compatible and fruitful mentorship.</p>
+                        ensuring a compatible and fruitful mentorship.</p>
                     </div>
                   </div>
                 </div>

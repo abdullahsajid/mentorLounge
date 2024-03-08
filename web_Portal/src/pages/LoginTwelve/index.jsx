@@ -226,14 +226,14 @@ const LoginTwelvePage = () => {
 
   useEffect(() => {
     const token = cookie.get("loungeToken");
-    if((user._id) && token){
-        if(user.role === 'mentor'){
-          return navigation('/mentor')
-        }else if(user.role === 'mentee'){
-          return navigation('/mentee')
-        }
+    if ((user._id) && token) {
+      if (user.role === 'mentor') {
+        return navigation('/mentor')
+      } else if (user.role === 'mentee') {
+        return navigation('/mentee')
+      }
     }
-  },[])
+  }, [])
 
   return (
     <>
@@ -318,16 +318,16 @@ const LoginTwelvePage = () => {
          rounded-[54px] shadow-bs8 w-[46%] absolute top-[5rem] right-0 z-[100] sm:top-[32rem] sm:left-0 sm:ml-0 sm:w-full
          sm:border sm:border-solid sm:border-[#000]">
           <Button
-            className="!text-gray-100 cursor-pointer h-[97px] leading-[normal] mt-[62px]
+            className="!text-gray-100 cursor-pointer h-[97px] sm:h-[60px] leading-[normal] mt-[62px]
             rounded-[48px] shadow-bs5 sm:text-[32.01px] md:text-[34.01px] text-[28.01px] text-center w-[100%]
-            sm:w-full"
+            sm:w-full flex items-center justify-center"
             size="3xl"
             onClick={() => handleSignUp()}>
             Sign up
           </Button>
           <Button
-            className="!text-gray-900_99 border border-gray-900_1e border-solid cursor-pointer h-[97px] leading-[normal] mt-11 
-            rounded-[48px] shadow-bs9 sm:text-[32.01px] md:text-[34.01px] text-[28.01px] text-center w-[100%] sm:w-full"
+            className="!text-gray-900_99 border border-gray-900_1e border-solid sm:h-[60px] cursor-pointer h-[97px] leading-[normal] mt-11 
+            rounded-[48px] shadow-bs9 sm:text-[32.01px] md:text-[34.01px] text-[28.01px] text-center w-[100%] sm:w-full flex items-center justify-center"
             color="white_A700"
             size="3xl"
             onClick={() => handleLogin()}>
@@ -336,16 +336,16 @@ const LoginTwelvePage = () => {
           <div
             className="common-pointer bg-white-A700 border border-gray-900_1e border-solid flex sm:flex-row 
             flex-row gap-[18px] h-[97px] md:h-auto items-center justify-start  mt-[99px] md:px-10 sm:px-5 px-[15px]
-            py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full"
+            py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full sm:h-[60px]"
             onClick={() => googleSignIn()}
           >
             <Img
-              className="h-[57px] w-[57px]"
+              className="h-[57px] w-[57px] sm:w-[47px] sm:h-[47px]"
               src="images/img_flatcoloriconsgoogle.svg"
               alt="flatcoloriconsg"
             />
             <Text
-              className="sm:text-[18px] md:text-[26.81px] text-[28.01px] text-purple-700_87 w-auto"
+              className="sm:text-[18px] md:text-[26.81px] text-[28.01px] text-purple-700_87 w-auto "
               size="txtPoppinsRegular2881"
             >
               Continue with Google
@@ -353,9 +353,9 @@ const LoginTwelvePage = () => {
           </div>
           <div className="bg-white-A700 border border-gray-900_1e border-solid flex sm:flex-row
            flex-row gap-[18px] h-[97px] md:h-auto items-center justify-start mb-[91px] mt-9 md:px-10
-            sm:px-5 px-[15px] py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full">
+            sm:px-5 px-[15px] py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full sm:h-[60px]">
             <Img
-              className="h-[57px] w-[57px]"
+              className="h-[57px] w-[57px] sm:w-[47px] sm:h-[47px]"
               src="images/img_logosfacebook.svg"
               alt="logosfacebook"
             />
@@ -368,7 +368,7 @@ const LoginTwelvePage = () => {
           </div>
         </div>
         <div className="flex flex-col font-poppins items-center justify-start mb-[174px] ml-[73px] mt-[50px] md:px-5 w-[23%] z-[1]
-        sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5">
+          sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5 sm:hidden">
           <div className="flex flex-col gap-[23px] items-start justify-start w-full">
             <Text
               className="text-base text-black-900_01 font-bold"

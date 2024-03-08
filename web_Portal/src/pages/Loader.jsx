@@ -1,8 +1,8 @@
 import React from 'react'
 import { Oval } from 'react-loader-spinner'
-const Loader = () => {
+const Loader = ({widthAlign}) => {
     return (
-        <div className='h-screen w-screen flex items-center justify-center'>
+        <div className={`h-screen w-screen flex items-center justify-center ${widthAlign && "!w-full"}`}>
             <Oval
                 height={30}
                 width='100%'

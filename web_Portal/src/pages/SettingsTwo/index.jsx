@@ -62,7 +62,7 @@ const SettingsTwoPage = () => {
       <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-end mx-auto w-full">
         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
           <Sidebar5 className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto md:px-5 top-[0]" />
-          <div className="flex flex-1 flex-col font-proximasoft gap-[42px] items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[42px] items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -94,18 +94,18 @@ const SettingsTwoPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-[13px] items-start justify-start w-[96%] md:w-full">
+            <div className="flex flex-col gap-[13px] items-start justify-start w-[96%] sm:px-2 md:w-full">
               <Text
                 className="sm:text-[31px] md:text-[33px] text-[35px] text-black-900_03"
                 size="txtProximaSoftSemiBold35"
               >
                 Account Settings
               </Text>
-              <div className="flex md:flex-col flex-row font-poppins gap-[18px] items-start justify-between w-full">
+              <div className="flex md:flex-col flex-row font-poppins gap-[18px] items-start justify-between sm:mb-3 w-full">
                 <div className="bg-white-A700 flex md:flex-1 flex-col items-start justify-start p-7 sm:px-5 rounded-[30px] w-[22%] md:w-full">
-                  <div className="flex flex-col md:gap-10 gap-[143px] items-start justify-start my-[7px] pb-[62px] md:pr-10 sm:pr-5 pr-[62px] w-[91%] md:w-full">
-                    <div className="flex flex-col gap-[12.74px] items-start justify-start w-auto">
-                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] shadow-bs23 w-auto">
+                  <div className="flex flex-col md:gap-10 gap-[143px] items-start justify-start my-[7px] pb-[62px] md:pr-10 pr-[62px] sm:pr-0 sm:pb-0 w-[91%] md:w-full">
+                    <div className="flex flex-col gap-[12.74px] items-start justify-start sm:justify-center sm:w-full w-auto">
+                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] sm:w-full shadow-bs23 w-auto">
                         <Text
                           className="sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
                           size="txtPoppinsSemiBold2038"
@@ -113,7 +113,7 @@ const SettingsTwoPage = () => {
                           My Profile
                         </Text>
                       </div>
-                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] shadow-bs23 w-auto">
+                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] sm:w-full shadow-bs23 w-auto">
                         <Text
                           className="sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
                           size="txtPoppinsSemiBold2038"
@@ -122,13 +122,13 @@ const SettingsTwoPage = () => {
                         </Text>
                       </div>
                       <Button
-                        className="cursor-pointer font-semibold leading-[normal] min-w-[166px] rounded-[10px] shadow-bs23 sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-center"
+                        className="cursor-pointer font-semibold leading-[normal] min-w-[166px] sm:w-full rounded-[10px] shadow-bs23 sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-center"
                         size="lg"
                       >
                         Notifications
                       </Button>
                     </div>
-                    <div className="h-[49px] mb-[433px] rounded-[10px] shadow-bs23 w-full"></div>
+                    <div className="h-[49px] mb-[433px] rounded-[10px] shadow-bs23 w-full sm:hidden"></div>
                   </div>
                 </div>
                 <div className="flex md:flex-1 flex-col font-proximasoft gap-[18px] items-center justify-start md:mt-0 mt-2 w-[77%] md:w-full">
@@ -176,7 +176,7 @@ const SettingsTwoPage = () => {
                               className="mt-0.5"
                             />
                           </div>
-                          
+
                         </div>
                       </div>
                       <div className="flex flex-col items-center justify-start w-full">
@@ -205,7 +205,7 @@ const SettingsTwoPage = () => {
                               className="mt-0.5"
                             />
                           </div>
-                          
+
                         </div>
                       </div>
                       <div className="flex flex-col items-center justify-start w-full">
@@ -234,7 +234,7 @@ const SettingsTwoPage = () => {
                               className="mt-0.5"
                             />
                           </div>
-                          
+
                         </div>
                       </div>
                       <div className="flex flex-col items-center justify-start w-full">
@@ -251,23 +251,23 @@ const SettingsTwoPage = () => {
                                 className="text-gray-600_02 text-sm"
                                 size="txtPoppinsRegular14Gray60002"
                               >
-                              New sessions and updates
-                            </Text>
+                                New sessions and updates
+                              </Text>
                             </div>
                             <Switch
-                            onColor=""
-                            offColor=""
-                            onHandleColor="#743c95"
-                            offHandleColor="#743c95"
-                            value={true}
-                            className=""
-                          />
+                              onColor=""
+                              offColor=""
+                              onHandleColor="#743c95"
+                              offHandleColor="#743c95"
+                              value={true}
+                              className=""
+                            />
                           </div>
-                            
+
                         </div>
                       </div>
                     </List>
-                    
+
                   </div>
                 </div>
               </div>

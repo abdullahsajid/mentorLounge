@@ -2,7 +2,7 @@ import React from "react";
 
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 
-import { Img, Input, Line, List, Text} from "components";
+import { Img, Input, Line, List, Text } from "components";
 
 const CustomerServicePage = () => {
   const sideBarMenu = [
@@ -107,7 +107,7 @@ const CustomerServicePage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft gap-[18px] items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[18px] items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -139,7 +139,7 @@ const CustomerServicePage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row font-poppins gap-[19px] items-start justify-between w-[97%] md:w-full">
+            <div className="flex md:flex-col flex-row font-poppins gap-[19px] items-start justify-between w-[97%] sm:px-2 md:w-full">
               <div className="bg-white-A700 flex flex-col items-center justify-start p-[26px] sm:px-5 rounded-[35px] w-[27%] md:w-full">
                 <div className="flex flex-col gap-9 justify-start mt-[7px] w-full">
                   <div className="flex flex-col gap-[26px] items-start justify-start md:ml-[0] w-full">
@@ -199,7 +199,7 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end sm:justify-start sm:pl-2 my-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9.png"
@@ -244,7 +244,7 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end sm:justify-start sm:pl-2 my-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9.png"
@@ -289,12 +289,12 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
-                          <Img
-                            className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
-                            src="images/img_rectangle9_54x54.png"
-                            alt="rectangleNine"
-                          />
+                          <div className="flex flex-row gap-3.5 items-center justify-end sm:justify-start sm:pl-2 my-2 w-[95%] md:w-full">
+                            <Img
+                              className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
+                              src="images/img_rectangle9_54x54.png"
+                              alt="rectangleNine"
+                            />
                             <div className="flex flex-col font-poppins items-start justify-start overflow-hidden text-ellipsis
                               whitespace-nowrap">
                               <div className="flex flex-row  justify-between items-center w-full">
@@ -344,7 +344,7 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 sm:justify-start sm:pl-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -357,7 +357,7 @@ const CustomerServicePage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -389,7 +389,7 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 sm:justify-start sm:pl-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -402,7 +402,7 @@ const CustomerServicePage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -434,7 +434,7 @@ const CustomerServicePage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 sm:justify-start sm:pl-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -447,7 +447,7 @@ const CustomerServicePage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -507,7 +507,7 @@ const CustomerServicePage = () => {
                   <Line className="bg-gray-100_06 h-0.5 mt-[15px] w-full" />
                   <div
                     className="bg-cover bg-no-repeat flex flex-col items-center justify-center 
-                     mt-3 w-[70%]">
+                     mt-3 w-[70%] sm:w-full">
                     <Text
                       className="leading-[28.00px] mb-[3px] text-white-A700 text-base p-[10px]
                        rounded-lg sm:w-full bg-[#743C95]"

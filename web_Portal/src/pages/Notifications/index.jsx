@@ -106,7 +106,7 @@ const NotificationsPage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft gap-[17px] items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[17px] items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -138,7 +138,7 @@ const NotificationsPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row gap-[19px] items-start justify-between w-[97%] md:w-full">
+            <div className="flex md:flex-col flex-row gap-[19px] items-start justify-between w-[97%] sm:px-2 md:w-full">
               <div className="bg-white-A700 flex flex-col items-center justify-start p-[26px] sm:px-5 rounded-[35px] w-[27%] md:w-full">
                 <div className="flex flex-col gap-9 justify-start mt-[7px] w-full">
                   <div className="flex flex-col gap-[26px] items-start justify-start md:ml-[0] w-full">
@@ -198,7 +198,7 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end sm:justify-start sm:pl-2 my-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9.png"
@@ -243,7 +243,7 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 sm:justify-start sm:pl-2 w-[95%] md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9.png"
@@ -288,12 +288,12 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
-                          <Img
-                            className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
-                            src="images/img_rectangle9_54x54.png"
-                            alt="rectangleNine"
-                          />
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] sm:justify-start sm:pl-2 md:w-full">
+                            <Img
+                              className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
+                              src="images/img_rectangle9_54x54.png"
+                              alt="rectangleNine"
+                            />
                             <div className="flex flex-col font-poppins items-start justify-start overflow-hidden text-ellipsis
                               whitespace-nowrap">
                               <div className="flex flex-row  justify-between items-center w-full">
@@ -343,7 +343,7 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] sm:justify-start sm:pl-2 md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -356,7 +356,7 @@ const NotificationsPage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -388,7 +388,7 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] sm:justify-start sm:pl-2 md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -401,7 +401,7 @@ const NotificationsPage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -433,7 +433,7 @@ const NotificationsPage = () => {
                       <div className="w-full">
                         <div className="bg-gray-100_06 flex flex-col font-opensans h-full items-center justify-center
                          p-[3px] rounded-[15px] w-full">
-                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] md:w-full">
+                          <div className="flex flex-row gap-3.5 items-center justify-end my-2 w-[95%] sm:justify-start sm:pl-2 md:w-full">
                             <Img
                               className="h-[54px] md:h-auto object-cover rounded-lg w-[54px]"
                               src="images/img_rectangle9_1.png"
@@ -446,7 +446,7 @@ const NotificationsPage = () => {
                                   className="text-black-900_03 text-xs"
                                   size="txtPoppinsBold12"
                                 >
-                                 Denze Russel
+                                  Denze Russel
                                 </Text>
                                 <Text
                                   className="text-[8px] text-black-900_03"
@@ -494,98 +494,98 @@ const NotificationsPage = () => {
                         alt="save"
                       />
                     </button>
-                    
+
                   </div>
                 </div>
                 {/* start */}
                 <div className="bg-white-A700 flex flex-col items-center justify-start md:mt-0 mt-[5px] p-[26px] 
               sm:px-5 rounded-[26px] w-full">
-                <div className="flex flex-col justify-start w-full">
-                  <div className="flex flex-row gap-[19px] items-center justify-start w-full">
-                    <Img
-                      className="h-[54px] md:h-auto rounded-[50%] w-[54px]"
-                      src="images/img_rectangle41959.png"
-                      alt="rectangle41959"
-                    />
-                    <div className="flex flex-col items-start justify-start">
-                      <Text
-                        className="text-black-900_03 text-xl"
-                        size="txtProximaSoftSemiBold20Black90003"
-                      >
-                        Tom Nathan
-                      </Text>
-                      <Text
-                        className="text-gray-500_01 text-xs"
-                        size="txtInterRegular12Gray50001"
-                      >
-                        tom_nathan123@gmail.com
-                      </Text>
+                  <div className="flex flex-col justify-start w-full">
+                    <div className="flex flex-row gap-[19px] items-center justify-start w-full">
+                      <Img
+                        className="h-[54px] md:h-auto rounded-[50%] w-[54px]"
+                        src="images/img_rectangle41959.png"
+                        alt="rectangle41959"
+                      />
+                      <div className="flex flex-col items-start justify-start">
+                        <Text
+                          className="text-black-900_03 text-xl"
+                          size="txtProximaSoftSemiBold20Black90003"
+                        >
+                          Tom Nathan
+                        </Text>
+                        <Text
+                          className="text-gray-500_01 text-xs"
+                          size="txtInterRegular12Gray50001"
+                        >
+                          tom_nathan123@gmail.com
+                        </Text>
+                      </div>
                     </div>
-                  </div>
-                  <Line className="bg-gray-100_06 h-0.5 mt-[15px] w-full" />
-                  <div
-                    className="bg-cover bg-no-repeat flex flex-col items-center justify-center 
-                     mt-3 w-[70%]">
-                    <Text
-                      className="leading-[28.00px] mb-[3px] text-white-A700 text-base p-[10px]
-                       rounded-lg sm:w-full bg-[#743C95]"
-                      size="txtPoppinsRegular20WhiteA700"
-                    >
-                      I hope this message finds you well. I am writing to bring
-                      to your attention a concerning issue regarding a recent
-                      transaction I made on your platform. On 25 of this month,
-                      I purchased a power bank and made the payment
-                      successfully. However, despite the completion of the
-                      payment process, I have yet to receive the power bank. I
-                      would like to emphasize the urgency of this matter, as the
-                      power bank was intended to be a necessary tool for my
-                      upcoming travels. As a paying customer, I have a
-                      reasonable expectation of receiving the product within a
-                      reasonable timeframe.
-                    </Text>
-                  </div>
-                  <div className="w-full flex flex-col items-end justify-end">
+                    <Line className="bg-gray-100_06 h-0.5 mt-[15px] w-full" />
                     <div
-                      className="bg-cover bg-no-repeat flex flex-col items-center justify-end
-                      mt-10 w-[70%]"
-                    >
+                      className="bg-cover bg-no-repeat flex flex-col items-center justify-center 
+                     mt-3 w-[70%] sm:w-full">
                       <Text
-                        className="leading-[28.00px] mb-[3px] text-white-A700 text-base p-[10px] rounded-lg bg-[#CBA13D] sm:w-full"
+                        className="leading-[28.00px] mb-[3px] text-white-A700 text-base p-[10px]
+                       rounded-lg sm:w-full bg-[#743C95]"
                         size="txtPoppinsRegular20WhiteA700"
                       >
-                        <>
-                          OK, let ne check the transactions and once I confirm I
-                          will release the batteries but kindly don’t leave the
-                          station till the confirmation once I release the
-                          batteries and you have left the station then it will be
-                          your responsibility.
-                          <br />
-                          Thank you{" "}
-                        </>
+                        I hope this message finds you well. I am writing to bring
+                        to your attention a concerning issue regarding a recent
+                        transaction I made on your platform. On 25 of this month,
+                        I purchased a power bank and made the payment
+                        successfully. However, despite the completion of the
+                        payment process, I have yet to receive the power bank. I
+                        would like to emphasize the urgency of this matter, as the
+                        power bank was intended to be a necessary tool for my
+                        upcoming travels. As a paying customer, I have a
+                        reasonable expectation of receiving the product within a
+                        reasonable timeframe.
                       </Text>
                     </div>
-                  </div>
-                  <div className="flex md:flex-col flex-row font-opensans gap-[15px] items-center justify-start w-full mt-3">
-                    <div className="flex items-center relative w-full md:w-full 
-                      border border-gray-500 border-solid rounded-[10px]">
-                      <input
-                        className=" text-gray-500_03 text-lg px-3 py-4 rounded-[10px] w-full"
-                        placeholder="Write your message..."
-                      />
+                    <div className="w-full flex flex-col items-end justify-end">
+                      <div
+                        className="bg-cover bg-no-repeat flex flex-col items-center justify-end
+                      mt-10 w-[70%]"
+                      >
+                        <Text
+                          className="leading-[28.00px] mb-[3px] text-white-A700 text-base p-[10px] rounded-lg bg-[#CBA13D] sm:w-full"
+                          size="txtPoppinsRegular20WhiteA700"
+                        >
+                          <>
+                            OK, let ne check the transactions and once I confirm I
+                            will release the batteries but kindly don’t leave the
+                            station till the confirmation once I release the
+                            batteries and you have left the station then it will be
+                            your responsibility.
+                            <br />
+                            Thank you{" "}
+                          </>
+                        </Text>
+                      </div>
                     </div>
-                    <div className="bg-purple-700 flex flex-col items-center justify-start p-[11px] rounded-[10px] w-[7%] md:w-full">
-                      <button>
-                        <Img
-                          className=""
-                          src="images/img_fluentsend28filled.svg"
-                          alt="fluentsend28fil"
+                    <div className="flex md:flex-col flex-row font-opensans gap-[15px] items-center justify-start w-full mt-3">
+                      <div className="flex items-center relative w-full md:w-full 
+                      border border-gray-500 border-solid rounded-[10px]">
+                        <input
+                          className=" text-gray-500_03 text-lg px-3 py-4 rounded-[10px] w-full"
+                          placeholder="Write your message..."
                         />
-                      </button>
+                      </div>
+                      <div className="bg-purple-700 flex flex-col items-center justify-start p-[11px] rounded-[10px] w-[7%] md:w-full">
+                        <button>
+                          <Img
+                            className=""
+                            src="images/img_fluentsend28filled.svg"
+                            alt="fluentsend28fil"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
         </div>

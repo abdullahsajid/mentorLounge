@@ -102,9 +102,9 @@ const SessionManagementPage = () => {
       <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-end mx-auto w-full">
         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
           <Sidebar4 className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto md:px-5 top-[0]" />
-          <div className="flex flex-1 flex-col font-proximasoft gap-[31px] items-center justify-start md:px-5 w-full">
-            <div className="bg-white-A700 flex md:flex-col flex-row gap-10 items-center justify-center p-[13px] shadow-bs18 w-full">
-              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 md:ml-[0] ml-[835px] md:mt-0 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[31px] items-center justify-start md:px-5 sm:px-0 w-full">
+            <div className="bg-white-A700 flex flex-row gap-[17px] items-center justify-end p-[13px] shadow-bs18 w-full">
+              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end  p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
                   <Img
                     className="h-[22px] w-[21px]"
@@ -113,7 +113,7 @@ const SessionManagementPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-row gap-2.5 items-center justify-center mr-[54px] p-2.5 w-auto">
+              <div className="flex flex-row gap-2.5 items-center justify-center p-2.5 w-auto">
                 <Img
                   className="h-[52px] md:h-auto rounded-[50%] w-[52px]"
                   src="images/img_profilepic2.png"
@@ -134,7 +134,7 @@ const SessionManagementPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row font-poppins md:gap-5 items-center justify-between w-[95%] md:w-full">
+            <div className="flex md:flex-col flex-row font-poppins md:gap-5 items-center justify-between w-[95%] sm:px-2 md:w-full">
               <div className="w-full">
                 <Input
                   name="group152"
@@ -154,7 +154,7 @@ const SessionManagementPage = () => {
                   variant="fill"
                 ></Input>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center sm:gap-2">
                 <Button
                   className="cursor-pointer flex items-center justify-center mb-[3px] min-w-[125px] md:ml-[0] ml-[394px] rounded-[20px]"
                   leftIcon={
@@ -191,7 +191,7 @@ const SessionManagementPage = () => {
                 </Button>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row font-poppins gap-4 items-start justify-start w-[97%] md:w-full">
+            <div className="flex md:flex-col flex-row font-poppins gap-4 items-start justify-start w-[97%] sm:px-2 md:w-full">
               <div className="flex flex-col items-center justify-start w-[62%] md:w-full">
                 <div className="gap-5 grid md:grid-cols-1 grid-cols-2 justify-center min-h-[auto] w-full">
                   <div className="bg-white-A700 flex flex-1 flex-col items-center py-5 px-5 rounded-[27px]
@@ -278,7 +278,7 @@ const SessionManagementPage = () => {
                 </div>
               </div>
               <div className="bg-white-A700 flex flex-col font-proximasoft items-center justify-start p-[25px] sm:px-5 
-              rounded-[21px] shadow-bs2 w-[38%] h-screen">
+              rounded-[21px] shadow-bs2 w-[38%] h-screen sm:w-full">
                 <div className="flex flex-col gap-[41px] items-center justify-start mt-[5px] w-full">
                   <div className="flex flex-row items-center justify-between w-[97%] md:w-full">
                     <Text

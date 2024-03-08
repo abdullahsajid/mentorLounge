@@ -1,0 +1,34 @@
+import React from "react";
+import Loaders from "components/Loaders";
+import TopMentor from "components/TopMentor";
+const AllMentor = ({ get_all_mentor, isLoading }) => {
+  return (
+    <div>
+      {isLoading ? (
+        <Loaders />
+      ) : get_all_mentor.isLoading ? (
+        <Loaders />
+      ) : (
+        <div className="grid grid-cols-4 gap-4 sm:grid-cols-1 mt-5">
+          {get_all_mentor?.allMentor?.data?.mentors.map((item, index) => (
+            <TopMentor
+              key={index}
+              id={item?.user._id}
+              name={item?.user?.name}
+              img={item?.user?.profile_picture_url}
+              mentorFields={item?.mentorFeilds}
+              mentorDescription={item?.mentorDescription}
+              mentorEducation={item?.mentorEducation}
+              mentorExperience={item?.mentorExperience}
+              mentorPrice={item?.mentorPrice}
+              links={item?.socialMediaLinks}
+              available={item?.mentorsAvailability}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AllMentor;

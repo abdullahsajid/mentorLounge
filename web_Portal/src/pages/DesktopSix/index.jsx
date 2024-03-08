@@ -7,47 +7,14 @@ import { Button, Img, Input, Line, List, Text } from "components";
 const DesktopSixPage = () => {
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto w-full"style={{
-        width:"calc(100% - 316px)"
+      <div className="bg-white-A700 font-proximasoft ml-auto w-full sm:!w-full" style={{
+        width: "calc(100% - 316px)"
       }}>
-        {/* <div className="bg-[#f8f5f9] flex flex-col gap-[54px] h-full items-end justify-center p-[52px] md:px-10 sm:px-5 w-full">
-          <div className="flex flex-col items-start justify-start mt-[46px] w-[3%] md:w-full">
-            <Text
-              className="text-gray-700_03 text-sm"
-              size="txtProximaSoftRegular14"
-            >
-              Clear
-            </Text>
-            <div className="bg-gray-700 h-px w-[88%]"></div>
-          </div>
-          <div className="flex flex-col gap-[41px] items-center justify-start mb-[653px] mr-1 w-[1%] md:w-full">
-            <Img
-              className="h-[7px] w-[7px]"
-              src="images/img_close_gray_700.svg"
-              alt="close"
-            />
-            <Img
-              className="h-[7px] w-[7px]"
-              src="images/img_close_gray_700.svg"
-              alt="close_One"
-            />
-            <Img
-              className="h-[7px] w-[7px]"
-              src="images/img_close_gray_700.svg"
-              alt="close_Two"
-            />
-            <Img
-              className="h-[7px] w-[7px]"
-              src="images/img_close_gray_700.svg"
-              alt="close_Three"
-            />
-          </div>
-        </div> */}
         <div className="bg-[#f8f5f9] flex md:flex-col flex-row font-poppins md:gap-10 items-start justify-between md:px-5 w-full
-        gap-5 p-[52px]">
-          <div className="bg-white-A700 flex flex-1 flex-col items-center justify-start mb-[27px]  py-[39px] rounded-[31px] shadow-bs3 w-full">
-            <div className="flex flex-col gap-[26px] justify-start mb-[741px] w-full">
-              <div className="flex flex-col gap-[22px] items-start justify-start md:ml-[0] ml-[26px] w-3/4 md:w-full">
+        gap-5 p-[52px] sm:gap-2">
+          <div className="bg-white-A700 flex flex-1 flex-col items-center justify-start mb-[27px] py-[39px] rounded-[31px] shadow-bs3 w-full">
+            <div className="flex flex-col gap-[26px] justify-start mb-[741px] sm:mb-0 w-full">
+              <div className="flex flex-col gap-[22px] items-start justify-start md:ml-[0] ml-[26px] w-3/4 md:w-full sm:items-center">
                 <Input
                   name="groupNinetyFour"
                   placeholder="Product designer"
@@ -64,7 +31,7 @@ const DesktopSixPage = () => {
                   size="xl"
                   variant="fill"
                 ></Input>
-                <div className="flex sm:flex-col flex-row sm:gap-10 items-center justify-between w-full gap-3">
+                <div className="flex sm:flex-col flex-row sm:flex-wrap items-center w-full gap-3 px-4">
                   <Button
                     className="cursor-pointer font-medium leading-[normal] min-w-[157px] rounded-[19px] text-[15.17px] text-center"
                     color="lime_700"
@@ -91,7 +58,7 @@ const DesktopSixPage = () => {
                   </Button>
                 </div>
               </div>
-              <Line className="bg-lime-700 h-px w-full" />
+              <Line className="bg-lime-700 h-px w-full sm:hidden" />
             </div>
           </div>
           <div className="bg-white-A700 flex flex-1 flex-col font-proximasoft gap-[21px] items-start justify-center mb-[27px] 

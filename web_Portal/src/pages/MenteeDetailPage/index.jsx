@@ -107,39 +107,25 @@ const MenteeDetailPagePage = () => {
     <>
       <div className="bg-white-A700 font-poppins h-[1024px] mx-auto relative w-full">
         <div className="bg-[#f8f5f9] justify-center  p-[54px] md:px-5 w-full h-full">
-          {/* <Img
-            className="h-1.5 ml-auto mr-[34px] mt-10"
-            src="images/img_arrowdown.svg"
-            alt="arrowdown"
-          /> */}
+
           <div className="absolute flex flex-col items-center justify-start right-[4%] top-[5%] w-[71%] sm:w-full sm:p-[22px] sm:left-0">
             <div className="flex flex-col items-start justify-start w-full">
-            <div className="flex md:flex-col flex-row gap-[29px] items-start justify-between w-full">
-                <div className="flex md:flex-1 flex-row items-start justify-start w-full md:w-full">
+              <div className="flex md:flex-col flex-row gap-[29px] items-start justify-between w-full">
+                <div className="flex md:flex-1 flex-row items-center justify-start w-full md:w-full">
                   <div className="flex flex-row gap-[15px] items-center w-full sm:flex-col sm:items-start">
                     <Img
-                      className="h-[167px] md:h-auto rounded-[50%] w-[167px]"
+                      className="h-[147px] md:h-auto rounded-[50%] w-[147px]"
                       src="images/img_ellipse25.png"
                       alt="ellipseTwentyFive"
                     />
                     <div className="flex md:flex-1 flex-col gap-[5px] items-start justify-start md:w-full">
                       <div className="md:h-12 h-[50px] relative w-full">
-                        <SelectBox
-                          className="absolute font-medium font-proximasoft inset-x-[0] leading-[normal] mx-auto text-5xl sm:text-[38px] md:text-[44px] text-black-900 text-left top-[0] w-[97%] sm:w-full"
-                          placeholderClassName="text-black-900"
-                          indicator={
-                            <Img
-                              className="h-1.5 mr-[0] w-2 right-[0] absolute"
-                              src="images/img_arrowdown.svg"
-                              alt="arrow_down"
-                            />
-                          }
-                          isMulti={false}
-                          name="group403"
-                          options={adielOmariOptionsList}
-                          isSearchable={false}
-                          placeholder="Adiel Omari"
-                        />
+                        <Text
+                          className="text-5xl sm:text-[38px] md:text-[44px] text-black-900"
+                          size="txtProximaSoftMedium48"
+                        >
+                          Adiel Omari
+                        </Text>
                       </div>
                       <Text
                         className="text-[19px] text-black-900"
@@ -158,11 +144,11 @@ const MenteeDetailPagePage = () => {
                 </div>
               </div>
               <Text
-                    className="md:ml-[0] ml-[3px] mt-5 text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
-                  >
-                    About
-                  </Text>
+                className="md:ml-[0] ml-[3px] mt-5 text-[19px] text-black-900"
+                size="txtPoppinsMedium19"
+              >
+                About
+              </Text>
               <Text
                 className="md:ml-[0] ml-[3px] mt-0.5 text-base text-blue_gray-700 w-full"
                 size="txtPoppinsMedium16"
@@ -173,84 +159,88 @@ const MenteeDetailPagePage = () => {
                 academic knowledge in a real-world setting and gain hands-on
                 experience.
               </Text>
-              <div className="grid grid-cols-2 sm:gap-10 md:ml-[0] ml-[3px] mt-[19px] w-full">
-                <div className="flex flex-col justify-start">
-                  <Text
-                    className="text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
-                  >
-                    Status
-                  </Text>
+              <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 md:ml-[0] ml-[3px] mt-[19px] w-full">
+                <div>
+                  <div className="flex flex-col justify-start">
+                    <Text
+                      className="text-[19px] text-black-900"
+                      size="txtPoppinsMedium19"
+                    >
+                      Status
+                    </Text>
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <Text
+                      className="mb-[3px] text-base text-blue_gray-700"
+                      size="txtPoppinsMedium16"
+                    >
+                      Seeking Job
+                    </Text>
+                  </div>
                 </div>
-                <div className="flex flex-col justify-start">
+                <div>
                   <Text
                     className="text-[19px] text-black-900"
                     size="txtPoppinsMedium19"
                   >
                     Education
                   </Text>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] w-full">
-                <Text
-                  className="mb-[3px] text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  Seeking Job
-                </Text>
-                <Text
-                  className="mt-[3px] text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  Masters in Visual Designing
-                </Text>
-              </div>
-              <div className="grid grid-cols-2 sm:gap-10 items-center justify-between ml-0.5 md:ml-[0] mt-[9px] w-full">
-                <div className="flex flex-col justify-start">
                   <Text
-                    className="text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
+                    className="mt-[3px] text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
                   >
-                    Experience
+                    Masters in Visual Designing
                   </Text>
                 </div>
-                <div className="flex flex-col justify-start">
+                <div>
+                  <div className="flex flex-col justify-start">
+                    <Text
+                      className="text-[19px] text-black-900"
+                      size="txtPoppinsMedium19"
+                    >
+                      Experience
+                    </Text>
+                  </div>
+                  <div className="flex flex-col justify-start">
+                    <Text
+                      className="text-base text-blue_gray-700"
+                      size="txtPoppinsMedium16"
+                    >
+                      Masters in Visual Designing
+                    </Text>
+                  </div>
+                </div>
+                <div>
                   <Text
                     className="text-[19px] text-black-900"
                     size="txtPoppinsMedium19"
                   >
                     Sessions Attended
                   </Text>
+                  <Text
+                    className="text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
+                  >
+                    6
+                  </Text>
+                </div>
+                <div>
+                  <div className="flex flex-col items-start justify-start mt-[30px]">
+                    <Text
+                      className="text-[19px] text-black-900"
+                      size="txtPoppinsMedium19"
+                    >
+                      Payment
+                    </Text>
+                  </div>
+                  <Text
+                    className="ml-0.5 md:ml-[0] text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
+                  >
+                    Verified and In time payment
+                  </Text>
                 </div>
               </div>
-              <div className="grid grid-cols-2 sm:gap-10 ml-0.5 md:ml-[0] w-full">
-                <Text
-                  className="text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  Masters in Visual Designing
-                </Text>
-                <Text
-                  className="text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  6
-                </Text>
-              </div>
-              <div className="flex flex-col items-center justify-start ml-0.5 md:ml-[0] mt-[30px]">
-                <Text
-                  className="text-[19px] text-black-900"
-                  size="txtPoppinsMedium19"
-                >
-                  Payment
-                </Text>
-              </div>
-              <Text
-                className="ml-0.5 md:ml-[0] text-base text-blue_gray-700"
-                size="txtPoppinsMedium16"
-              >
-                Verified and In time payment
-              </Text>
             </div>
           </div>
         </div>

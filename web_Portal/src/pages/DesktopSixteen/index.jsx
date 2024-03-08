@@ -1,18 +1,75 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { Menu, MenuItem } from "react-pro-sidebar";
-
 import { Button, Img, Input, List, Text } from "components";
 import DesktopTwoPage from "pages/DesktopTwo";
 import DesktopThreePage from "pages/DesktopThree";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TopMentor from "components/TopMentor";
+import { useGetAllMentorMutation, useGetMenteeByIdMutation } from "features/apis/mentee";
+import Loaders from "components/Loaders";
+import AllMentor from "components/AllMentor";
 
-const DesktopSixteenPage = () => {
-  const{user} = useSelector((state) => state.user)
+const DesktopSixteenPage = ({ toggleSideBar }) => {
+  const [getMenteeById] = useGetMenteeByIdMutation()
+  const [getAllMentor, { isLoading }] = useGetAllMentorMutation()
+  const { user } = useSelector((state) => state.user)
+  const { menteeData } = useSelector((state) => state.menteeData)
+  const get_all_mentor = useSelector((state) => state.menteeData)
   const navigate = useNavigate()
   const [toggleNotification, setNotificationToggle] = useState(false)
   const [toggleCalender, setCalenderToggle] = useState(false)
+
+  let allMentors = {
+    sortproperty: "createdAt",
+    sortorder: -1,
+    offset: 0,
+    limit: 50,
+    query: {
+      critarion: { active: true },
+      mentorReviewsFields: "reviewStars reviewDescription reviewBy",
+      mentorReviewsSkip: 0,
+      mentorReviewsLimit: 10,
+      sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc zoomMeeting",
+      sessionRequestsSkip: 0,
+      sessionRequestsLimit: 10,
+      mentorsAvailabilityFields: "availabilityStartTime availabilityEndTime availabilityDuration availabilityBooked availabilityExpired availabilityRequested",
+      mentorsAvailabilitySkip: 0,
+      mentorsAvailabilityLimit: 10,
+      userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
+      userCreditCardsSkip: 0,
+      userCreditCardsLimit: 10,
+      mentorsQuestionsFields: "questionText",
+      mentorsQuestionsSkip: 0,
+      mentorsQuestionsLimit: 10,
+      userFields: "_id email name profile_picture_url",
+      addedby: "_id email name",
+      lastModifiedBy: "_id email name"
+    }
+  }
+
+  let data = {
+    critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
+    menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
+    menteeRefersSkip: 0,
+    menteeRefersLimit: 10,
+    menteeRefersSessionFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    menteeRefersSessionSkip: 0,
+    menteeRefersSessionLimit: 10,
+    sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    sessionRequestsSkip: 0,
+    sessionRequestsLimit: 10,
+    recentSearchesFields: "searchKeyWords mentors",
+    recentSearchesSkip: 0,
+    recentSearchesLimit: 10,
+    userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
+    userCreditCardsSkip: 0,
+    userCreditCardsLimit: 10,
+    userFields: "_id email name",
+    addedby: "_id email name",
+    lastModifiedBy: "_id email name"
+  }
+
   const toggleHandler = () => {
     setNotificationToggle(!toggleNotification)
     setCalenderToggle(false)
@@ -23,33 +80,44 @@ const DesktopSixteenPage = () => {
   }
 
   const navigateHandler = () => {
-    navigate("/profile")
+    navigate("/settings")
   }
+
+  useEffect(() => {
+    getMenteeById(data)
+    getAllMentor(allMentors)
+  }, [])
+
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full"style={{
-        width:"calc(100% - 316px)"
+      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full" style={{
+        width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#f8f5f9] flex flex-col h-full justify-center p-[47px] md:px-10 sm:px-5">
           <div className="flex flex-col items-start justify-start mt-[15px] w-full md:w-full sm:h-full">
             <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between w-full">
+              {/* <div className="sm:w-full sm:flex sm:items-center"> */}
+              {/* <div className="hidden sm:flex" onClick={toggleSideBar}>
+                  <i class="fa-solid fa-bars"></i>
+                </div> */}
               <Text
-                className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900"
+                className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900 sm:ml-[3rem]"
                 size="txtProximaSoftSemiBold48"
               >
-                Hello, {user?.name || user?.data?.name}
+                Hello, {menteeData?.data?.user?.name}
               </Text>
+              {/* </div> */}
               <div className="flex sm:flex-row sm:gap-3">
                 <Button
                   className={`bg-gray-50 border border-purple-700 border-solid flex h-[51px] items-center justify-center w-[51px]
-                  ${toggleCalender && "bg-[#743c95]"}`}
+                  ${toggleCalender && "!bg-[#743c95]"}`}
                   shape="round"
                   color="gray_50"
                   size="md"
                   onClick={toggleCalenderHandler}
                 >
-                  <i class={`fa-regular fa-calendar text-[22px] ${toggleCalender && "text-[#fff]"}`}></i>
+                  <i class={`fa-regular fa-calendar text-[22px] ${toggleCalender && "!text-[#fff]"}`}></i>
                 </Button>
                 <div className={`bg-white-A700 border border-purple-700 border-solid flex flex-col h-[51px] items-center
                  justify-end ml-4 md:ml-[0] p-[9px] rounded-[25px] w-[51px] ${toggleNotification && "bg-[#743c95]"}`} onClick={toggleHandler}>
@@ -84,7 +152,7 @@ const DesktopSixteenPage = () => {
               </div>
             </div>
             <List
-              className="sm:flex-col flex-row font-poppins gap-7 grid md:grid-cols-1 grid-cols-2 mt-[31px] w-[95%]"
+              className="sm:flex-col flex-row font-poppins gap-7 grid md:grid-cols-1 grid-cols-2 mt-[31px] w-[95%] sm:w-full"
               orientation="horizontal"
             >
               <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-full">
@@ -152,442 +220,16 @@ const DesktopSixteenPage = () => {
             >
               Top Mentors for you
             </Text>
-            <div className="flex md:flex-col flex-row font-poppins md:gap-10 items-center justify-between md:ml-[0] ml-[3px] mt-[18px] w-[99%] md:w-full">
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <div className="h-[255px] m-auto w-full">
-                  <Img
-                    className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                    src="images/img_rectangle6.png"
-                    alt="rectangleSix"
-                  />
-                  <Text
-                    className="absolute bottom-[40%] left-[5%] text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Adiel Omari
-                  </Text>
-                </div>
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Designer
-                  </Text>
-                  <div className="flex flex-row items-center w-full gap-2">
-                    <Text
-                      name="frameOne"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal] p-2
-                       placeholder:text-black-900_01 text-[10.09px] text-left flex justify-center items-center rounded-lg"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex justify-center items-center px-[7px] rounded-[9px] text-[10.09px] text-black-900_01 w-24 "
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex justify-center items-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <Img
-                  className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                  src="images/img_rectangle6_255x229.png"
-                  alt="rectangleSix_One"
-                />
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[6%] w-[83%]">
-                  <Text
-                    className="text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Faraji Mandla{" "}
-                  </Text>
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Developer
-                  </Text>
-                  <div className="flex flex-row items-center w-full gap-2">
-                    <Text
-                      name="frameOne_One"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] rounded-lg font-medium leading-[normal] p-2 placeholder:text-black-900_01 text-[10.09px] text-left flex justify-center items-center"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex justify-center items-center px-[7px] rounded-[9px] text-[10.09px] text-black-900_01 w-24
-                      "
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <Img
-                  className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                  src="images/img_rectangle6_1.png"
-                  alt="rectangleSix_Two"
-                />
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Zola Kwame
-                  </Text>
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Developer
-                  </Text>
-                  <div className="flex flex-row items-center w-full gap-2">
-                    <Text
-                      name="frameOne_Two"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal]  p-2 placeholder:text-black-900_01  text-[10.09px] text-left flex justify-center items-center
-                      rounded-lg"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center p-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <div className="h-[255px] m-auto w-full">
-                  <Img
-                    className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                    src="images/img_rectangle6.png"
-                    alt="rectangleSix_Three"
-                  />
-                  <Text
-                    className="absolute bottom-[40%] left-[5%] text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Adiel Omari
-                  </Text>
-                </div>
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Designer
-                  </Text>
-                  <div className="flex flex-row items-center gap-2 w-full">
-                    <Text
-                      name="frameOne_Three"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal] p-2 placeholder:text-black-900_01  text-[10.09px] text-left flex justify-center items-center
-                      rounded-lg"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center p-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-            </div>
-            <div className="flex md:flex-col flex-row font-poppins md:gap-10 items-center justify-between md:ml-[0] ml-[3px] mt-[31px] w-[99%] md:w-full">
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <div className="h-[255px] m-auto w-full">
-                  <Img
-                    className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                    src="images/img_rectangle6.png"
-                    alt="rectangleSix_Four"
-                  />
-                  <Text
-                    className="absolute bottom-[40%] left-[5%] text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Adiel Omari
-                  </Text>
-                </div>
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Designer
-                  </Text>
-                  <div className="flex flex-row items-center gap-2 w-full">
-                    <Text
-                      name="frameOne_Four"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal] p-2 placeholder:text-black-900_01 text-[10.09px] text-left 
-                      rounded-lg flex justify-center items-center"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center p-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <Img
-                  className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                  src="images/img_rectangle6_255x229.png"
-                  alt="rectangleSix_Five"
-                />
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[6%] w-[83%]">
-                  <Text
-                    className="text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Faraji Mandla{" "}
-                  </Text>
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Developer
-                  </Text>
-                  <div className="flex flex-row items-center gap-2 w-full">
-                    <Text
-                      name="frameOne_Five"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal] p-2 placeholder:text-black-900_01 text-[10.09px] text-left
-                      flex justify-center items-center rounded-lg"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center p-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <Img
-                  className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                  src="images/img_rectangle6_1.png"
-                  alt="rectangleSix_Six"
-                />
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Zola Kwame
-                  </Text>
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Developer
-                  </Text>
-                  <div className="flex flex-row items-center gap-2 w-full">
-                    <Text
-                      name="frameOne_Six"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal] p-2 placeholder:text-black-900_01 text-[10.09px] text-left
-                      flex justify-center items-center rounded-lg"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center px-[7px] rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01 w-[124px]"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-              <div className="h-[255px] relative w-[23%] md:w-full">
-                <div className="h-[255px] m-auto w-full">
-                  <Img
-                    className="h-[255px] m-auto object-cover rounded-[13px] w-full"
-                    src="images/img_rectangle6.png"
-                    alt="rectangleSix_Seven"
-                  />
-                  <Text
-                    className="absolute bottom-[40%] left-[5%] text-[10.09px] text-white-A700 tracking-[0.10px]"
-                    size="txtPoppinsMedium1009"
-                  >
-                    Adiel Omari
-                  </Text>
-                </div>
-                <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%]">
-                  <Text
-                    className="text-[14.13px] text-white-A700"
-                    size="txtPoppinsSemiBold1413"
-                  >
-                    Product Designer
-                  </Text>
-                  <div className="flex flex-row items-center gap-2 w-full">
-                    <Text
-                      name="frameOne_Seven"
-                      placeholder="Career Advice"
-                      className="bg-blue_gray-100 h-[19px] font-medium leading-[normal]  p-2 placeholder:text-black-900_01 text-[10.09px] text-left rounded-lg
-                      flex justify-center items-center"
-                      wrapClassName="w-[47%]"
-                      shape="round"
-                      color="blue_gray_100"
-                      size="xs"
-                      variant="fill"
-                    >Career Advice</Text>
-                    <Text
-                      className="bg-blue_gray-100 h-[19px] flex items-center justify-center p-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                      size="txtPoppinsMedium1009Black90001"
-                    >
-                      College Queries
-                    </Text>
-                  </div>
-                  <Text
-                    className="bg-blue_gray-100 h-[19px] flex items-center justify-center mt-1 px-2 rounded-[9px] text-[10.09px] text-black-900_01"
-                    size="txtPoppinsMedium1009Black90001"
-                  >
-                    Interview Techniques
-                  </Text>
-                  <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
-                    size="txtPoppinsSemiBold128"
-                  >
-                    Book Session
-                  </Text>
-                </div>
-              </div>
-            </div>
+            <AllMentor get_all_mentor={get_all_mentor} isLoading={isLoading} />
           </div>
         </div>
-       
-         {toggleNotification && <DesktopTwoPage toggle={toggleHandler}/>}
-         {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler}/>}
+
+        {toggleNotification && <DesktopTwoPage toggle={toggleHandler} />}
+        {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler} />}
       </div>
     </>
   );
 };
 
 export default DesktopSixteenPage;
+

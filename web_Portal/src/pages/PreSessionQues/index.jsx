@@ -52,7 +52,11 @@ const PreQues = ({ formData, handlerChange }) => {
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                     }
                 })
-                navigation('/home')
+                if (data.data.role === 'mentor') {
+                    navigation('/mentor')
+                } else if (data.data.role === 'mentee') {
+                    navigation('/mentee')
+                }
                 cookie.set('loungeToken', data.token, { path: '/' })
                 localStorage.setItem('loungeUser', JSON.stringify(data.data))
             } else if (data.status === 'Fail') {

@@ -27,7 +27,21 @@ export const userAuthSlice = createSlice({
           state.isLoading = false;
           state.error = action.payload;
         }
-      );
+      ).addMatcher(
+        userApi.endpoints.signUpUser.matchPending,(state) => {
+          state.isLoading = true
+        }
+      ).addMatcher(
+        userApi.endpoints.signUpUser.matchFulfilled,(state,action)=>{
+          state.isLoading = false
+          state.user = action.payload
+        }
+      ).addMatcher(
+        userApi.endpoints.signUpUser.matchRejected, (state,action) => {
+          state.isLoading = false
+          state.error = action.payload
+        }
+      )
   },
 });
 

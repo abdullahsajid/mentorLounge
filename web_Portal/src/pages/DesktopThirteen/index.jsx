@@ -1,21 +1,210 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
-
+import toast from 'react-hot-toast';
 import { Button, Img, Input, Text } from "components";
 import DesktopThirteenChangepassword from "components/DesktopThirteenChangepassword";
+import { useSelector } from "react-redux";
+import { useGetMenteeByIdMutation, useUpdateMenteeDetailMutation, useUpdateMenteeSettingsMutation } from "features/apis/mentee";
+import ImgModel from "components/ImgModel";
 
 const DesktopThirteenPage = () => {
+  const [toggleModel, setToggleModel] = useState(false)
+  const [updateMenteeDetail] = useUpdateMenteeDetailMutation()
+  const [getMenteeById] = useGetMenteeByIdMutation()
+  const [updateMenteeSettings] = useUpdateMenteeSettingsMutation()
+  const { user } = useSelector((state) => state.user)
+  const { menteeData } = useSelector((state) => state.menteeData)
+  const [name, setName] = useState('')
+  const [menteeDescription, setMenteeDescription] = useState('')
+  const [menteeEducation, setMenteeEducation] = useState('')
+  const [menteeExperience, setMenteeExperience] = useState('')
+  const [socialLink, setLinks] = useState([])
+  const [appNotifications, setAppNotifications] = useState(null);
+  const [promotionalNotifications, setPromotionalNotifications] = useState(null);
+  const [updatesNotifications, setUpdatesNotifications] = useState(null);
 
+  let menteePayloadData = {
+    critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
+    menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
+    menteeRefersSkip: 0,
+    menteeRefersLimit: 10,
+    menteeRefersSessionFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    menteeRefersSessionSkip: 0,
+    menteeRefersSessionLimit: 10,
+    sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    sessionRequestsSkip: 0,
+    sessionRequestsLimit: 10,
+    recentSearchesFields: "searchKeyWords mentors",
+    recentSearchesSkip: 0,
+    recentSearchesLimit: 10,
+    userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
+    userCreditCardsSkip: 0,
+    userCreditCardsLimit: 10,
+    userFields: "_id email name profile_picture_url",
+    addedby: "_id email name",
+    lastModifiedBy: "_id email name"
+  }
+
+  const handlerAddInput = () => {
+    setLinks([...socialLink, { socialPlatformLink: '' }])
+  }
+
+  const handleInput = (e, index) => {
+    let { name, value } = e.target
+    let updateLink = [...socialLink]
+    updateLink[index][name] = value
+    setLinks(updateLink)
+  }
+
+  useEffect(() => {
+    getMenteeById(menteePayloadData)
+  }, [])
+
+  useEffect(() => {
+    if (menteeData.data) {
+      setName(menteeData?.data?.user?.name)
+      setMenteeDescription(menteeData?.data?.menteeDescription)
+      setMenteeEducation(menteeData?.data?.menteeEducation)
+      setMenteeExperience(menteeData?.data?.menteeExperience)
+      setAppNotifications(menteeData?.data?.user?.userSettings?.notificationSettings?.appNotifications?.emailNotifications)
+      setPromotionalNotifications(menteeData?.data?.user?.userSettings?.notificationSettings?.promotionalNotifications?.emailNotifications)
+      setUpdatesNotifications(menteeData?.data?.user?.userSettings?.notificationSettings?.updateNotifications?.emailNotifications)
+    }
+  }, [menteeData])
+
+  // useEffect(() => {
+  //   if (user?.userSettings) {
+  //     setAppNotifications(user?.userSettings?.notificationSettings?.appNotifications?.emailNotifications)
+  //     setPromotionalNotifications(user?.userSettings?.notificationSettings?.promotionalNotifications?.emailNotifications)
+  //     setUpdatesNotifications(user?.userSettings?.notificationSettings?.updateNotifications?.emailNotifications)
+  //   }
+  // }, [user])
+
+  let updateData = {
+    menteeid: menteeData?.data?._id,
+    active: true
+  }
+  const handlerUpdate = async () => {
+    if ((menteeData?.data?.menteeDescription === menteeDescription) && (menteeData?.data?.menteeEducation === menteeEducation) &&
+      (menteeData?.data?.menteeExperience === menteeExperience) && (socialLink.length === 0) && (menteeData?.data?.user?.name === name)) {
+      return toast.error(`nothing change!`, {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        },
+      })
+    }
+    if (menteeData?.data?.user?.name !== name) {
+      updateData['name'] = name
+    }
+    if (menteeData?.data?.menteeDescription !== menteeDescription) {
+      updateData['menteeDescription'] = menteeDescription
+    }
+    if (menteeData?.data?.menteeEducation !== menteeEducation) {
+      updateData['menteeEducation'] = menteeEducation
+    }
+    if (menteeData?.data?.menteeExperience !== menteeExperience) {
+      updateData['menteeExperience'] = menteeExperience
+    }
+    if (socialLink.length > 0) {
+      socialLink.push(...menteeData?.data?.socialMediaLinks.flat());
+      updateData['socialMediaLinks'] = socialLink
+    }
+    const { data } = await updateMenteeDetail(updateData)
+    if (data.status === 'Success') {
+      toast.success(`${data.message}`, {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        }
+      })
+      setLinks([])
+      getMenteeById(menteePayloadData)
+    } else if (data.status === 'Fail') {
+      toast.error(`${data.message}`, {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        },
+      })
+    } else {
+      toast.error(`${data.message}`, {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        },
+      })
+    }
+  }
+
+  let menteeSetting = {
+    userSettingid: menteeData?.data?.user?.userSettings?._id,
+    notificationSettings: {
+      appNotifications: {
+        emailNotifications: menteeData?.data?.user?.userSettings?.notificationSettings?.appNotifications?.emailNotifications,
+        mobileNotifications: false,
+        smsNotifications: false
+      },
+      promotionalNotifications: {
+        emailNotifications: menteeData?.data?.user?.userSettings?.notificationSettings?.promotionalNotifications?.emailNotifications,
+        mobileNotifications: false,
+        smsNotifications: false
+      },
+      updateNotifications: {
+        emailNotifications: menteeData?.data?.user?.userSettings?.notificationSettings?.updateNotifications?.emailNotifications,
+        mobileNotifications: false,
+        smsNotifications: false
+      }
+    }
+  }
+
+  const handlerNotifications = (toggleType) => {
+    if (toggleType === 'appNotifications') {
+      if(appNotifications === true){
+        menteeSetting.notificationSettings.appNotifications.emailNotifications = false
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }else if(appNotifications === false){
+        menteeSetting.notificationSettings.appNotifications.emailNotifications = true
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }
+    }else if(toggleType === 'promotionalNotifications'){
+      if(promotionalNotifications === true){
+        menteeSetting.notificationSettings.promotionalNotifications.emailNotifications = false
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }else if(promotionalNotifications === false){
+        menteeSetting.notificationSettings.promotionalNotifications.emailNotifications = true
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }
+    }else if(toggleType === 'updatesNotifications'){
+      if(updatesNotifications === true){
+        menteeSetting.notificationSettings.updateNotifications.emailNotifications = false
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }else if(promotionalNotifications === false){
+        menteeSetting.notificationSettings.updateNotifications.emailNotifications = true
+        updateMenteeSettings(menteeSetting)
+        getMenteeById(menteePayloadData)
+      }
+    }
+  }
+  
   return (
     <>
-      <div className="bg-white-A700 font-poppins w-full ml-auto"style={{
-        width:"calc(100% - 316px)"
+      <div className="bg-white-A700 font-poppins sm:!w-full ml-auto" style={{
+        width: "calc(100% - 316px)"
       }}>
         <div className=" bottom-[0] flex md:flex-col flex-row md:gap-5 inset-x-[0] items-start justify-evenly w-full">
           <div className="bg-[#f8f5f9] flex flex-1 flex-col font-proximasoft items-center justify-start p-[35px] md:px-5 shadow-bs14 w-full">
             <div className="flex flex-col gap-[33px] items-center justify-start mb-[90px] w-full">
-              <div className="flex sm:flex-col flex-row md:gap-10 items-center justify-between w-full md:w-full">
+              <div className="flex sm:flex-row flex-row md:gap-10 items-center justify-between w-full md:w-full">
                 <Text
                   className="text-5xl sm:text-[38px] md:text-[44px] text-black-900_01"
                   size="txtProximaSoftSemiBold48Black90001"
@@ -24,9 +213,10 @@ const DesktopThirteenPage = () => {
                 </Text>
                 <Button
                   className="!text-gray-100 cursor-pointer font-poppins h-[54px] leading-[normal] mb-[3px]
-                    rounded-[27px] shadow-bs5 text-center text-xl w-[196px]"
+                    rounded-[27px] shadow-bs5 text-center text-xl w-[196px] sm:w-[140px]"
                   shape="round"
                   size="lg"
+                  onClick={handlerUpdate}
                 >
                   Save
                 </Button>
@@ -43,15 +233,16 @@ const DesktopThirteenPage = () => {
                     </Text>
                     <div className="md:h-[147px] mt-[37px] relative w-full flex item-center justify-start">
                       <Img
-                        className="h-[110px] rounded-[50%] w-[110px]"
-                        src="images/img_ellipse25_110x110.png"
+                        className="h-[110px] rounded-[50%] w-[110px] object-cover border"
+                        src={`${menteeData?.data?.user?.profile_picture_url ? `http://localhost:5873/${menteeData?.data?.user?.profile_picture_url}` : "images/default.png"}`}
                         alt="ellipseTwentyFive"
                       />
                       <Button
-                        className="absolute border-[3px] border-solid border-white-A700 bottom-[4%]
+                        className="absolute border-[3px] border-solid border-white-A700 bottom-[4%] sm:bottom-[23%]
                          flex h-[34px] items-center justify-center left-[80px] w-[34px]"
                         shape="circle"
                         size="sm"
+                        onClick={() => setToggleModel(!toggleModel)}
                       >
                         <Img
                           className="h-[19px]"
@@ -71,6 +262,8 @@ const DesktopThirteenPage = () => {
                           color="gray_100_03"
                           size="xl"
                           variant="fill"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                         ></Input>
                       </div>
                     </div>
@@ -99,6 +292,8 @@ const DesktopThirteenPage = () => {
                               color="gray_100_03"
                               size="xl"
                               variant="fill"
+                              value={menteeDescription}
+                              onChange={(e) => setMenteeDescription(e.target.value)}
                             ></Input>
                           </div>
                         </div>
@@ -120,6 +315,8 @@ const DesktopThirteenPage = () => {
                               color="gray_100_03"
                               size="xl"
                               variant="fill"
+                              value={menteeEducation}
+                              onChange={(e) => setMenteeEducation(e.target.value)}
                             ></Input>
                           </div>
                         </div>
@@ -141,6 +338,8 @@ const DesktopThirteenPage = () => {
                               color="gray_100_03"
                               size="xl"
                               variant="fill"
+                              value={menteeExperience}
+                              onChange={(e) => setMenteeExperience(e.target.value)}
                             ></Input>
                           </div>
                         </div>
@@ -154,39 +353,40 @@ const DesktopThirteenPage = () => {
                         </Text>
                         <div className="flex flex-col ml-0.5 md:ml-[0] relative w-full">
                           <div className="flex flex-col items-start justify-end mx-auto pr-[7px] py-[7px] w-full">
-                            <div className="flex flex-row items-center justify-start w-[44%] md:w-full">
-                              <Img
-                                className="h-[33px] w-[33px]"
-                                src="images/img_evabehancefill.svg"
-                                alt="evabehancefill"
-                              />
-                              <Img
-                                className="h-[33px] ml-[13px] w-[33px]"
-                                src="images/img_icroundfacebook.svg"
-                                alt="icroundfacebook"
-                              />
-                              <Img
-                                className="h-[33px] ml-[13px] w-[33px]"
-                                src="images/img_fegithub.svg"
-                                alt="fegithub"
-                              />
-                              <Img
-                                className="h-[33px] ml-[13px] w-[33px]"
-                                src="images/img_entyposociall.svg"
-                                alt="entyposociall"
-                              />
+                            <div className="flex flex-row items-center justify-start w-[44%] gap-3 md:w-full">
+                              {menteeData?.data?.socialMediaLinks.map((item) => (
+                                <a href={`${item.socialPlatformLink}`} className="bg-[#000] px-2 py-[7px] rounded">
+                                  <i class="fa-solid fa-link text-[#fff]"></i>
+                                </a>
+                              ))}
                             </div>
                           </div>
                           <Button
                             className="cursor-pointer leading-[normal] min-w-[108px] ml-auto mt-[-7.84px] rounded-[18px] text-[13.42px] text-center z-[1]"
                             size="md"
                             variant="outline"
+                            onClick={handlerAddInput}
                           >
                             + Add More
                           </Button>
                         </div>
+                        {socialLink.length > 0 && socialLink.map((item, index) => (
+                          <div className="flex flex-col items-center justify-start w-full" key={index}>
+                            <Input
+                              name="socialPlatformLink"
+                              placeholder="google.com"
+                              className="leading-[normal] md:h-auto p-0 placeholder:text-blue_gray-700 sm:h-auto text-[17.92px] text-left w-full"
+                              wrapClassName="border border-gray-900_1e border-solid rounded-[25px] w-full"
+                              color="gray_100_03"
+                              size="xl"
+                              variant="fill"
+                              value={item.socialPlatformLink}
+                              onChange={(e) => handleInput(e, index)}
+                            ></Input>
+                          </div>
+                        ))}
                       </div>
-                      <div className="flex flex-col items-start justify-start mt-6 w-full md:w-full gap-3">
+                      {/* <div className="flex flex-col items-start justify-start mt-6 w-full md:w-full gap-3">
                         <Text
                           className="text-[17.92px] text-blue_gray-700"
                           size="txtPoppinsMedium1792"
@@ -204,7 +404,7 @@ const DesktopThirteenPage = () => {
                             </Text>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -285,13 +485,13 @@ const DesktopThirteenPage = () => {
                       </Text>
                       <div className="flex flex-row items-center w-full sm:w-full">
                         <div className="w-full flex items-center gap-3">
-                            <div className="rounded-[5px] my-px">
-                              <Img
-                                className="h-6 rounded-[5px] my-auto"
-                                src="images/img_user_gray_900.svg"
-                                alt="user"
-                              />
-                            </div>
+                          <div className="rounded-[5px] my-px">
+                            <Img
+                              className="h-6 rounded-[5px] my-auto"
+                              src="images/img_user_gray_900.svg"
+                              alt="user"
+                            />
+                          </div>
                           <Text
                             name="notification"
                             className="font-semibold leading-[normal] p-0 placeholder:text-gray-900 text-base text-left w-full"
@@ -304,12 +504,16 @@ const DesktopThirteenPage = () => {
                         </div>
                         <div>
                           <label class="toggle-container">
-                            <input type="checkbox"/>
+                            <input
+                              type="checkbox"
+                              checked={appNotifications}
+                              onChange={() => handlerNotifications('appNotifications')}
+                            />
                             <span class="toggle-slider"></span>
                           </label>
                         </div>
                       </div>
-                      
+
                       <Text
                         className="text-gray-900 text-lg"
                         size="txtProximaSoftSemiBold18"
@@ -318,26 +522,30 @@ const DesktopThirteenPage = () => {
                       </Text>
                       <div className="flex flex-row items-center w-full sm:w-full">
                         <div className="w-full flex items-center gap-3">
-                            <div className="rounded-[5px] my-px">
-                              <Img
-                                className="h-6 rounded-[5px] my-auto"
-                                src="images/img_user_gray_900.svg"
-                                alt="user"
-                              />
-                            </div>
-                            <Text
-                              name="notification"
-                              className="font-semibold leading-[normal] p-0 placeholder:text-gray-900 text-base text-left w-full"
-                              wrapClassName="flex w-full"
-                              shape="square"
-                              color="gray_900_19"
-                              size="xl"
-                              variant="outline"
-                            >Promotional Notifications</Text>
+                          <div className="rounded-[5px] my-px">
+                            <Img
+                              className="h-6 rounded-[5px] my-auto"
+                              src="images/img_user_gray_900.svg"
+                              alt="user"
+                            />
+                          </div>
+                          <Text
+                            name="notification"
+                            className="font-semibold leading-[normal] p-0 placeholder:text-gray-900 text-base text-left w-full"
+                            wrapClassName="flex w-full"
+                            shape="square"
+                            color="gray_900_19"
+                            size="xl"
+                            variant="outline"
+                          >Promotional Notifications</Text>
                         </div>
                         <div>
                           <label class="toggle-container">
-                            <input type="checkbox" checked/>
+                            <input
+                              type="checkbox"
+                              checked={promotionalNotifications}
+                              onChange={() => handlerNotifications('promotionalNotifications')}
+                            />
                             <span class="toggle-slider"></span>
                           </label>
                         </div>
@@ -350,26 +558,30 @@ const DesktopThirteenPage = () => {
                       </Text>
                       <div className="flex flex-row items-center w-full sm:w-full">
                         <div className="w-full flex items-center gap-3">
-                            <div className="rounded-[5px] my-px">
-                              <Img
-                                className="h-6 rounded-[5px] my-auto"
-                                src="images/img_user_gray_900.svg"
-                                alt="user"
-                              />
-                            </div>
-                            <Text
-                              name="notification"
-                              className="font-semibold leading-[normal] p-0 placeholder:text-gray-900 text-base text-left w-full"
-                              wrapClassName="flex w-full"
-                              shape="square"
-                              color="gray_900_19"
-                              size="xl"
-                              variant="outline"
-                            >Updates Notifications</Text>
+                          <div className="rounded-[5px] my-px">
+                            <Img
+                              className="h-6 rounded-[5px] my-auto"
+                              src="images/img_user_gray_900.svg"
+                              alt="user"
+                            />
+                          </div>
+                          <Text
+                            name="notification"
+                            className="font-semibold leading-[normal] p-0 placeholder:text-gray-900 text-base text-left w-full"
+                            wrapClassName="flex w-full"
+                            shape="square"
+                            color="gray_900_19"
+                            size="xl"
+                            variant="outline"
+                          >Updates Notifications</Text>
                         </div>
                         <div>
                           <label class="toggle-container">
-                            <input type="checkbox"/>
+                            <input
+                              type="checkbox"
+                              checked={updatesNotifications}
+                              onChange={() => handlerNotifications('updatesNotifications')}
+                            />
                             <span class="toggle-slider"></span>
                           </label>
                         </div>
@@ -382,6 +594,7 @@ const DesktopThirteenPage = () => {
           </div>
         </div>
       </div>
+      {toggleModel && <ImgModel setToggleModel={setToggleModel} toggleModel={toggleModel} />}
     </>
   );
 };

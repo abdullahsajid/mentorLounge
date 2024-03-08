@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "pages/Home";
-import NotFound from "pages/NotFound";
-import Sidebar1 from "components/Sidebar1";
 import Loader from "pages/Loader";
+import Admin from "pages/admin";
 import ProtectedRoutes from "utils/ProtectedRoutes";
-
+const NotFound = React.lazy(() => import("pages/NotFound"));
+const Sidebar1 = React.lazy(() => import("components/Sidebar1"));
 const SettingsTwo = React.lazy(() => import("pages/SettingsTwo"));
 const Settings = React.lazy(() => import("pages/Settings"));
 const SettingsOne = React.lazy(() => import("pages/SettingsOne"));
@@ -62,16 +62,17 @@ const Availability = React.lazy(() => import("pages/Availability"));
 const PreQues = React.lazy(() => import('pages/PreSessionQues'))
 
 const ProjectRoutes = () => {
+  const [toggleSideBar, setToggleSidebar] = useState(false)
   return (
     <React.Suspense fallback={<><Loader /></>}>
-      <Sidebar1 className="!fixed !w-[316px] bg-white-A700 flex font-poppins inset-y-[0] justify-start left-[0]
-          my-auto overflow-auto md:px-5 shadow-2xl top-[0]" />
+      <Sidebar1 className={`!fixed !w-[316px] bg-white-A700 flex font-poppins inset-y-[0] justify-start left-[0]
+          my-auto overflow-auto md:px-5 shadow-2xl top-[0] ${toggleSideBar && 'resp-left'}`} setToggleSidebar={setToggleSidebar} />
       <Routes>
         <Route path="/" element={<LoginTwelve />} />
         <Route path="/cal" element={<Availability />} />
         <Route path='/preques' element={<PreQues />} />
         <Route element={<ProtectedRoutes userRole={['mentee']} />}>
-          <Route path="/mentee" element={<DesktopSixteen />} />
+          <Route path="/mentee" element={<DesktopSixteen toggleSideBar={setToggleSidebar} />} />
           <Route path="/profile" element={<DesktopFour />} />
           <Route path="/search" element={<DesktopSix />} />
           <Route path="/session" element={<DesktopSeven />} />
@@ -82,7 +83,7 @@ const ProjectRoutes = () => {
         <Route path="/frameone" element={<FrameOne />} />
         <Route path="/desktopsixteen" element={<DesktopSixteen />} />
         <Route path="/desktoptwo" element={<DesktopTwo />} />
-        <Route path="/desktopthree" element={<DesktopThree />} />  
+        <Route path="/desktopthree" element={<DesktopThree />} />
         <Route path="/loginseven" element={<LoginSeven />} />
         <Route path="/logineight" element={<LoginEight />} />
         <Route path="/logineleven" element={<LoginEleven />} />
@@ -100,8 +101,12 @@ const ProjectRoutes = () => {
         <Route path="/loginfifteen" element={<LoginFifteen />} />
         <Route path="/loginsixteen" element={<LoginSixteen />} />
         <Route path="/logineighteen" element={<LoginEighteen />} />
-        <Route element={<ProtectedRoutes userRole={['mentor']}/>}>
+        <Route element={<ProtectedRoutes userRole={['mentor']} />}>
           <Route path="/mentor" element={<DesktopSeventeen />} />
+          <Route path="/mtrsearch" element={<DesktopTwentyOne />} />
+          <Route path="/mtrsession" element={<DesktopTwentyTwo />} />
+          <Route path="/mtrsettings" element={<DesktopTwentyEight />} />
+          <Route path="/mtr-Request-Session" element={<DesktopTwentyFive />}/>
         </Route>
         <Route path="/desktopnineteen" element={<DesktopNineteen />} />
         <Route path="/desktoptwenty" element={<DesktopTwenty />} />
@@ -113,26 +118,29 @@ const ProjectRoutes = () => {
         <Route path="/desktoptwentyfive" element={<DesktopTwentyFive />} />
         <Route path="/desktoptwentyseven" element={<DesktopTwentySeven />} />
         <Route path="/desktoptwentyeight" element={<DesktopTwentyEight />} />
-        <Route element={<ProtectedRoutes userRole={['admin']}/>}>
-          <Route path="/usermanagement" element={<UserManagement />} />
-          <Route path="/mentordetailpage" element={<MentorDetailPage />} />
-          <Route path="/menteedetailpage" element={<MenteeDetailPage />} />
-          <Route
-            path="/analyticsandreporting"
-            element={<AnalyticsandReporting />}
-          />
-          <Route path="/mentormanagement" element={<MentorManagement />} />
-          <Route path="/sessionmanagement" element={<SessionManagement />} />
-          <Route path="/contentmanagement" element={<ContentManagement />} />
-          <Route path="/finance" element={<Finance />} />
-          <Route path="/customerservice" element={<CustomerService />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/settingOne" element={<SettingsOne />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/settingstwo" element={<SettingsTwo />} />
-        </Route>
+        {/* <Route element={<ProtectedRoutes userRole={['admin']}/>}> */}
+        {/* </Route> */}
+        {/* <Route element={<Admin/>}> */}
+        <Route path="/usermanagement" element={<UserManagement />} />
+        <Route path="/mentordetailpage" element={<MentorDetailPage />} />
+        <Route path="/menteedetailpage" element={<MenteeDetailPage />} />
+        <Route
+          path="/analyticsandreporting"
+          element={<AnalyticsandReporting />}
+        />
+        <Route path="/mentormanagement" element={<MentorManagement />} />
+        <Route path="/sessionmanagement" element={<SessionManagement />} />
+        <Route path="/contentmanagement" element={<ContentManagement />} />
+        <Route path="/finance" element={<Finance />} />
+        <Route path="/customerservice" element={<CustomerService />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/settingsone" element={<SettingsOne />} />
+        <Route path="/settingss" element={<Settings />} />
+        <Route path="/settingstwo" element={<SettingsTwo />} />
+        {/* </Route> */}
       </Routes>
     </React.Suspense>
   );
 };
+
 export default ProjectRoutes;

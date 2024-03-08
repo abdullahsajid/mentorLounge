@@ -16,7 +16,7 @@ const FinancePage = () => {
     labels: ["Revenue"],
     options: {
       chart: {
-        width:"100%", 
+        width: "100%",
         type: 'bar',
         toolbar: {
           show: false,
@@ -58,26 +58,26 @@ const FinancePage = () => {
   // useEffect(()=>{
   //   setSales()
   // },[])  
-  const[earned,setEarned] = useState({
-          series: [44, 55],
-              options: {
-                chart: {
-                  width:"100%",
-                  type: 'donut',
-                  toolbar: {
-                    show: false,
-                  },
-                  legend: {
-                    show: false,
-                  },
-                  grid: {
-                    show: false,
-                  },
-                  dataLabels: {
-                    enabled: false
-                  },
-                },
-              }
+  const [earned, setEarned] = useState({
+    series: [44, 55],
+    options: {
+      chart: {
+        width: "100%",
+        type: 'donut',
+        toolbar: {
+          show: false,
+        },
+        legend: {
+          show: false,
+        },
+        grid: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: false
+        },
+      },
+    }
   })
   const sideBarMenu = [
     {
@@ -182,7 +182,7 @@ const FinancePage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -214,7 +214,8 @@ const FinancePage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex sm:flex-col flex-row font-poppins md:gap-10 items-center justify-between mt-[31px] w-[96%] md:w-full">
+            <div className="flex sm:flex-col flex-row font-poppins md:gap-10 sm:gap-[17px] items-center justify-between mt-[31px] w-[96%]
+             md:w-full sm:px-2">
               <Input
                 name="group152"
                 placeholder="Search"
@@ -249,33 +250,32 @@ const FinancePage = () => {
                 </div>
               </Button>
             </div>
-            <div className="flex md:flex-col flex-row font-poppins gap-3 justify-start mt-3 w-[97%] md:w-full">
-              <div className="bg-white-A700 flex flex-col items-center justify-start pl-2 py-2 rounded-[24px] 
-                shadow-bs5 w-3/5 md:w-full h-full">
-                <table className="table-auto flex flex-col font-poppins 
-                 rounded-[24px]">
+            <div className="flex md:flex-col flex-row font-poppins gap-3 justify-around mt-3 w-full px-2">
+              <div className="sm:w-full overflow-auto sm:px-2 h-full">
+                <table className="table-auto bg-white-A700 font-poppins 
+                  rounded-[24px] shadow-bs19 w-full p-5 sm:w-full overflow-hidden h-full">
                   <thead>
-                    <tr className="flex md:flex-col flex-row md:gap-5 items-start justify-around w-full md:w-full py-3"
-                    style={{borderBottom:"1px solid #BA35351A"}}>
-                        <th>Sender</th>
-                        <th>Reciever</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Commission</th>
+                    <tr
+                      style={{ borderBottom: "2px solid #BA35351A" }}>
+                      <th className="p-3 px-7">Sender</th>
+                      <th className="p-3 px-7">Reciever</th>
+                      <th className="p-3 px-7">Amount</th>
+                      <th className="p-3 px-7">Date</th>
+                      <th className="p-3 px-7">Commission</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr className="flex flex-row justify-around items-center py-3">
-                        <td>Bisa</td>
-                        <td>Denzel</td>
-                        <td>$100</td>
-                        <td>10/07/23</td>
-                        <td>$15</td>
+                  <tbody className="overflow-hidden">
+                    <tr className="overflow-hidden">
+                      <td className="text-center">Bisa</td>
+                      <td className="text-center">Denzel</td>
+                      <td className="text-center">$100</td>
+                      <td className="text-center">10/07/23</td>
+                      <td className="text-center">$15</td>
                     </tr>
                   </tbody>
-                </table>   
+                </table>
               </div>
-              <div className="flex flex-col font-inter gap-6 items-center justify-start w-2/5 md:w-full">
+              <div className="flex flex-col font-inter gap-6 items-center justify-start w-2/5 sm:w-full">
                 <div className="bg-white-A700 flex flex-col items-start justify-start p-[21px] sm:px-5 rounded-[21px] w-full">
                   <div className="flex sm:flex-col flex-row sm:gap-10 items-center justify-between mb-[22px] mt-1.5 w-full">
                     <div className="flex flex-col items-start justify-start w-full sm:w-full">
@@ -372,7 +372,7 @@ const FinancePage = () => {
                       </List>
                     </div>
                     <div className="h-full w-full">
-                      <div className="!w-full h-full" style={{minHeight:"100%"}}>
+                      <div className="!w-full h-full" style={{ minHeight: "100%" }}>
                         <CircularProgressbar
                           className="!w-[212px] border-solid m-auto overflow-visible"
                           value={24}
@@ -387,17 +387,17 @@ const FinancePage = () => {
                             },
                           }}
                         ></CircularProgressbar>
-                         <div className="flex flex-col items-center justify-start">
-                        {/* <Text
+                        <div className="flex flex-col items-center justify-start">
+                          {/* <Text
                           className="sm:text-[17.2px] md:text-[19.2px] text-[21.2px] text-center text-gray-900_01 w-auto"
                           size="txtInterBold212"
                         >
                           $100
                         </Text> */}
-                      </div>
+                        </div>
                         {/* <ReactApexChart options={earned.options} series={earned.series} type="donut" height="100%"/> */}
                       </div>
-                     
+
                     </div>
                   </div>
                 </div>

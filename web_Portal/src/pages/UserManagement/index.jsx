@@ -154,9 +154,10 @@ const UserManagementPage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 w-full">
-            <div className="bg-white-A700 flex md:flex-col flex-row gap-[13px] items-center justify-center p-[7px] shadow-bs18 w-full">
-              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-[26px] md:ml-[0] ml-[845px] md:mt-0 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
+          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 sm:px-0 w-full">
+            <div className="bg-white-A700 flex flex-row gap-[13px] items-center justify-end p-[7px] shadow-bs18 w-full">
+              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end
+               p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
                   <Img
                     className="h-[22px] w-[21px]"
@@ -165,7 +166,7 @@ const UserManagementPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-row gap-2.5 items-center justify-center mb-3 mr-10 p-2.5 w-auto">
+              <div className="flex flex-row gap-2.5 items-center justify-center p-2.5 w-auto">
                 <Img
                   className="h-[52px] md:h-auto rounded-[50%] w-[52px]"
                   src="images/img_profilepic2.png"
@@ -187,7 +188,7 @@ const UserManagementPage = () => {
               </div>
             </div>
             <div className="flex sm:flex-col flex-row font-poppins gap-[10px] 
-            items-center justify-end mt-[45px] w-full pr-12">
+            items-center justify-end mt-[45px] w-full pr-12 sm:px-2">
               <Input
                 name="group152"
                 placeholder="Search"
@@ -228,7 +229,7 @@ const UserManagementPage = () => {
             >
               Mentors
             </Text>
-            <div className="w-[96%] sm:w-full overflow-auto">
+            <div className="w-[96%] sm:w-full overflow-auto sm:px-2">
               <table className="table-auto bg-white-A700 font-poppins 
                 rounded-[24px] shadow-bs19 w-full p-5 sm:w-full overflow-hidden">
                 <thead>
@@ -269,7 +270,7 @@ const UserManagementPage = () => {
               >
                 Mentees
               </Text>
-              <div className="w-[96%] sm:w-full overflow-auto">
+              <div className="w-[96%] sm:w-full overflow-auto sm:px-2">
                 <table className="table-auto bg-white-A700 font-poppins 
                   rounded-[24px] shadow-bs19 w-full p-5 sm:w-full overflow-hidden">
                   <thead>

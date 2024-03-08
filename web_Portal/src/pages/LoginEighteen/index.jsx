@@ -55,7 +55,7 @@ const LoginEighteenPage = ({ next, formData, handlerChange }) => {
       <div className="w-full h-screen flex justify-center items-center fixed z-[110]"
         style={{ backgroundColor: "rgba(0,0,0,0.5)", overflowY: 'scroll' }}>
         <div
-          className="bg-[#fff] flex flex-col items-center p-6 md:px-5 h-[670px] w-[41%]"
+          className="bg-[#fff] flex flex-col items-center p-6 md:px-5 h-[670px] w-[41%] sm:w-full sm:mx-[12px]"
           style={{ borderRadius: "20px", overflowY: 'scroll' }} id="sc"
         >
           <div className="flex flex-col items-start justify-start mt-1.5 w-full md:w-full">

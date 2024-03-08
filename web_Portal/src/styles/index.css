@@ -274,4 +274,11 @@ input:checked + .approve-toggle:before{
 #sc::-webkit-scrollbar-track{
   margin-top: 16px;
 }
-
+@media (max-width:750px){
+  .resp{
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+}
+.resp-left{
+  left: 0 !important;
+}

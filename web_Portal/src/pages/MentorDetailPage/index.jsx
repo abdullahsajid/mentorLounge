@@ -105,36 +105,26 @@ const MentorDetailPagePage = () => {
 
   return (
     <>
-      <div className="bg-white-A700 font-poppins h-[1024px] mx-auto relative w-full">
+      <div className="bg-white-A700 font-poppins h-[1024px] sm:h-full mx-auto relative w-full">
         <div className="bg-[#f8f5f9] flex flex-col h-full items-end justify-center p-[30px] sm:px-5 w-full">
-          <div className="flex flex-col items-center justify-start mb-[173px] mr-[29px] md:px-5 w-[74%] md:w-full">
+          <div className="flex flex-col items-center justify-start mb-[173px] mr-[29px] sm:mr-0 sm:px-0 md:px-5 w-[74%] md:w-full">
             <div className="flex flex-col items-start justify-start w-full">
               <div className="flex md:flex-col flex-row gap-[29px] items-start justify-between w-full">
-                <div className="flex md:flex-1 flex-row items-start justify-start w-full md:w-full">
-                  <div className="flex flex-row gap-[15px] items-center w-full">
+                <div className="flex md:flex-1 flex-row items-center justify-start w-full sm:flex-col sm:gap-3 md:w-full">
+                  <div className="flex flex-row gap-[15px] items-center w-full sm:flex-col">
                     <Img
                       className="h-[167px] md:h-auto rounded-[50%] w-[167px]"
                       src="images/img_ellipse25.png"
                       alt="ellipseTwentyFive"
                     />
-                    <div className="flex md:flex-1 flex-col gap-[5px] items-start justify-start md:w-full">
-                      <div className="md:h-12 h-[50px] relative w-full">
-                        <SelectBox
-                          className="absolute font-medium font-proximasoft inset-x-[0] leading-[normal] mx-auto text-5xl sm:text-[38px] md:text-[44px] text-black-900 text-left top-[0] w-[97%] sm:w-full"
-                          placeholderClassName="text-black-900"
-                          indicator={
-                            <Img
-                              className="h-1.5 mr-[0] w-2 right-[0] absolute"
-                              src="images/img_arrowdown.svg"
-                              alt="arrow_down"
-                            />
-                          }
-                          isMulti={false}
-                          name="group403"
-                          options={adielOmariOptionsList}
-                          isSearchable={false}
-                          placeholder="Adiel Omari"
-                        />
+                    <div className="flex md:flex-1 flex-col gap-[5px] items-start justify-start sm:items-center sm:justify-center md:w-full">
+                      <div className="md:h-12 h-[50px] sm:flex sm:items-center sm:justify-center relative w-full">
+                        <Text
+                          className="text-5xl sm:text-[38px] md:text-[44px] text-black-900"
+                          size="txtProximaSoftMedium48"
+                        >
+                          Adiel Omari
+                        </Text>
                       </div>
                       <Text
                         className="text-[19px] text-black-900"
@@ -144,7 +134,7 @@ const MentorDetailPagePage = () => {
                       </Text>
                     </div>
                   </div>
-                  <div className="mt-3">
+                  <div>
                     <button className="border border-solid border-[#743C95] py-3 px-8 rounded-2xl
                     text-[#743C95]">
                       Verified
@@ -153,23 +143,23 @@ const MentorDetailPagePage = () => {
                 </div>
               </div>
               <Text
-                    className="ml-0.5 md:ml-[0] mt-[39px] text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
-                  >
-                    Price
-                  </Text>
-                  <Text
-                    className="md:ml-[0] ml-[3px] mt-1 text-base text-blue_gray-700"
-                    size="txtPoppinsMedium16"
-                  >
-                    $50 per Session
-                  </Text>
-                  <Text
-                    className="md:ml-[0] ml-[3px] mt-[7px] text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
-                  >
-                    About
-                  </Text>
+                className="ml-0.5 md:ml-[0] mt-[39px] text-[19px] text-black-900"
+                size="txtPoppinsMedium19"
+              >
+                Price
+              </Text>
+              <Text
+                className="md:ml-[0] ml-[3px] mt-1 text-base text-blue_gray-700"
+                size="txtPoppinsMedium16"
+              >
+                $50 per Session
+              </Text>
+              <Text
+                className="md:ml-[0] ml-[3px] mt-[7px] text-[19px] text-black-900"
+                size="txtPoppinsMedium19"
+              >
+                About
+              </Text>
               <Text
                 className="md:ml-[0] ml-[3px] mt-0.5 text-base text-blue_gray-700 w-full"
                 size="txtPoppinsMedium16"
@@ -181,9 +171,9 @@ const MentorDetailPagePage = () => {
                   product design. Let&#39;s redefine boundaries together!
                 </>
               </Text>
-              <div className="flex flex-row sm:gap-10 items-start justify-between md:ml-[0] ml-[3px] mt-[9px] w-[69%] md:w-full">
-                <div className="md:h-[31px] h-[46px] mt-0.5 relative w-[12%]">
-                  <div className="absolute flex flex-col items-center justify-start left-[0] top-[0]">
+              <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 md:ml-[0] ml-[3px] mt-[19px] w-full">
+                <div>
+                  <div className="flex flex-col items-start justify-start">
                     <Text
                       className="text-[19px] text-black-900"
                       size="txtPoppinsMedium19"
@@ -192,13 +182,13 @@ const MentorDetailPagePage = () => {
                     </Text>
                   </div>
                   <Img
-                    className="absolute bottom-[0] h-[17px] inset-x-[0]"
+                    className="mt-1"
                     src="images/img_group10.svg"
                     alt="group289232"
                   />
                 </div>
-                <div className="flex flex-col items-start justify-start w-[32%]">
-                  <div className="flex flex-col items-center justify-start">
+                <div>
+                  <div className="flex flex-col items-start justify-start">
                     <Text
                       className="text-[19px] text-black-900"
                       size="txtPoppinsMedium19"
@@ -213,38 +203,38 @@ const MentorDetailPagePage = () => {
                     Masters in Visual Designing
                   </Text>
                 </div>
-              </div>
-              <div className="flex flex-row sm:gap-10 items-center justify-between ml-0.5 md:ml-[0] mt-[9px] w-[59%] md:w-full">
-                <div className="flex flex-col items-center justify-start">
-                  <Text
-                    className="text-[19px] text-black-900"
-                    size="txtPoppinsMedium19"
-                  >
-                    Experience
-                  </Text>
+                <div>
+                  <div className="flex flex-col items-start justify-start">
+                    <Text
+                      className="text-[19px] text-black-900"
+                      size="txtPoppinsMedium19"
+                    >
+                      Experience
+                    </Text>
+                  </div>
+                  <div className="flex flex-col items-start justify-start">
+                    <Text
+                      className="text-base text-blue_gray-700"
+                      size="txtPoppinsMedium16"
+                    >
+                      Masters in Visual Designing
+                    </Text>
+                  </div>
                 </div>
-                <div className="flex flex-col items-center justify-start">
+                <div className="flex flex-col items-start md:w-full">
                   <Text
                     className="text-[19px] text-black-900"
                     size="txtPoppinsMedium19"
                   >
                     Total Sessions
                   </Text>
+                  <Text
+                    className="text-base text-blue_gray-700"
+                    size="txtPoppinsMedium16"
+                  >
+                    10
+                  </Text>
                 </div>
-              </div>
-              <div className="flex flex-row items-start justify-between ml-0.5 md:ml-[0] w-[48%] md:w-full">
-                <Text
-                  className="text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  Masters in Visual Designing
-                </Text>
-                <Text
-                  className="text-base text-blue_gray-700"
-                  size="txtPoppinsMedium16"
-                >
-                  10
-                </Text>
               </div>
               <Text
                 className="md:ml-[0] ml-[3px] mt-14 text-[19px] text-black-900"
@@ -258,15 +248,15 @@ const MentorDetailPagePage = () => {
                   src="images/img_ellipse7.png"
                   alt="ellipseSeven"
                 />
-                <div className="md:h-[35px] h-[43px] mt-0.5 relative w-[56%]">
+                <div className="md:h-[35px] h-[43px] mt-0.5 w-[56%]">
                   <Text
-                    className="absolute left-[0] sm:text-[17.48px] md:text-[19.48px] text-[21.48px] text-black-900 top-[0]"
+                    className="sm:text-[17.48px] md:text-[19.48px] text-[21.48px] text-black-900 "
                     size="txtPoppinsMedium2148"
                   >
                     Taraji
                   </Text>
                   <Img
-                    className="absolute bottom-[0] h-[17px] inset-x-[0] "
+                    className="h-[17px]"
                     src="images/img_group10.svg"
                     alt="groupTen"
                   />
@@ -290,13 +280,13 @@ const MentorDetailPagePage = () => {
                 />
                 <div className="md:h-[33px] h-[46px] relative w-[56%]">
                   <Text
-                    className="absolute left-[0] sm:text-[17.63px] md:text-[19.63px] text-[21.63px] text-black-900 top-[0]"
+                    className="sm:text-[17.63px] md:text-[19.63px] text-[21.63px] text-black-900"
                     size="txtPoppinsMedium2163"
                   >
                     Eshe
                   </Text>
                   <Img
-                    className="absolute bottom-[0] h-[17px] inset-x-[0] "
+                    className="h-[17px]"
                     src="images/img_group10.svg"
                     alt="groupNinetyFour"
                   />

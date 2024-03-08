@@ -218,8 +218,8 @@ const AnalyticsandReportingPage = () => {
               ))}
             </Menu>
           </Sidebar>
-          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 w-full">
-            <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft items-center justify-start sm:px-0 md:px-5 w-full">
+            <div className="bg-white-A700 flex flex-row gap-[13px] items-center justify-end p-[7px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
                   <Img
@@ -250,7 +250,7 @@ const AnalyticsandReportingPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-col flex-row gap-[39px] items-center justify-between mt-11 w-[93%] md:w-full">
+            <div className="flex md:flex-col flex-row gap-[39px] items-center justify-between mt-11 w-[93%] sm:px-2 md:w-full">
               <div className="flex flex-col items-center justify-start w-[38%] md:w-full">
                 <div className="gap-6 grid grid-cols-2 justify-center min-h-[auto] w-full">
                   <div className="bg-white-A700 border border-blue_gray-50 border-solid flex flex-1 flex-col items-center justify-end p-[13px] rounded-[21px] w-full">
@@ -344,9 +344,9 @@ const AnalyticsandReportingPage = () => {
                   </div>
               </div>
             </div>
-            <div className="w-[96%] sm:w-full overflow-auto">
+            <div className="w-[96%] sm:px-2 sm:w-full overflow-auto">
             <table className="table-auto bg-white-A700  font-poppins 
-                 rounded-[24px] shadow-bs19 w-[96%] sm:w-full overflow-hidden my-6">
+                 rounded-[24px] shadow-bs19 w-full sm:w-full overflow-hidden my-6">
                   <thead>
                     <tr
                     style={{borderBottom:"2px solid #BA35351A"}}>

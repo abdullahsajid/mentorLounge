@@ -62,7 +62,7 @@ const SettingsPage = () => {
       <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-end mx-auto w-full">
         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
           <Sidebar5 className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto md:px-5 top-[0]" />
-          <div className="flex flex-1 flex-col font-proximasoft gap-[42px] items-center justify-start md:px-5 w-full">
+          <div className="flex flex-1 flex-col font-proximasoft gap-[42px] items-center justify-start md:px-5 sm:px-0 w-full">
             <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
               <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
                 <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
@@ -94,7 +94,7 @@ const SettingsPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-[13px] items-start justify-start w-[96%] md:w-full">
+            <div className="flex flex-col gap-[13px] items-start justify-start w-[96%] sm:px-2 md:w-full">
               <Text
                 className="sm:text-[31px] md:text-[33px] text-[35px] text-black-900_03"
                 size="txtProximaSoftSemiBold35"
@@ -103,35 +103,35 @@ const SettingsPage = () => {
               </Text>
               <div className="flex md:flex-col flex-row font-poppins gap-[27px] items-start justify-between w-full">
                 <div className="bg-white-A700 flex md:flex-1 flex-col items-start justify-start p-7 sm:px-5 rounded-[30px] w-[22%] md:w-full">
-                  <div className="flex flex-col md:gap-10 gap-[143px] items-start justify-start my-[7px] pb-[62px] md:pr-10 sm:pr-5 pr-[62px] w-[91%] md:w-full">
-                    <div className="flex flex-col gap-[12.74px] items-start justify-start w-auto">
-                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] shadow-bs23 w-auto">
+                  <div className="flex flex-col md:gap-10 gap-[143px] items-start justify-start my-[7px] pb-[62px] sm:pb-0 md:pr-10 sm:pr-5 pr-[62px] sm:pr-0 w-[91%] md:w-full">
+                    <div className="flex flex-col gap-[12.74px] items-start justify-start sm:justify-center sm:w-full w-auto">
+                      <div className="flex flex-col items-center justify-center rounded-[10px] pl-[15.28px] pr-[19.11px] py-[12.74px] shadow-bs23 w-full px-2">
                         <Text
-                          className="sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
+                          className="sm:text-[14px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
                           size="txtPoppinsSemiBold2038"
                         >
                           My Profile
                         </Text>
                       </div>
                       <Button
-                        className="cursor-pointer font-semibold leading-[normal] min-w-[119px] rounded-[10px] shadow-bs23 sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-center"
+                        className="cursor-pointer font-semibold leading-[normal] min-w-[119px] sm:w-full rounded-[10px] shadow-bs23 sm:text-[14px] md:text-[18.38px] text-[20.38px] text-center"
                         size="lg"
                       >
                         Security
                       </Button>
-                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] shadow-bs23 w-auto">
+                      <div className="flex flex-col items-center justify-center pl-[15.28px] pr-[19.11px] py-[12.74px] rounded-[10px] shadow-bs23 sm:w-full w-auto">
                         <Text
-                          className="sm:text-[16.38px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
+                          className="sm:text-[14px] md:text-[18.38px] text-[20.38px] text-gray-900_87 w-auto"
                           size="txtPoppinsSemiBold2038"
                         >
                           Notifications
                         </Text>
                       </div>
                     </div>
-                    <div className="h-[49px] mb-[433px] rounded-[10px] shadow-bs23 w-full"></div>
+                    <div className="h-[49px] mb-[433px] rounded-[10px] shadow-bs23 w-full sm:hidden"></div>
                   </div>
                 </div>
-                <div className="flex md:flex-1 flex-col font-proximasoft items-start justify-start w-[77%] md:w-full">
+                <div className="flex md:flex-1 flex-col font-proximasoft items-start justify-start w-[77%] sm:mb-3 md:w-full">
                   <Text
                     className="text-3xl sm:text-[26px] md:text-[28px] text-gray-900_02"
                     size="txtProximaSoftSemiBold30Gray90002"
@@ -154,75 +154,74 @@ const SettingsPage = () => {
                           Update Password
                         </Button>
                       </div>
-                      <div className="flex flex-col items-start justify-start w-full">
+                      <div className="flex flex-col items-start justify-start w-full sm:mt-3">
                         <Text
-                          className="md:ml-[0] ml-[5px] text-gray-600_02 text-sm"
+                          className="md:ml-[0] ml-[5px] mb-2 text-gray-600_02 text-sm"
                           size="txtPoppinsRegular14Gray60002"
                         >
                           Email
                         </Text>
                         <input
                           className="font-semibold leading-[normal] 
-                          border-2 border-solid rounded-lg text-base px-5 py-2"
+                          border-2 border-solid rounded-lg text-base px-5 py-2 sm:w-full"
                           placeholder="arnold_negger21@gmail.com"
                           value={"arnold_negger21@gmail.com"}
                         />
                       </div>
                       <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mt-[15px]  md:w-full">
-                        <div className="flex sm:flex-col flex-row sm:gap-10 gap-5 items-center justify-between md:w-full">
-                          <div className="flex flex-row items-center justify-evenly sm:w-full">
+                        <div className="flex sm:flex-col flex-row sm:gap-3 gap-5 items-center justify-between md:w-full">
+                          <div className="flex flex-row items-center justify-evenly sm:flex-col sm:w-full">
                             <Text
-                              className="text-gray-600_02 text-sm mr-2"
+                              className="text-gray-600_02 text-sm mr-2 sm:w-full sm:mb-2"
                               size="txtPoppinsRegular14Gray60002"
                             >
                               Old Password:
                             </Text>
                             <input
                               className="font-museosansrounded font-semibold leading-[normal]
-                                rounded-lg text-base px-5 py-2 border-2 border-solid w-[100px]"
+                                rounded-lg text-base px-5 py-2 border-2 border-solid w-[100px] sm:w-full"
                               color="gray_900_19"
                               size="md"
                               placeholder="********"
-                              value={"********"}
                             />
-                              
+
                           </div>
-                          <div className="flex flex-row gap-[9px] items-center justify-between sm:w-full">
+                          <div className="flex flex-row gap-[9px] items-center justify-between sm:flex-col sm:w-full">
                             <Text
-                              className="text-gray-600_02 text-sm mr-2"
+                              className="text-gray-600_02 text-sm mr-2 sm:w-full"
                               size="txtPoppinsRegular14Gray60002"
                             >
                               New Password:
                             </Text>
                             <input
                               className="cursor-pointer font-museosansrounded font-semibold leading-[normal] 
-                               rounded-lg text-base px-5 py-2 border-2 border-solid w-[100px]"
+                               rounded-lg text-base px-5 py-2 border-2 border-solid w-[100px] sm:w-full"
                               color="gray_900_19"
                               size="md"
                               placeholder="********"
                               value={"********"}
                             />
-                              
+
                           </div>
-                          <div className="flex flex-row items-center justify-evenly md:w-full">
-                          <Text
-                            className="text-gray-600_02 text-sm mr-2"
-                            size="txtPoppinsRegular14Gray60002"
-                          >
-                            Confirm Password:
-                          </Text>
-                          <input
-                            className="cursor-pointer font-museosansrounded font-semibold leading-[normal]
-                            w-[100px] rounded-lg text-base px-5 py-2 border-2 border-solid"
-                            color="gray_900_19"
-                            size="md"
-                            placeholder="********"
-                            value={"********"}
-                          />
-                            
+                          <div className="flex flex-row items-center justify-evenly sm:flex-col md:w-full">
+                            <Text
+                              className="text-gray-600_02 text-sm mr-2 sm:w-full"
+                              size="txtPoppinsRegular14Gray60002"
+                            >
+                              Confirm Password:
+                            </Text>
+                            <input
+                              className="cursor-pointer font-museosansrounded font-semibold leading-[normal]
+                            w-[100px] rounded-lg text-base px-5 py-2 border-2 border-solid sm:w-full"
+                              color="gray_900_19"
+                              size="md"
+                              placeholder="********"
+                              value={"********"}
+                            />
+
+                          </div>
                         </div>
-                        </div>
-                        
+
                       </div>
                       <a
                         href="javascript:"

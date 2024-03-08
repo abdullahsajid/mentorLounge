@@ -51,7 +51,7 @@ const DesktopNineteenPage = ({handler}) => {
     <>
       {/* <div className="bg-gray-400 font-proximasoft h-[1024px] mx-auto relative w-full"> */}
         <div className="absolute bg-white-A700 bottom-[0] flex flex-col font-proximasoft items-center justify-start
-         p-6 md:px-5 right-[0] rounded-[21px] shadow-bs2 w-[30%] ">
+         p-6 md:px-5 right-[0] rounded-[21px] shadow-bs2 w-[30%] sm:w-full sm:fixed border border-solid border-[#000]">
           <div className="flex flex-col gap-[42px] items-center justify-start w-[99%] md:w-full">
             <div className="flex flex-row items-start justify-between w-[97%] md:w-full">
               <Text
