@@ -1,21 +1,25 @@
-import React from "react";
-
-import { Menu, MenuItem } from "react-pro-sidebar";
-
+import React, { useEffect } from "react";
 import { Img, Input, Text } from "components";
-import Sidebar11 from "components/Sidebar11";
+import { Cross as Hamburger } from 'hamburger-react'
 
-const DesktopSevenPage = () => {
+const DesktopSevenPage = ({ toggleSideBar, setToggleSidebar }) => {
+
+  useEffect(() => {
+    setToggleSidebar(false)
+  },[])
 
   return (
     <>
       <div className="bg-[#f8f5f9] flex flex-col font-poppins items-center justify-end ml-auto md:pr-10 pr-[41px] sm:pr-[0]
-       w-full sm:!w-full" style={{
+       w-full md:!w-full sm:!w-full" style={{
           width: "calc(100% - 316px)"
         }}>
         <div className="flex flex-col items-center justify-end mx-auto w-full">
           <div className="flex md:flex-col flex-row gap-[35px] items-start justify-between w-full">
             <div className="flex flex-1 flex-col font-proximasoft gap-[23px] justify-start w-full p-[47px] sm:p-[20px]">
+              <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+                <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+              </div>
               <Text
                 className="md:ml-[0] ml-[7px] text-5xl sm:text-[38px] md:text-[44px] text-black-900_01"
                 size="txtProximaSoftSemiBold48Black90001"

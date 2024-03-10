@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Button, Text } from "components";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import { Button, Img, List, Text } from "components";
-
-const LoginSixteenPage = ({ next, formData,handlerChange,setUserRole }) => {
-  const [role,setRole] = useState('')
-  const [validateRole,setValidateRole] = useState(false)
+const LoginSixteenPage = ({ next,prev, formData, handlerChange, setUserRole }) => {
+  const [role, setRole] = useState('')
+  const [validateRole, setValidateRole] = useState(false)
   const handlerRole = (data) => {
     setRole(data)
-    handlerChange('role',data)
+    handlerChange('role', data)
     setValidateRole(true)
     setUserRole(data)
   }
@@ -19,6 +20,9 @@ const LoginSixteenPage = ({ next, formData,handlerChange,setUserRole }) => {
           style={{ borderRadius: "30px" }}
         >
           <div className="flex flex-col items-start justify-start mb-[5px] mt-2.5 w-[98%] md:w-full">
+            {/* <div className="mb-3">
+              <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
+            </div> */}
             <Text
               className="md:ml-[0] ml-[5px] sm:text-[29.6px] md:text-[31.6px] text-[35.6px] text-black-900"
               size="txtProximaSoftSemiBold456"
@@ -39,7 +43,7 @@ const LoginSixteenPage = ({ next, formData,handlerChange,setUserRole }) => {
               <Button
                 className={`text-black-900 cursor-pointer h-[60px] leading-[normal] 
                   rounded-[36px] shadow-bs11 sm:text-[22.4px] md:text-[25.4px] text-[27.4px] text-center w-full
-                  flex justify-center items-center ${(role == 'mentor') && "bg-[#743C95] text-[#fff]"}`}
+                  flex justify-center items-center ${((role == 'mentor') || (formData?.role === 'mentor')) && "bg-[#743C95] !text-[#fff]"}`}
                 variant="outline"
                 onClick={() => handlerRole('mentor')}
               >
@@ -48,7 +52,7 @@ const LoginSixteenPage = ({ next, formData,handlerChange,setUserRole }) => {
               <Button
                 className={`text-black-900 cursor-pointer h-[60px] leading-[normal] 
                   rounded-[36px] shadow-bs11 sm:text-[22.4px] md:text-[25.4px] text-[27.4px] text-center w-full
-                  flex justify-center items-center ${(role == 'mentee') && "bg-[#743C95] text-[#fff]"}`}
+                  flex justify-center items-center ${((role == 'mentee') ||  (formData?.role === 'mentee')) && "bg-[#743C95] !text-[#fff]"}`}
                 variant="outline"
                 onClick={() => handlerRole('mentee')}
               >

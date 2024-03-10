@@ -1,31 +1,32 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Img, Input, Text } from "components";
 import DesktopThirteenChangepassword from "components/DesktopThirteenChangepassword";
 import ImgModel from "components/ImgModel";
 import toast from 'react-hot-toast';
 import { useSelector } from "react-redux";
+import { Cross as Hamburger } from 'hamburger-react'
 import { useGetMentorByIdMutation, useUpdateMentorDetailMutation } from "features/apis/mentor";
 import { useUpdateMenteeSettingsMutation } from "features/apis/mentee";
 
-const DesktopTwentyEightPage = () => {
+const DesktopTwentyEightPage = ({ toggleSideBar, setToggleSidebar }) => {
   const [toggleModel, setToggleModel] = useState(false)
   const [getMentorById] = useGetMentorByIdMutation()
   const [updateMenteeSettings] = useUpdateMenteeSettingsMutation()
   const [updateMentorDetail] = useUpdateMentorDetailMutation()
   const [name, setName] = useState('')
-  const {user} = useSelector((state) => state.user)
-  const {mentorData} = useSelector((state) => state.mentorData)
+  const { user } = useSelector((state) => state.user)
+  const { mentorData } = useSelector((state) => state.mentorData)
   const [mentorDescription, setMentorDescription] = useState('')
   const [mentorEducation, setMentorEducation] = useState('')
   const [mentorExperience, setMentorExperience] = useState('')
-  const [price,setPrice] = useState('')
+  const [price, setPrice] = useState('')
   const [socialLink, setLinks] = useState([])
   const [appNotifications, setAppNotifications] = useState(null);
   const [promotionalNotifications, setPromotionalNotifications] = useState(null);
   const [updatesNotifications, setUpdatesNotifications] = useState(null);
 
   let mentorPayload = {
-    critarion: {_id : `${user?.mentorModel?._id || user?.data?.mentorModel?._id}`},
+    critarion: { _id: `${user?.mentorModel?._id || user?.data?.mentorModel?._id}` },
     mentorReviewsFields: "reviewStars reviewDescription reviewBy",
     mentorReviewsSkip: 0,
     mentorReviewsLimit: 10,
@@ -39,7 +40,7 @@ const DesktopTwentyEightPage = () => {
     userCreditCardsSkip: 0,
     userCreditCardsLimit: 10,
     userFields: "_id email name profile_picture_url",
-    addedby: "_id email name",        
+    addedby: "_id email name",
     lastModifiedBy: "_id email name profile_picture_url"
   }
 
@@ -56,7 +57,8 @@ const DesktopTwentyEightPage = () => {
 
   useEffect(() => {
     getMentorById(mentorPayload)
-  },[])
+    setToggleSidebar(false)
+  }, [])
 
   useEffect(() => {
     if (mentorData.data) {
@@ -91,7 +93,7 @@ const DesktopTwentyEightPage = () => {
     if (mentorData?.data?.user?.name !== name) {
       updateData['name'] = name
     }
-    if(mentorData?.data?.mentorPrice !== price){
+    if (mentorData?.data?.mentorPrice !== price) {
       updateData['mentorPrice'] = price
     }
     if (mentorData?.data?.mentorDescription !== mentorDescription) {
@@ -160,31 +162,31 @@ const DesktopTwentyEightPage = () => {
 
   const handlerNotifications = (toggleType) => {
     if (toggleType === 'appNotifications') {
-      if(appNotifications === true){
+      if (appNotifications === true) {
         mentorSetting.notificationSettings.appNotifications.emailNotifications = false
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
-      }else if(appNotifications === false){
+      } else if (appNotifications === false) {
         mentorSetting.notificationSettings.appNotifications.emailNotifications = true
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
       }
-    }else if(toggleType === 'promotionalNotifications'){
-      if(promotionalNotifications === true){
+    } else if (toggleType === 'promotionalNotifications') {
+      if (promotionalNotifications === true) {
         mentorSetting.notificationSettings.promotionalNotifications.emailNotifications = false
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
-      }else if(promotionalNotifications === false){
+      } else if (promotionalNotifications === false) {
         mentorSetting.notificationSettings.promotionalNotifications.emailNotifications = true
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
       }
-    }else if(toggleType === 'updatesNotifications'){
-      if(updatesNotifications === true){
+    } else if (toggleType === 'updatesNotifications') {
+      if (updatesNotifications === true) {
         mentorSetting.notificationSettings.updateNotifications.emailNotifications = false
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
-      }else if(promotionalNotifications === false){
+      } else if (promotionalNotifications === false) {
         mentorSetting.notificationSettings.updateNotifications.emailNotifications = true
         updateMenteeSettings(mentorSetting)
         getMentorById(mentorPayload)
@@ -194,11 +196,14 @@ const DesktopTwentyEightPage = () => {
 
   return (
     <>
-      <div className="bg-white-A700 font-poppins sm:!w-full ml-auto" style={{
+      <div className="bg-white-A700 font-poppins md:!w-full sm:!w-full ml-auto" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className=" bottom-[0] flex md:flex-col flex-row md:gap-5 inset-x-[0] items-start justify-evenly w-full">
-          <div className="bg-[#f8f5f9] flex flex-1 flex-col font-proximasoft items-center justify-start p-[35px] md:px-5 shadow-bs14 w-full">
+          <div className="bg-[#f8f5f9] flex flex-1 flex-col font-proximasoft items-center justify-start p-[35px] md:px-5 sm:!gap-[12px] shadow-bs14 w-full">
+            <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+              <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+            </div>
             <div className="flex flex-col gap-[33px] items-center justify-start mb-[90px] w-full">
               <div className="flex sm:flex-row flex-row md:gap-10 items-center justify-between w-full md:w-full">
                 <Text

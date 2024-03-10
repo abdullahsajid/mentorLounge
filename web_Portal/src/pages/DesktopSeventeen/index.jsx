@@ -3,12 +3,13 @@ import { Button, Img, Input, Line, Text } from "components";
 import { useSelector } from "react-redux";
 import { useGetMentorByIdMutation } from "features/apis/mentor";
 import { Oval } from 'react-loader-spinner'
+import { Cross as Hamburger } from 'hamburger-react'
 const RequestMentee = lazy(() => import("components/RequestMentee"));
 const DesktopNineteenPage = lazy(() => import("pages/DesktopNineteen"));
 const DesktopThreePage = lazy(() => import("pages/DesktopThree"))
 
 
-const DesktopSeventeenPage = () => {
+const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const { user } = useSelector((state) => state.user)
   const { mentorData } = useSelector((state) => state.mentorData)
   const [getMentorById] = useGetMentorByIdMutation()
@@ -44,16 +45,22 @@ const DesktopSeventeenPage = () => {
 
   useEffect(() => {
     getMentorById(mentorpayload)
+    setToggleSidebar(false)
   }, [])
+
+  
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full" style={{
+      <div className="bg-white-A700 font-proximasoft ml-auto md:!w-full sm:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className={`bg-[#f8f5f9] flex flex-col items-end justify-center p-7 sm:px-3 w-full ${toggleNotification && "opacity-[.2]"} ${toggleCalender && "opacity-[.2]"}`}>
-          <div className="flex flex-col items-start justify-start mb-[157px] mt-[35px] md:px-5 sm:px-0 w-full md:w-full">
+          <div className="flex flex-col items-start justify-start mb-[157px] mt-[35px] sm:mt-0 md:px-5 sm:px-0 w-full md:w-full">
             <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between w-full">
+              <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+                <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+              </div>
               <Text
                 className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900"
                 size="txtProximaSoftSemiBold48"
@@ -111,7 +118,7 @@ const DesktopSeventeenPage = () => {
             >
               Requests
             </Text>
-            <div className="flex flex-row w-full gap-5 sm:flex-col-reverse">
+            <div className="flex flex-row w-full gap-5 md:flex-col-reverse sm:flex-col-reverse">
               <div className="flex flex-col gap-3 w-full">
                 {/* start */}
                 {!mentorData ? (

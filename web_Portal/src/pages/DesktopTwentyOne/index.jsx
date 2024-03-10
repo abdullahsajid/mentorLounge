@@ -1,22 +1,26 @@
-import React from "react";
-
-import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
-
+import React, { useEffect } from "react";
 import { Button, Img, Input, Line, List, Text } from "components";
+import { Cross as Hamburger } from 'hamburger-react'
 
-const DesktopTwentyOnePage = () => {
+const DesktopTwentyOnePage = ({ toggleSideBar, setToggleSidebar }) => {
 
+  useEffect(() => {
+    setToggleSidebar(false)
+  }, [])
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto w-full sm:!w-full" style={{
+      <div className="bg-white-A700 font-proximasoft ml-auto w-full sm:!w-full md:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#f8f5f9] flex md:flex-col flex-row font-poppins md:gap-10 items-start justify-between md:px-5 w-full
-        gap-5 p-[52px] sm:gap-2">
+        gap-5 p-[52px] sm:p-[26px] sm:gap-2">
+          <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+            <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+          </div>
           <div className="bg-white-A700 flex flex-1 flex-col items-center justify-start mb-[27px] py-[39px] rounded-[31px] shadow-bs3 w-full">
             <div className="flex flex-col gap-[26px] justify-start mb-[741px] sm:mb-0 w-full">
-              <div className="flex flex-col gap-[22px] items-start justify-start md:ml-[0] ml-[26px] w-3/4 md:w-full sm:items-center">
+              <div className="flex flex-col gap-[22px] items-start justify-start md:ml-[0] ml-[26px] w-3/4 md:items-center md:w-full sm:items-center">
                 <Input
                   name="groupNinetyFour"
                   placeholder="Product designer"
@@ -33,7 +37,7 @@ const DesktopTwentyOnePage = () => {
                   size="xl"
                   variant="fill"
                 ></Input>
-                <div className="flex sm:flex-col flex-row sm:flex-wrap items-center w-full gap-3 px-4">
+                <div className="flex sm:flex-col flex-row sm:flex-wrap md:items-center md:justify-center items-center w-full gap-3 px-4">
                   <Button
                     className="cursor-pointer font-medium leading-[normal] min-w-[157px] rounded-[19px] text-[15.17px] text-center"
                     color="lime_700"

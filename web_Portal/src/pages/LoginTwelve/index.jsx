@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "universal-cookie";
 import { Button, Img, List, Text } from "components";
-import LoginThirteenPage from "pages/LoginThirteen";
-import LoginFourteenPage from "pages/LoginFourteen";
-import LoginSixteenPage from "pages/LoginSixteen";
-import LoginFifteenPage from "pages/LoginFifteen";
-import LoginEighteenPage from "pages/LoginEighteen";
-import Availability from "pages/Availability";
-import PreQues from "pages/PreSessionQues";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const LoginThirteenPage = lazy(() => import("pages/LoginThirteen"));
+const LoginFourteenPage = lazy(() => import("pages/LoginFourteen"));
+const LoginSixteenPage = lazy(() => import("pages/LoginSixteen"));
+const LoginFifteenPage = lazy(() => import("pages/LoginFifteen"))
+const LoginEighteenPage = lazy(() => import("pages/LoginEighteen"))
+const Availability = lazy(() => import("pages/Availability"))
+const PreQues = lazy(() => import("pages/PreSessionQues"))
 const cookie = new Cookies()
 
-const LoginTwelvePage = () => {
+const LoginTwelvePage = ({ setToggleSidebar }) => {
   const navigation = useNavigate()
   const { user } = useSelector((state) => state.user)
   const [toggleLogin, setToggleLogin] = useState(false)
@@ -140,11 +140,6 @@ const LoginTwelvePage = () => {
 
   }
 
-  // useEffect(() => {
-  //   console.log(formData)
-  //   console.log(userRole)
-  //   console.log(userRole === 'mentor')
-  // }, [formData])
 
   useEffect(() => {
     if (userRole === 'mentor') {
@@ -223,6 +218,14 @@ const LoginTwelvePage = () => {
     setMultiStep(multiStep + 1)
     setToggleSignUp(false)
   }
+  const prev = () => {
+    setMultiStep((prevStep) => {
+      if (prevStep === 2) {
+        setToggleSignUp(true);
+      }
+      return prevStep - 1;
+    });
+  }
 
   useEffect(() => {
     const token = cookie.get("loungeToken");
@@ -233,8 +236,9 @@ const LoginTwelvePage = () => {
         return navigation('/mentee')
       }
     }
+    setToggleSidebar(false)
   }, [])
-
+  console.log(formData)
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-proximasoft mx-auto relative w-full" >
@@ -452,10 +456,10 @@ const LoginTwelvePage = () => {
         </div>
         {toggleLogin && <LoginThirteenPage close={() => setToggleLogin(false)} />}
         {toggleSignUp && <LoginFourteenPage close={() => setToggleSignUp(false)} next={next} handlerChange={handlerChange} formData={formData} />}
-        {multiStep == 2 && <LoginSixteenPage next={next} formData={formData} handlerChange={handlerChange} setUserRole={setUserRole} />}
-        {multiStep == 3 && <LoginEighteenPage next={next} formData={formData} handlerChange={handlerChange} />}
-        {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} />}
-        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} />}
+        {multiStep == 2 && <LoginSixteenPage next={next} prev={prev} formData={formData} handlerChange={handlerChange} setUserRole={setUserRole} />}
+        {multiStep == 3 && <LoginEighteenPage next={next} prev={prev} formData={formData} handlerChange={handlerChange} />}
+        {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
+        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
         {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} />}
       </div>
     </>

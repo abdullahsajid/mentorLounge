@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Img, Text } from "components";
 import { useLocation } from "react-router-dom";
 import { useUpdateSessionRequestMutation } from "features/apis/mentor";
 import toast from 'react-hot-toast';
+import { Cross as Hamburger } from 'hamburger-react'
 
-const DesktopTwentyFivePage = () => {
-  const[updateSessionRequest] = useUpdateSessionRequestMutation()
+const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
+  const [updateSessionRequest] = useUpdateSessionRequestMutation()
   const location = useLocation()
 
   const handlerRequestStatus = async (val) => {
     let payloadRequest = {
       sessionRequestid: location.state.id,
-      
+
       requestStatus: val,
       active: true
     }
-    const {data} = await updateSessionRequest(payloadRequest)
+    const { data } = await updateSessionRequest(payloadRequest)
     if (data.status === 'Success') {
       toast.success(`${data.message}`, {
         style: {
@@ -42,12 +43,20 @@ const DesktopTwentyFivePage = () => {
       })
     }
   }
+
+  useEffect(() => {
+    setToggleSidebar(false)
+  }, [])
+
   return (
     <>
-      <div className="bg-white-A700 font-poppins ml-auto w-full sm:!w-full" style={{
+      <div className="bg-white-A700 font-poppins ml-auto w-full sm:!w-full md:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#F2ECF5] flex flex-col h-full p-[29px] sm:px-5 w-full">
+          <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+            <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+          </div>
           <div className="flex flex-col justify-start mb-[65px] mr-[25px] md:px-5 w-full md:w-full">
             <div className="flex sm:flex-col flex-row gap-[29px] items-center justify-start w-full md:w-full">
               <div className="h-[167px] relative w-[167px]">

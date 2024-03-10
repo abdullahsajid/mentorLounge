@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
+import React, { lazy, useEffect } from "react";
 import { Button, Img, Line, Text } from "components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetMenteeByIdMutation } from "features/apis/mentee";
 import { useSelector } from "react-redux";
+import { Cross as Hamburger } from 'hamburger-react'
+import Loaders from "components/Loaders";
+const IconsContainer = lazy(() => import("components/IconsContainer")) 
 
-const DesktopFourPage = () => {
+const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
   const location = useLocation()
   const [getMenteeById] = useGetMenteeByIdMutation()
   const { user } = useSelector((state) => state.user)
   // const { menteeData } = useSelector((state) => state.menteeData)
   const navigate = useNavigate()
   const navigatehandler = () => {
-    navigate('/booksession', { state: {id:location.state.id, available:location.state.available, name:location.state.name, price:location.state.mentorPrice} })
+    navigate('/booksession', { state: { id: location.state.id, available: location.state.available, name: location.state.name, price: location.state.mentorPrice } })
   }
   // let data = {
   //   critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
@@ -38,13 +40,21 @@ const DesktopFourPage = () => {
   // useEffect(() => {
   //   getMenteeById(data)
   // }, [])
+
+  useEffect(() => {
+    setToggleSidebar(false)
+  }, [])
+
   return (
     <>
-      <div className="bg-white-A700 font-poppins ml-auto w-full sm:!w-full" style={{
+      <div className="bg-white-A700 font-poppins ml-auto w-full md:!w-full sm:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#f8f5f9] flex flex-col h-full p-[29px] sm:px-5 w-full">
           <div className="flex flex-col items-start justify-start mr-5 md:px-5 sm:px-0 w-full md:w-full">
+            <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+              <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+            </div>
             <div className="flex sm:flex-col flex-row gap-[29px] sm:gap-[10px] items-center justify-start w-[52%] md:w-full">
               <div className="h-[167px] relative w-[167px]">
                 <Img
@@ -262,11 +272,9 @@ const DesktopFourPage = () => {
               experience, seamlessly blending theory with practical insights
             </Text>
             <div className="flex flex-row items-center justify-center gap-2 mt-7 w-full">
-              {location.state.links.map((item) => (
-                <a href={`${item.socialPlatformLink}`} className="bg-[#000] p-2 rounded-lg">
-                  <i class="fa-solid fa-link text-[#fff]"></i>
-                </a>
-              ))}
+              {location?.state?.links ?
+                (<IconsContainer links={location.state.links}/>)
+              :(<><Loaders/></>)}
             </div>
           </div>
         </div>

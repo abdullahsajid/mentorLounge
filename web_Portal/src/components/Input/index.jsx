@@ -58,7 +58,7 @@ const Input = React.forwardRef(
     // const handleChange = (e) => {
     //   if (onChange) onChange(e?.target?.value);
     // };
-
+   console.log(isValid,errMessage)
     return (
       <>
         <div
@@ -81,7 +81,7 @@ const Input = React.forwardRef(
             onBlur={validationCondition}
             {...restProps}
           />
-          {!isValid && <p className="text-red-500 text-sm">{errMessage}</p>}
+          {!isValid && <p className={`text-red-500 text-sm ${restProps.errClass}`}>{errMessage}</p>}
           {!!suffix && suffix}
         </div>
         {!!errors && <ErrorMessage errors={errors} />}

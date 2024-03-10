@@ -5,13 +5,16 @@ import { useSignUpUserMutation } from "features/apis/user";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 const cookie = new Cookies()
 
-const LoginFifteenPage = ({ formData, handlerChange, next }) => {
+const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
   const [signUpUser] = useSignUpUserMutation()
   const navigation = useNavigate()
   const [selectPayment, setPayment] = useState('')
   const [isFormValid, setIsFormValid] = useState(false)
+  // const [creditCardNumber, setCreditCardNumber] = useState('');
   const [validation, setValidation] = useState({
     payType: { isValid: true, errMessage: "Enter your choice" },
     name: { isValid: true, errMessage: 'name is required' },
@@ -20,7 +23,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
     year: { isValid: true, errMessage: 'field is required' }
   })
 
-  const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator()
+  const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
 
   const validationCondition = () => {
     const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -58,7 +61,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
         if (data.data.role === 'mentor') {
           navigation('/mentor')
         } else if (data.data.role === 'mentee') {
-            navigation('/mentee')
+          navigation('/mentee')
         }
         cookie.set('loungeToken', data.token, { path: '/' })
         localStorage.setItem('loungeUser', JSON.stringify(data.data))
@@ -83,9 +86,6 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
   }
 
 
-  // useEffect(() => {
-  //   console.log(validation)
-  // },[validation])
 
   return (
     <>
@@ -98,6 +98,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
           <div className="h-[555px] md:h-full md:ml-[0] sm:mt-0 relative w-full sm:w-full">
             <div className=" flex flex-col h-full items-center m-auto">
               <div className="flex flex-col items-start justify-start w-full">
+                {/* <div className="mb-3">
+                  <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
+                </div> */}
                 <Text
                   className="sm:text-[33.08px] md:text-[35.08px] text-[37.08px] text-black-900_01"
                   size="txtProximaSoftMedium4408"
@@ -112,7 +115,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                 </Text>
                 <div className="flex flex-row items-center justify-start mt-4 w-[53%] md:w-full">
                   <Button
-                    className={`flex h-[60px] items-center justify-center rounded-[50%] w-[60px] ${(selectPayment === 'master card') &&
+                    className={`flex h-[60px] items-center justify-center rounded-[50%] w-[60px] ${((selectPayment === 'master card') ||
+                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'master card') && formData?.mentorAttributes?.userCreditCard['creditCardType'] 
+                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'master card') && formData?.menteeAttributes?.userCreditCard['creditCardType'] ) &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="gray_100_05"
@@ -123,7 +128,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                     <Img src="images/img_user_yellow_800.svg" alt="user" />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-[13px] rounded-[50%] w-[60px] ${(selectPayment === 'visa') &&
+                    className={`flex h-[60px] items-center justify-center ml-[13px] rounded-[50%] w-[60px] ${((selectPayment === 'visa') ||
+                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'visa') && formData?.mentorAttributes?.userCreditCard['creditCardType'] 
+                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'visa') && formData?.menteeAttributes?.userCreditCard['creditCardType'] ) &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="gray_100_05"
@@ -137,7 +144,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                     />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${(selectPayment === 'american express') &&
+                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${((selectPayment === 'american express') ||
+                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'american express') && formData?.mentorAttributes?.userCreditCard['creditCardType']  
+                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'american express') && formData?.menteeAttributes?.userCreditCard['creditCardType']) &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="light_blue_800"
@@ -148,7 +157,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                     <Img src="images/img_television.svg" alt="television" />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${(selectPayment === 'discover') &&
+                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${((selectPayment === 'discover') ||
+                      (formData?.role === 'mentor') ?  (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'discover') && formData?.mentorAttributes?.userCreditCard['creditCardType']   
+                      :  (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'discover') && formData?.menteeAttributes?.userCreditCard['creditCardType']) &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="light_blue_800"
@@ -198,11 +209,11 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                           size: "txtPoppinsRegular2351",
                           placeholder: "Card Number",
                           onChange: (e) => {
+                            // setCreditCardNumber(e.target.value);
                             handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.creditCardNumber' : 'menteeAttributes.userCreditCard.creditCardNumber'}`, e.target.value)
                           },
-
                         })}
-                      // onChange={(e) => handlerChange(`mentorAttributes.userCreditCard.creditCardNumber`, e.target.value)}
+                        // value={creditCardNumber || (formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['creditCardNumber'] : formData?.menteeAttributes?.userCreditCard['creditCardNumber']}
                       />
                     </div>
                     <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{erroredInputs.cardNumber && erroredInputs.cardNumber}</p>
@@ -244,11 +255,11 @@ const LoginFifteenPage = ({ formData, handlerChange, next }) => {
                     </div>
                   </div>
                 </div>
-              <Button className={`!text-gray-100 cursor-pointer h-[60px] leading-[normal] mb-[10px]
+                <Button className={`!text-gray-100 cursor-pointer h-[60px] leading-[normal] mb-[10px]
                 md:ml-[0] rounded-[39px] shadow-bs5 sm:text-[25.39px] md:text-[27.39px]
                 text-[25.01px] text-center w-full flex justify-center items-center mt-7 ${!isFormValid && "opacity-60 cursor-not-allowed"}`} onClick={(formData.role === 'mentor') ? next : handleSignUp} disabled={!isFormValid}>
-                {(formData.role === 'mentor') ? 'Next' : 'Register'}
-              </Button>
+                  {(formData.role === 'mentor') ? 'Next' : 'Register'}
+                </Button>
               </div>
             </div>
 

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
+import React, { lazy, useEffect, useState } from "react";
+import { Cross as Hamburger } from 'hamburger-react'
 import toast from 'react-hot-toast';
 import { Button, Img, Input, Text } from "components";
 import DesktopThirteenChangepassword from "components/DesktopThirteenChangepassword";
 import { useSelector } from "react-redux";
 import { useGetMenteeByIdMutation, useUpdateMenteeDetailMutation, useUpdateMenteeSettingsMutation } from "features/apis/mentee";
-import ImgModel from "components/ImgModel";
+import IconsContainer from "components/IconsContainer";
+import Loaders from "components/Loaders";
+const ImgModel = lazy(() => import("components/ImgModel"));
 
-const DesktopThirteenPage = () => {
+
+const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const [toggleModel, setToggleModel] = useState(false)
   const [updateMenteeDetail] = useUpdateMenteeDetailMutation()
   const [getMenteeById] = useGetMenteeByIdMutation()
@@ -22,6 +25,7 @@ const DesktopThirteenPage = () => {
   const [appNotifications, setAppNotifications] = useState(null);
   const [promotionalNotifications, setPromotionalNotifications] = useState(null);
   const [updatesNotifications, setUpdatesNotifications] = useState(null);
+  const [isValid, setIsValid] = useState(false);
 
   let menteePayloadData = {
     critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
@@ -49,8 +53,15 @@ const DesktopThirteenPage = () => {
     setLinks([...socialLink, { socialPlatformLink: '' }])
   }
 
+  const isValidLink = (url) => {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    return urlRegex.test(url);
+  };
+
+
   const handleInput = (e, index) => {
     let { name, value } = e.target
+    setIsValid(isValidLink(value))
     let updateLink = [...socialLink]
     updateLink[index][name] = value
     setLinks(updateLink)
@@ -58,6 +69,7 @@ const DesktopThirteenPage = () => {
 
   useEffect(() => {
     getMenteeById(menteePayloadData)
+    setToggleSidebar(false)
   }, [])
 
   useEffect(() => {
@@ -86,8 +98,17 @@ const DesktopThirteenPage = () => {
   }
   const handlerUpdate = async () => {
     if ((menteeData?.data?.menteeDescription === menteeDescription) && (menteeData?.data?.menteeEducation === menteeEducation) &&
-      (menteeData?.data?.menteeExperience === menteeExperience) && (socialLink.length === 0) && (menteeData?.data?.user?.name === name)) {
+      (menteeData?.data?.menteeExperience === menteeExperience) && ((socialLink.length === 0) || (socialLink.some(item => item.socialPlatformLink === ''))) && (menteeData?.data?.user?.name === name)) {
       return toast.error(`nothing change!`, {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        },
+      })
+    }
+    if(isValid === false){
+      return toast.error(`invalid link`, {
         style: {
           backgroundColor: '#f6f6f7',
           border: '3px solid #fff',
@@ -164,45 +185,48 @@ const DesktopThirteenPage = () => {
 
   const handlerNotifications = (toggleType) => {
     if (toggleType === 'appNotifications') {
-      if(appNotifications === true){
+      if (appNotifications === true) {
         menteeSetting.notificationSettings.appNotifications.emailNotifications = false
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
-      }else if(appNotifications === false){
+      } else if (appNotifications === false) {
         menteeSetting.notificationSettings.appNotifications.emailNotifications = true
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
       }
-    }else if(toggleType === 'promotionalNotifications'){
-      if(promotionalNotifications === true){
+    } else if (toggleType === 'promotionalNotifications') {
+      if (promotionalNotifications === true) {
         menteeSetting.notificationSettings.promotionalNotifications.emailNotifications = false
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
-      }else if(promotionalNotifications === false){
+      } else if (promotionalNotifications === false) {
         menteeSetting.notificationSettings.promotionalNotifications.emailNotifications = true
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
       }
-    }else if(toggleType === 'updatesNotifications'){
-      if(updatesNotifications === true){
+    } else if (toggleType === 'updatesNotifications') {
+      if (updatesNotifications === true) {
         menteeSetting.notificationSettings.updateNotifications.emailNotifications = false
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
-      }else if(promotionalNotifications === false){
+      } else if (promotionalNotifications === false) {
         menteeSetting.notificationSettings.updateNotifications.emailNotifications = true
         updateMenteeSettings(menteeSetting)
         getMenteeById(menteePayloadData)
       }
     }
   }
-  
+
   return (
     <>
       <div className="bg-white-A700 font-poppins sm:!w-full ml-auto" style={{
         width: "calc(100% - 316px)"
       }}>
-        <div className=" bottom-[0] flex md:flex-col flex-row md:gap-5 inset-x-[0] items-start justify-evenly w-full">
-          <div className="bg-[#f8f5f9] flex flex-1 flex-col font-proximasoft items-center justify-start p-[35px] md:px-5 shadow-bs14 w-full">
+        <div className=" flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
+          <div className="bg-[#f8f5f9] flex flex-1 flex-col font-proximasoft items-center justify-start p-[35px] md:px-5 shadow-bs14 sm:gap-[12px] w-full">
+            <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+              <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+            </div>
             <div className="flex flex-col gap-[33px] items-center justify-start mb-[90px] w-full">
               <div className="flex sm:flex-row flex-row md:gap-10 items-center justify-between w-full md:w-full">
                 <Text
@@ -354,11 +378,9 @@ const DesktopThirteenPage = () => {
                         <div className="flex flex-col ml-0.5 md:ml-[0] relative w-full">
                           <div className="flex flex-col items-start justify-end mx-auto pr-[7px] py-[7px] w-full">
                             <div className="flex flex-row items-center justify-start w-[44%] gap-3 md:w-full">
-                              {menteeData?.data?.socialMediaLinks.map((item) => (
-                                <a href={`${item.socialPlatformLink}`} className="bg-[#000] px-2 py-[7px] rounded">
-                                  <i class="fa-solid fa-link text-[#fff]"></i>
-                                </a>
-                              ))}
+                              {menteeData?.data?.socialMediaLinks ?
+                                (<IconsContainer links={menteeData?.data?.socialMediaLinks} />)
+                                : (<><Loaders /></>)}
                             </div>
                           </div>
                           <Button

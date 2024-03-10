@@ -66,18 +66,18 @@ const ProjectRoutes = () => {
   return (
     <React.Suspense fallback={<><Loader /></>}>
       <Sidebar1 className={`!fixed !w-[316px] bg-white-A700 flex font-poppins inset-y-[0] justify-start left-[0]
-          my-auto overflow-auto md:px-5 shadow-2xl top-[0] ${toggleSideBar && 'resp-left'}`} setToggleSidebar={setToggleSidebar} />
+          my-auto overflow-auto md:px-5 shadow-2xl top-[0] !transition-all  sm:hidden md:hidden ${toggleSideBar && "!flex z-[999]"}`} />
       <Routes>
-        <Route path="/" element={<LoginTwelve />} />
+        <Route path="/" element={<LoginTwelve setToggleSidebar={setToggleSidebar} />} />
         <Route path="/cal" element={<Availability />} />
         <Route path='/preques' element={<PreQues />} />
         <Route element={<ProtectedRoutes userRole={['mentee']} />}>
-          <Route path="/mentee" element={<DesktopSixteen toggleSideBar={setToggleSidebar} />} />
-          <Route path="/profile" element={<DesktopFour />} />
-          <Route path="/search" element={<DesktopSix />} />
-          <Route path="/session" element={<DesktopSeven />} />
-          <Route path="/settings" element={<DesktopThirteen />} />
-          <Route path="/booksession" element={<DesktopFive />} />
+          <Route path="/mentee" element={<DesktopSixteen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/profile" element={<DesktopFour toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/search" element={<DesktopSix toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/session" element={<DesktopSeven toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/settings" element={<DesktopThirteen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/booksession" element={<DesktopFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
         </Route>
         <Route path="*" element={<NotFound />} />
         <Route path="/frameone" element={<FrameOne />} />
@@ -102,11 +102,11 @@ const ProjectRoutes = () => {
         <Route path="/loginsixteen" element={<LoginSixteen />} />
         <Route path="/logineighteen" element={<LoginEighteen />} />
         <Route element={<ProtectedRoutes userRole={['mentor']} />}>
-          <Route path="/mentor" element={<DesktopSeventeen />} />
-          <Route path="/mtrsearch" element={<DesktopTwentyOne />} />
-          <Route path="/mtrsession" element={<DesktopTwentyTwo />} />
-          <Route path="/mtrsettings" element={<DesktopTwentyEight />} />
-          <Route path="/mtr-Request-Session" element={<DesktopTwentyFive />}/>
+          <Route path="/mentor" element={<DesktopSeventeen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/mtrsearch" element={<DesktopTwentyOne toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/mtrsession" element={<DesktopTwentyTwo toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/mtrsettings" element={<DesktopTwentyEight toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/mtr-Request-Session" element={<DesktopTwentyFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
         </Route>
         <Route path="/desktopnineteen" element={<DesktopNineteen />} />
         <Route path="/desktoptwenty" element={<DesktopTwenty />} />

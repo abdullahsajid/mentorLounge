@@ -6,8 +6,9 @@ import Calendar from 'react-calendar';
 import { useLocation } from "react-router-dom";
 import { useBookSessionMutation } from "features/apis/mentee";
 import toast from 'react-hot-toast';
+import { Cross as Hamburger } from 'hamburger-react'
 
-const DesktopFivePage = () => {
+const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [bookSession] = useBookSessionMutation()
   const [selectDuration, setSelectDuration] = useState('20 minutes')
   const location = useLocation()
@@ -54,6 +55,10 @@ const DesktopFivePage = () => {
   const handlerQusTwo = (val) => {
     setSelectQTwo(val)
   }
+
+  useEffect(() => {
+    setToggleSidebar(false)
+  },[])
 
   useEffect(() => {
     if ((filterData !== null) && (filterData !== undefined) && (filterData.length > 0)) {
@@ -132,7 +137,7 @@ const DesktopFivePage = () => {
     </div>
   ), [selectQTwo])
 
-
+    
 
   let bookSessionPayload = {
     sessionRequestTitle: "test007",
@@ -165,7 +170,7 @@ const DesktopFivePage = () => {
 
 
   const handlerBookSession = async () => {
-    if(filterAvailability.length <= 0){
+    if (filterAvailability.length <= 0) {
       return toast.error(`Try Choose different availability!`, {
         style: {
           backgroundColor: '#f6f6f7',
@@ -173,7 +178,7 @@ const DesktopFivePage = () => {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
         }
       })
-    }else if(getQuesThree === ''){
+    } else if (getQuesThree === '') {
       return toast.error(`please fill field!`, {
         style: {
           backgroundColor: '#f6f6f7',
@@ -181,8 +186,8 @@ const DesktopFivePage = () => {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
         }
       })
-    }else if(filterAvailability.length > 0){
-      const {data} = await bookSession(bookSessionPayload)
+    } else if (filterAvailability.length > 0) {
+      const { data } = await bookSession(bookSessionPayload)
       if (data.status === 'Success') {
         toast.success(`${data.message}`, {
           style: {
@@ -192,7 +197,7 @@ const DesktopFivePage = () => {
           }
         })
         getQuesThree('')
-      }else if (data.status === 'Fail') {
+      } else if (data.status === 'Fail') {
         toast.error(`${data.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
@@ -214,11 +219,14 @@ const DesktopFivePage = () => {
 
   return (
     <>
-      <div className="bg-white-A700 flex flex-col font-poppins items-center justify-center ml-auto w-full sm:!w-full" style={{
+      <div className="bg-white-A700 flex flex-col font-poppins items-center justify-center ml-auto w-full md:!w-full sm:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
         <div className="bg-[#f8f5f9] flex flex-col items-center justify-center pb-1 px-1 w-full">
-          <div className="flex md:flex-col flex-row md:gap-[45px] items-center justify-center mb-[19px] mx-auto md:px-5 sm:py-3 w-full">
+          <div className="flex md:flex-col flex-row md:gap-[20px] items-center justify-center mb-[19px] mx-auto md:px-5 sm:py-3 w-full">
+            <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+              <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+            </div>
             <div className="flex flex-1 flex-col gap-[37px] items-center justify-center w-full p-[47px] sm:p-0">
               <div className="flex md:flex-col flex-row md:gap-5 items-start justify-start w-full">
                 <div className="flex flex-col font-proximasoft items-start justify-between w-full">
@@ -250,7 +258,7 @@ const DesktopFivePage = () => {
                   </Button>
                   <Button className="border border-purple-700 border-solid cursor-pointer sm:h-[50px] font-poppins h-[61px] leading-[normal]
                    rounded-[30px] shadow-bs5 sm:text-[16.77px] md:text-[18.77px] text-[20.77px] text-center w-[207px] sm:w-[150px] flex justify-center items-center"
-                   onClick={() => handlerBookSession()}>
+                    onClick={() => handlerBookSession()}>
                     Book Session
                   </Button>
                 </div>

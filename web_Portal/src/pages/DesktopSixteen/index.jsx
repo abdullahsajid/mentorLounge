@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Menu, MenuItem } from "react-pro-sidebar";
 import { Button, Img, Input, List, Text } from "components";
 import DesktopTwoPage from "pages/DesktopTwo";
@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TopMentor from "components/TopMentor";
 import { useGetAllMentorMutation, useGetMenteeByIdMutation } from "features/apis/mentee";
-import Loaders from "components/Loaders";
-import AllMentor from "components/AllMentor";
+import { Cross as Hamburger } from 'hamburger-react'
+const AllMentor = lazy(() => import("components/AllMentor")) 
 
-const DesktopSixteenPage = ({ toggleSideBar }) => {
+const DesktopSixteenPage = ({ toggleSideBar,setToggleSidebar }) => {
   const [getMenteeById] = useGetMenteeByIdMutation()
   const [getAllMentor, { isLoading }] = useGetAllMentorMutation()
   const { user } = useSelector((state) => state.user)
@@ -86,23 +86,27 @@ const DesktopSixteenPage = ({ toggleSideBar }) => {
   useEffect(() => {
     getMenteeById(data)
     getAllMentor(allMentors)
+    setToggleSidebar(false)
   }, [])
 
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full" style={{
+      <div className="bg-white-A700 font-proximasoft ml-auto sm:!w-full md:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
-        <div className="bg-[#f8f5f9] flex flex-col h-full justify-center p-[47px] md:px-10 sm:px-5">
+        <div className="bg-[#f8f5f9] flex flex-col h-full justify-center p-[47px] sm:p-[26px] md:px-10 sm:px-5">
           <div className="flex flex-col items-start justify-start mt-[15px] w-full md:w-full sm:h-full">
             <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between w-full">
               {/* <div className="sm:w-full sm:flex sm:items-center"> */}
               {/* <div className="hidden sm:flex" onClick={toggleSideBar}>
                   <i class="fa-solid fa-bars"></i>
                 </div> */}
+                <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+                <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
+              </div>
               <Text
-                className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900 sm:ml-[3rem]"
+                className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900"
                 size="txtProximaSoftSemiBold48"
               >
                 Hello, {menteeData?.data?.user?.name}

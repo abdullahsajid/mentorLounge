@@ -3,9 +3,12 @@ import { Button, Text } from "components";
 import { useSignUpUserMutation } from "features/apis/user";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'universal-cookie';
 const cookie = new Cookies()
-const PreQues = ({ formData, handlerChange }) => {
+
+const PreQues = ({ formData, handlerChange,prev }) => {
     const [addQues, setQues] = useState([{ questionText: '' }])
     const [isFormValid, setIsFormValid] = useState(false)
     const [validation, setValidation] = useState({
@@ -89,6 +92,9 @@ const PreQues = ({ formData, handlerChange }) => {
             <div className="bg-[#fff] flex flex-col items-start justify-start p-[30px] md:px-5 rounded-[26px] w-[41%] sm:w-full
             sm:mx-[12px] z-[1]">
                 <div className="flex flex-col gap-5 items-start justify-start mb-[11px] md:ml-[0] w-full md:w-full">
+                    {/* <div className="mb-3">
+                        <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
+                    </div> */}
                     <Text
                         className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900"
                         size="txtProximaSoftSemiBold3832"
