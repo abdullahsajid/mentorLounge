@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
+import React, { lazy, useEffect } from "react";
 import { Img, Text } from "components";
 import { Cross as Hamburger } from 'hamburger-react'
+import { FilterSessionsForMentor } from "utils"
+import { Oval } from 'react-loader-spinner'
+const SessionContainer = lazy(() => import('components/SessionContainer'))
 
 const DesktopTwentyTwoPage = ({ toggleSideBar, setToggleSidebar }) => {
+  const filterList = FilterSessionsForMentor()
+
 
   useEffect(() => {
     setToggleSidebar(false)
   }, [])
+
 
   return (
     <>
@@ -28,7 +33,7 @@ const DesktopTwentyTwoPage = ({ toggleSideBar, setToggleSidebar }) => {
                 Sessions
               </Text>
               <div className="bg-white-A700 flex flex-col font-poppins gap-[21px] items-center justify-center p-[30px] sm:px-0 sm:pt-0 rounded-[20px] shadow-bs3 w-full">
-                <div className="w-full md:w-full flex items-center gap-5 border-2 border-gray-50 border-solid p-[21px] px-[6px] sm:px-5 rounded-[19px]">
+                {/* <div className="w-full md:w-full flex items-center gap-5 border-2 border-gray-50 border-solid p-[21px] px-[6px] sm:px-5 rounded-[19px]">
                   <div className="flex flex-col h-full items-center justify-start ml-[34px] sm:ml-0 w-[71px]">
                     <Img
                       className="md:h-auto rounded-[50%] w-[71px]"
@@ -71,73 +76,44 @@ const DesktopTwentyTwoPage = ({ toggleSideBar, setToggleSidebar }) => {
                       </Text>
                     </div>
                   </div>
-                </div>
-                <div className="w-full md:w-full flex items-center gap-5 border-2 border-gray-50 border-solid p-[21px] px-[6px] sm:px-5 rounded-[19px]">
-                  <div className="flex flex-col h-full items-center justify-start ml-[34px] sm:ml-0 w-[71px]">
-                    <Img
-                      className="md:h-auto rounded-[50%] w-[71px]"
-                      src="images/img_ellipse10_71x71.png"
-                      alt="ellipseTen_One"
+                </div> */}
+                {!filterList ? (
+                  <div className="flex justify-center items-center w-full text-[24px] h-full">
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
                     />
                   </div>
-                  <div className="flex sm:justify-between w-full">
-                    <div className="flex items-center flex-col w-full">
-                      <Text
-                        className="text-[19.52px] text-black-900 w-full sm:text-[12px] sm:font-bold"
-                        size="txtPoppinsMedium1952"
-                      >
-                        Product Design As A Career
-                      </Text>
-                      <Text
-                        className="text-[12.83px] text-blue_gray-700 tracking-[0.13px] w-full sm:text-[10px]"
-                        size="txtPoppinsMedium1283"
-                      >
-                        Session with James Charles
-                      </Text>
-                    </div>
-                    <div className="flex sm:justify-end w-32">
-                      <Text
-                        className="text-base text-blue_gray-700 sm:text-[12px] sm:justify-end"
-                        size="txtPoppinsMedium16"
-                      >
-                        16 Out,2023
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full md:w-full flex items-center gap-5 border-2 border-gray-50 border-solid p-[21px] px-[6px] sm:px-5 rounded-[19px]">
-                  <div className="flex flex-col h-full items-center justify-start ml-[34px] sm:ml-0 w-[71px]">
-                    <Img
-                      className="md:h-auto rounded-[50%] w-[71px]"
-                      src="images/img_ellipse10_71x71.png"
-                      alt="ellipseTen_One"
+                ) : (
+                  <React.Suspense fallback={<div className="flex justify-center items-center w-full text-[24px] h-full">
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
                     />
-                  </div>
-                  <div className="flex sm:justify-between w-full">
-                    <div className="flex items-center flex-col w-full">
-                      <Text
-                        className="text-[19.52px] text-black-900 w-full sm:text-[12px] sm:font-bold"
-                        size="txtPoppinsMedium1952"
-                      >
-                        Product Design As A Career
-                      </Text>
-                      <Text
-                        className="text-[12.83px] text-blue_gray-700 tracking-[0.13px] w-full sm:text-[10px]"
-                        size="txtPoppinsMedium1283"
-                      >
-                        Session with James Charles
-                      </Text>
-                    </div>
-                    <div className="flex sm:justify-end w-32">
-                      <Text
-                        className="text-base text-blue_gray-700 sm:text-[12px] sm:justify-end"
-                        size="txtPoppinsMedium16"
-                      >
-                        16 Out,2023
-                      </Text>
-                    </div>
-                  </div>
-                </div>
+                  </div>}>
+                    {filterList.length === 0 ? (
+                      <div className="flex justify-center items-center w-full text-[24px] h-full">No Sessions at the Moment</div>
+                    ) : (
+                      filterList?.map((item) => (
+                        <SessionContainer
+                          startTime={item.requestStartTime}
+                          name={item.requestBy.name}
+                          title={item.sessionRequestTitle}
+                          img={item.requestBy.profile_picture_url}
+                          endTime={item.requestEndTime}
+                          meeting={item.zoomMeeting}
+                        />
+                      ))
+                    )}
+                  </React.Suspense>
+                )}
+
               </div>
             </div>
           </div>

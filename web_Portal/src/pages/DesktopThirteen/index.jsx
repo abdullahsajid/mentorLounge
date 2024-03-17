@@ -5,8 +5,8 @@ import { Button, Img, Input, Text } from "components";
 import DesktopThirteenChangepassword from "components/DesktopThirteenChangepassword";
 import { useSelector } from "react-redux";
 import { useGetMenteeByIdMutation, useUpdateMenteeDetailMutation, useUpdateMenteeSettingsMutation } from "features/apis/mentee";
-import IconsContainer from "components/IconsContainer";
 import Loaders from "components/Loaders";
+const IconsContainer = lazy(() => import("components/IconsContainer"));
 const ImgModel = lazy(() => import("components/ImgModel"));
 
 
@@ -377,7 +377,7 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
                         </Text>
                         <div className="flex flex-col ml-0.5 md:ml-[0] relative w-full">
                           <div className="flex flex-col items-start justify-end mx-auto pr-[7px] py-[7px] w-full">
-                            <div className="flex flex-row items-center justify-start w-[44%] gap-3 md:w-full">
+                            <div className="flex flex-row items-center justify-start w-full gap-3 md:w-full">
                               {menteeData?.data?.socialMediaLinks ?
                                 (<IconsContainer links={menteeData?.data?.socialMediaLinks} />)
                                 : (<><Loaders /></>)}

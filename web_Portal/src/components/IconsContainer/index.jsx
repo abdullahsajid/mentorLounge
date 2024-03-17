@@ -1,7 +1,8 @@
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faTwitter, faLinkedin, faGoogle, faFacebook, faInstagram, faYoutube, faXTwitter, faDribbble, faBehance, faPinterest,faAmazon
+    faTwitter, faLinkedin, faGoogle, faFacebook, faInstagram, faYoutube, faXTwitter, faDribbble, faBehance, faPinterest, faAmazon
+    ,faGithub
 } from '@fortawesome/free-brands-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,7 +20,8 @@ const IconsContainer = ({ links }) => {
             'dribbble.com': faDribbble,
             'behance.net': faBehance,
             'pinterest.com': faPinterest,
-            'amazon.com':faAmazon
+            'amazon.com': faAmazon,
+            'github.com':faGithub
         };
         for (const pattern in iconMap) {
             if (link.includes(pattern)) {
@@ -31,8 +33,8 @@ const IconsContainer = ({ links }) => {
     return (
         <>
             {links.map((item, index) => (
-                <a href={`${item.socialPlatformLink}`} className="bg-[#000] px-[10px] py-[5px] rounded-full" key={index}>
-                    <FontAwesomeIcon icon={getIconForLink(item.socialPlatformLink)} className="text-[#fff]"  />
+                <a href={`${item.socialPlatformLink}`} className="bg-[#000] px-[7px] py-[4px] rounded-full" key={index}>
+                    <FontAwesomeIcon icon={getIconForLink(item.socialPlatformLink)} className="text-[#fff]" />
                 </a>
             ))}
         </>

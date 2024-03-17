@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Menu, MenuItem, Sidebar, useProSidebar } from "react-pro-sidebar";
-import { Button, Img, Text } from "components";
+import { Button, Text } from "components";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import { useLocation } from "react-router-dom";
 import { useBookSessionMutation } from "features/apis/mentee";
 import toast from 'react-hot-toast';
 import { Cross as Hamburger } from 'hamburger-react'
+
 
 const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [bookSession] = useBookSessionMutation()
@@ -17,16 +17,17 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [selectQOne, setSelectQOne] = useState('Interview questions')
   const [selectQTwo, setSelectQTwo] = useState('UX Design')
   const [getQuesThree, setQuesThree] = useState('')
-  const [getDate, setDate] = useState(new Date().toLocaleDateString('en-CA', {
+  const [getDate, setDate] = useState(new Date().toLocaleDateString(undefined, {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   }))
-
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const handlerFilter = (val) => {
-    let splitVal = val.split(' ')
-    let filterRes = location.state.available.filter(item => item.availabilityDuration.slice(0, 2) === splitVal[0])
+    let splitVal = val?.split(' ')
+    let filterRes = location?.state?.available?.filter(item => item.availabilityDuration.slice(0, 2) === splitVal[0])
+    // console.log("Filter Res=> ", filterRes)
     setFilterData(filterRes)
   }
 
@@ -36,18 +37,23 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   }
 
   const handleFilterDate = () => {
-    let filterDate = filterData.filter(item => item.availabilityStartTime.slice(0, 10) === getDate)
+    const formattedDate = new Date(getDate).toLocaleDateString().replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
+    // console.log(formattedDate)
+    let filterDate = filterData?.filter(item => item.availabilityStartTime.slice(0, 10) === formattedDate)
     setFilterAvailability(filterDate)
   }
 
   const handleData = (val) => {
-    const formattedDate = val.toLocaleDateString('en-CA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    setDate(formattedDate)
+    // const formattedDate = val?.toLocaleDateString(undefined, {
+    //   year: 'numeric',
+    //   month: '2-digit',
+    //   day: '2-digit',
+    // });
+
+    setDate(val)
+    handleFilterDate()
   }
+  
 
   const handlerQusOne = (val) => {
     setSelectQOne(val)
@@ -58,13 +64,13 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
 
   useEffect(() => {
     setToggleSidebar(false)
-  },[])
+  }, [])
 
-  useEffect(() => {
-    if ((filterData !== null) && (filterData !== undefined) && (filterData.length > 0)) {
-      handleFilterDate()
-    }
-  }, [getDate])
+  // useEffect(() => {
+  //   if ((filterData !== null) && (filterData !== undefined) && (filterData.length > 0)) {
+  //     handleFilterDate()
+  //   }
+  // }, [getDate])
 
   const quesOne = useMemo(() => (
     <div className="flex flex-row gap-[11px] items-center sm:flex-wrap w-full">
@@ -137,13 +143,14 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     </div>
   ), [selectQTwo])
 
-    
+
+  const formattedDate = new Date(getDate).toLocaleDateString().replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
 
   let bookSessionPayload = {
     sessionRequestTitle: "test007",
     requestDuration: selectDuration,
-    requestStartTime: `${getDate}${filterAvailability[0]?.availabilityStartTime.slice(-14)}`,
-    requestEndTime: `${getDate}${filterAvailability[0]?.availabilityEndTime.slice(-14)}`,
+    requestStartTime: `${formattedDate}${filterAvailability[0]?.availabilityStartTime.slice(-14)}`,
+    requestEndTime: `${formattedDate}${filterAvailability[0]?.availabilityEndTime.slice(-14)}`,
     sessionTimeZone: "Asia/karachi",
     requestStatus: "pending",
     mentor: location.state.id,
@@ -196,7 +203,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }
         })
-        getQuesThree('')
+        setQuesThree('')
       } else if (data.status === 'Fail') {
         toast.error(`${data.message}`, {
           style: {
@@ -216,7 +223,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
       }
     }
   }
-
+  
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-poppins items-center justify-center ml-auto w-full md:!w-full sm:!w-full" style={{
@@ -312,7 +319,10 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                     Choose Date
                   </Text>
                   <div className="my-7">
-                    <Calendar value={getDate} onChange={handleData} />
+                    <Calendar 
+                      value={getDate} 
+                      onChange={(date) => handleData(date)} 
+                    />
                   </div>
                   <Text
                     className="mt-[49px] sm:text-[25px] md:text-[27px] text-[29px] text-black-900_01 text-center"

@@ -20,12 +20,12 @@ const DesktopSixPage = ({ toggleSideBar, setToggleSidebar }) => {
           </div>
           <div className="bg-white-A700 flex flex-1 flex-col items-center justify-start mb-[27px] py-[39px] rounded-[31px] shadow-bs3 w-full">
             <div className="flex flex-col gap-[26px] justify-start mb-[741px] sm:mb-0 w-full">
-              <div className="flex flex-col gap-[22px] items-start justify-start md:items-center w-3/4 md:w-full sm:items-center">
+              <div className="flex flex-col gap-[22px] items-center justify-center md:items-center w-full md:w-full sm:items-center">
                 <Input
                   name="groupNinetyFour"
                   placeholder="Product designer"
                   className="leading-[normal] p-0 placeholder:text-gray-900_7f text-[14.12px] text-left w-full"
-                  wrapClassName="border border-gray-900_1e border-solid flex rounded-[18px] w-[90%]"
+                  wrapClassName="border border-gray-900_1e border-solid flex items-center justify-center rounded-[18px] w-[90%]"
                   prefix={
                     <Img
                       className="h-6 mr-4 my-auto"

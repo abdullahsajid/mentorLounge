@@ -115,9 +115,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                 </Text>
                 <div className="flex flex-row items-center justify-start mt-4 w-[53%] md:w-full">
                   <Button
-                    className={`flex h-[60px] items-center justify-center rounded-[50%] w-[60px] ${((selectPayment === 'master card') ||
-                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'master card') && formData?.mentorAttributes?.userCreditCard['creditCardType'] 
-                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'master card') && formData?.menteeAttributes?.userCreditCard['creditCardType'] ) &&
+                    className={`flex h-[60px] items-center justify-center rounded-[50%] w-[60px] ${(selectPayment === 'master card') &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="gray_100_05"
@@ -128,9 +126,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                     <Img src="images/img_user_yellow_800.svg" alt="user" />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-[13px] rounded-[50%] w-[60px] ${((selectPayment === 'visa') ||
-                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'visa') && formData?.mentorAttributes?.userCreditCard['creditCardType'] 
-                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'visa') && formData?.menteeAttributes?.userCreditCard['creditCardType'] ) &&
+                    className={`flex h-[60px] items-center justify-center ml-[13px] rounded-[50%] w-[60px] ${(selectPayment === 'visa') &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="gray_100_05"
@@ -144,9 +140,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                     />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${((selectPayment === 'american express') ||
-                      (formData?.role === 'mentor') ? (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'american express') && formData?.mentorAttributes?.userCreditCard['creditCardType']  
-                      : (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'american express') && formData?.menteeAttributes?.userCreditCard['creditCardType']) &&
+                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${(selectPayment === 'american express') &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="light_blue_800"
@@ -157,9 +151,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                     <Img src="images/img_television.svg" alt="television" />
                   </Button>
                   <Button
-                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${((selectPayment === 'discover') ||
-                      (formData?.role === 'mentor') ?  (formData?.mentorAttributes?.userCreditCard['creditCardType'] === 'discover') && formData?.mentorAttributes?.userCreditCard['creditCardType']   
-                      :  (formData?.menteeAttributes?.userCreditCard['creditCardType'] === 'discover') && formData?.menteeAttributes?.userCreditCard['creditCardType']) &&
+                    className={`flex h-[60px] items-center justify-center ml-3.5 rounded-[50%] w-[60px] ${(selectPayment === 'discover') &&
                       "border-4 border-[#000] border-solid"}`}
                     shape="circle"
                     color="light_blue_800"

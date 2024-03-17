@@ -1,58 +1,15 @@
 import React from "react";
-
-import { Menu, MenuItem } from "react-pro-sidebar";
-
-import { Button, Img, Input, Text } from "components";
-import Sidebar2 from "components/Sidebar2";
+import { Button, Img, Text } from "components";
 
 const DesktopTwelvePage = () => {
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-[29px] w-[29px]"
-          src="images/img_profile.svg"
-          alt="profile"
-        />
-      ),
-      label: "Home",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[26px] w-[26px]"
-          src="images/img_rewind.svg"
-          alt="rewind"
-        />
-      ),
-      label: "Search",
-    },
-    {
-      icon: (
-        <Img className="h-[26px] w-[26px]" src="images/img_bag.svg" alt="bag" />
-      ),
-      label: "Sessions",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[26px] w-[26px]"
-          src="images/img_search.svg"
-          alt="search_One"
-        />
-      ),
-      label: "Settings",
-      href: "/settingsone",
-      active: window.location.pathname === "/settingsone",
-    },
-  ];
-
+  
   return (
     <>
-      <div className="bg-[#f8f5f9] flex flex-col font-poppins items-center justify-end w-full">
+      <div className="bg-[#f8f5f9] ml-auto sm:!w-full md:!w-full"style={{
+        width: "calc(100% - 316px)"
+      }}>
         <div className="flex flex-col items-center justify-end mx-auto md:px-5 w-full">
           <div className="flex md:flex-col flex-row md:gap-[45px] items-start justify-between w-full gap-[25px]">
-            <Sidebar2 className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto shadow-bs1 top-[0]" />
             <div className="flex flex-1 flex-col font-proximasoft gap-[21px] justify-start w-full p-[30px]">
               <Text
                 className="text-4xl sm:text-[38px] md:text-[44px] text-black-900_01 font-bold"

@@ -29,6 +29,8 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     active: true,
     is_verified: true,
     approved: true,
+    signuptype: "web",
+    platform: "email",
   })
 
   const handlerChange = (name, value) => {
@@ -140,6 +142,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
   }
 
+  console.log(formData);
 
   useEffect(() => {
     if (userRole === 'mentor') {
@@ -238,7 +241,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     }
     setToggleSidebar(false)
   }, [])
-  console.log(formData)
+
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-proximasoft mx-auto relative w-full" >
@@ -467,3 +470,4 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 };
 
 export default LoginTwelvePage;
+// (multiStep == 5 && userRole === 'mentor')

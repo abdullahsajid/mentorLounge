@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "pages/Home";
+// import Home from "pages/Home";
 import Loader from "pages/Loader";
-import Admin from "pages/admin";
+// import Admin from "pages/admin";
 import ProtectedRoutes from "utils/ProtectedRoutes";
 const NotFound = React.lazy(() => import("pages/NotFound"));
 const Sidebar1 = React.lazy(() => import("components/Sidebar1"));
@@ -75,9 +75,10 @@ const ProjectRoutes = () => {
           <Route path="/mentee" element={<DesktopSixteen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
           <Route path="/profile" element={<DesktopFour toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
           <Route path="/search" element={<DesktopSix toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
-          <Route path="/session" element={<DesktopSeven toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/session" element={<DesktopSeven toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
           <Route path="/settings" element={<DesktopThirteen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
           <Route path="/booksession" element={<DesktopFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/invite" element={<DesktopTwelve />} />
         </Route>
         <Route path="*" element={<NotFound />} />
         <Route path="/frameone" element={<FrameOne />} />
@@ -91,10 +92,10 @@ const ProjectRoutes = () => {
         <Route path="/desktopeight" element={<DesktopEight />} />
         <Route path="/desktopnine" element={<DesktopNine />} />
         <Route path="/desktopten" element={<DesktopTen />} />
-        <Route path="/desktoptwelve" element={<DesktopTwelve />} />
-        <Route path="/desktopfourteen" element={<DesktopFourteen />} />
-        <Route path="/desktopeleven" element={<DesktopEleven />} />
-        <Route path="/desktopfifteen" element={<DesktopFifteen />} />
+        
+        <Route path="/commission" element={<DesktopFourteen />} />
+        <Route path="/reviewContainer" element={<DesktopEleven />} />
+        <Route path="/reviewSubmit" element={<DesktopFifteen />} />
         <Route path="/login" element={<LoginTwelve />} />
         <Route path="/loginthirteen" element={<LoginThirteen />} />
         <Route path="/signup" element={<LoginFourteen />} />
@@ -103,10 +104,10 @@ const ProjectRoutes = () => {
         <Route path="/logineighteen" element={<LoginEighteen />} />
         <Route element={<ProtectedRoutes userRole={['mentor']} />}>
           <Route path="/mentor" element={<DesktopSeventeen toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
-          <Route path="/mtrsearch" element={<DesktopTwentyOne toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
-          <Route path="/mtrsession" element={<DesktopTwentyTwo toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
-          <Route path="/mtrsettings" element={<DesktopTwentyEight toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
-          <Route path="/mtr-Request-Session" element={<DesktopTwentyFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar}/>} />
+          <Route path="/mtrsearch" element={<DesktopTwentyOne toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/mtrsession" element={<DesktopTwentyTwo toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/mtrsettings" element={<DesktopTwentyEight toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
+          <Route path="/mtr-Request-Session" element={<DesktopTwentyFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
         </Route>
         <Route path="/desktopnineteen" element={<DesktopNineteen />} />
         <Route path="/desktoptwenty" element={<DesktopTwenty />} />
@@ -116,7 +117,7 @@ const ProjectRoutes = () => {
         <Route path="/desktoptwentyfour" element={<DesktopTwentyFour />} />
         <Route path="/desktoptwentynine" element={<DesktopTwentyNine />} />
         <Route path="/desktoptwentyfive" element={<DesktopTwentyFive />} />
-        <Route path="/desktoptwentyseven" element={<DesktopTwentySeven />} />
+        <Route path="/mentorWallet" element={<DesktopTwentySeven />} />
         <Route path="/desktoptwentyeight" element={<DesktopTwentyEight />} />
         {/* <Route element={<ProtectedRoutes userRole={['admin']}/>}> */}
         {/* </Route> */}

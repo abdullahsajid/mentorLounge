@@ -1,16 +1,17 @@
 import React, { lazy, useEffect, useState } from "react";
-import { Menu, MenuItem } from "react-pro-sidebar";
 import { Button, Img, Input, List, Text } from "components";
 import DesktopTwoPage from "pages/DesktopTwo";
 import DesktopThreePage from "pages/DesktopThree";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TopMentor from "components/TopMentor";
 import { useGetAllMentorMutation, useGetMenteeByIdMutation } from "features/apis/mentee";
 import { Cross as Hamburger } from 'hamburger-react'
-const AllMentor = lazy(() => import("components/AllMentor")) 
+import { FilterSessionForNotifier } from "utils";
+import { Oval } from 'react-loader-spinner'
+const AllMentor = lazy(() => import("components/AllMentor"))
+const SessionNotifier = lazy(() => import("components/SessionNotifier"))
 
-const DesktopSixteenPage = ({ toggleSideBar,setToggleSidebar }) => {
+const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const [getMenteeById] = useGetMenteeByIdMutation()
   const [getAllMentor, { isLoading }] = useGetAllMentorMutation()
   const { user } = useSelector((state) => state.user)
@@ -89,6 +90,10 @@ const DesktopSixteenPage = ({ toggleSideBar,setToggleSidebar }) => {
     setToggleSidebar(false)
   }, [])
 
+  // console.log(new Date(menteeData?.data?.sessionRequests[0].requestStartTime).toDateString())
+  // console.log("Filter: ",menteeData?.data?.sessionRequests.filter(item => item.requestStatus === 'approved'))
+  let filterNotifier = FilterSessionForNotifier()
+
 
   return (
     <>
@@ -102,7 +107,7 @@ const DesktopSixteenPage = ({ toggleSideBar,setToggleSidebar }) => {
               {/* <div className="hidden sm:flex" onClick={toggleSideBar}>
                   <i class="fa-solid fa-bars"></i>
                 </div> */}
-                <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
+              <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
                 <Hamburger toggled={toggleSideBar} size={20} toggle={setToggleSidebar} />
               </div>
               <Text
@@ -155,69 +160,45 @@ const DesktopSixteenPage = ({ toggleSideBar,setToggleSidebar }) => {
                 </Button>
               </div>
             </div>
-            <List
-              className="sm:flex-col flex-row font-poppins gap-7 grid md:grid-cols-1 grid-cols-2 mt-[31px] w-[95%] sm:w-full"
-              orientation="horizontal"
-            >
-              <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-full">
-                <div className="flex flex-row gap-3 items-center justify-start w-[52%] md:w-full">
-                  <Img
-                    className="h-[122px]"
-                    src="images/img_line3.svg"
-                    alt="lineThree"
-                  />
-                  <div className="flex flex-col items-start justify-start">
-                    <Text
-                      className="text-[19.41px] text-purple-700"
-                      size="txtPoppinsMedium1941"
-                    >
-                      Session for today
-                    </Text>
-                    <Text
-                      className="text-[16.64px] text-black-900"
-                      size="txtPoppinsRegular1664"
-                    >
-                      Session with Michael Scott
-                    </Text>
-                    <Text
-                      className="text-[16.64px] text-black-900"
-                      size="txtPoppinsRegular1664"
-                    >
-                      10:00 - 10:30am
-                    </Text>
-                  </div>
-                </div>
+
+            {!filterNotifier ? (
+              <div className="flex justify-center items-center w-full text-[24px] h-full">
+                <Oval
+                  height={30}
+                  width='100%'
+                  color="#743C95"
+                  secondaryColor="rgb(120, 86, 255)"
+                  strokeWidth={3}
+                />
               </div>
-              <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-full">
-                <div className="flex flex-row gap-[22px] items-center justify-start w-[52%] md:w-full">
-                  <Img
-                    className="h-[122px]"
-                    src="images/img_line3.svg"
-                    alt="lineThree"
-                  />
-                  <div className="flex flex-col items-start justify-start">
-                    <Text
-                      className="text-[19.41px] text-purple-700"
-                      size="txtPoppinsMedium1941"
-                    >
-                      Session for tomorrow
-                    </Text>
-                    <Text
-                      className="mt-0.5 text-[16.64px] text-black-900"
-                      size="txtPoppinsRegular1664"
-                    >
-                      Session with Michael Scott
-                    </Text>
-                    <Text
-                      className="text-[16.64px] text-black-900"
-                      size="txtPoppinsRegular1664"
-                    >
-                      10:00 - 10:30am
-                    </Text>
-                  </div>
-                </div>
-              </div>
-            </List>
+            ) : (
+              <React.Suspense fallback={<div className="flex justify-center items-center w-full text-[24px] h-full">
+                <Oval
+                  height={30}
+                  width='100%'
+                  color="#743C95"
+                  secondaryColor="rgb(120, 86, 255)"
+                  strokeWidth={3}
+                />
+              </div>}>
+                {filterNotifier.length === 0 ? (
+                  <div className="flex justify-center items-center w-full text-[24px] h-full border-b-2 py-3">No Sessions at the Moment</div>
+                ) : (
+                  <List
+                    className="sm:flex-col flex-row font-poppins gap-7 grid md:grid-cols-1 grid-cols-2 mt-[31px] w-[95%] sm:w-full"
+                    orientation="horizontal"
+                  >
+                    {filterNotifier?.map((item) => (
+                      <SessionNotifier
+                        startTime={item.requestStartTime}
+                        name={item.mentor.name}
+                        endTime={item.requestEndTime}
+                      />
+                    ))}
+                  </List>
+                )}
+              </React.Suspense>
+            )}
             <Text
               className="mt-[33px] sm:text-4xl md:text-[38px] text-[40px] text-gray-900"
               size="txtProximaSoftSemiBold40"

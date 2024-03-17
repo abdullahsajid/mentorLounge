@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { Button, Img, Input, Text } from "components";
 import DesktopThirteenChangepassword from "components/DesktopThirteenChangepassword";
 import ImgModel from "components/ImgModel";
@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { Cross as Hamburger } from 'hamburger-react'
 import { useGetMentorByIdMutation, useUpdateMentorDetailMutation } from "features/apis/mentor";
 import { useUpdateMenteeSettingsMutation } from "features/apis/mentee";
+import Loaders from "components/Loaders";
+const IconsContainer = lazy(() => import("components/IconsContainer"));
 
 const DesktopTwentyEightPage = ({ toggleSideBar, setToggleSidebar }) => {
   const [toggleModel, setToggleModel] = useState(false)
@@ -354,12 +356,10 @@ const DesktopTwentyEightPage = ({ toggleSideBar, setToggleSidebar }) => {
                         </Text>
                         <div className="flex flex-col ml-0.5 md:ml-[0] relative w-full">
                           <div className="flex flex-col items-start justify-end mx-auto pr-[7px] py-[7px] w-full">
-                            <div className="flex flex-row items-center justify-start w-[44%] gap-3 md:w-full">
-                              {mentorData?.data?.socialMediaLinks.map((item) => (
-                                <a href={`${item.socialPlatformLink}`} className="bg-[#000] px-2 py-[7px] rounded">
-                                  <i class="fa-solid fa-link text-[#fff]"></i>
-                                </a>
-                              ))}
+                            <div className="flex flex-row items-center justify-start w-full gap-3 md:w-full">
+                              {mentorData?.data?.socialMediaLinks ?
+                                (<IconsContainer links={mentorData?.data?.socialMediaLinks} />)
+                                : (<><Loaders /></>)}
                             </div>
                           </div>
                           <Button

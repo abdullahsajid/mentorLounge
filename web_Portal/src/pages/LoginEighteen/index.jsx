@@ -62,7 +62,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
       [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
       [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
       [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
-      [`${formData?.role}Price`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '', errorMessage: 'Price must be a number' },
+      [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
       socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
       formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
     };

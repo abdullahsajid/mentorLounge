@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 import { useGetMentorByIdMutation } from "features/apis/mentor";
 import { Oval } from 'react-loader-spinner'
 import { Cross as Hamburger } from 'hamburger-react'
+import { FilterSeesionNotifierForMentor } from "utils";
 const RequestMentee = lazy(() => import("components/RequestMentee"));
 const DesktopNineteenPage = lazy(() => import("pages/DesktopNineteen"));
 const DesktopThreePage = lazy(() => import("pages/DesktopThree"))
-
+const SessionNotifier = lazy(() => import("components/SessionNotifier"))
 
 const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const { user } = useSelector((state) => state.user)
@@ -48,14 +49,15 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
     setToggleSidebar(false)
   }, [])
 
+  const filterItem = FilterSeesionNotifierForMentor()
   
 
   return (
     <>
-      <div className="bg-white-A700 font-proximasoft ml-auto md:!w-full sm:!w-full" style={{
+      <div className="bg-[#f8f5f9] font-proximasoft !h-full ml-auto md:!w-full sm:!w-full" style={{
         width: "calc(100% - 316px)"
       }}>
-        <div className={`bg-[#f8f5f9] flex flex-col items-end justify-center p-7 sm:px-3 w-full ${toggleNotification && "opacity-[.2]"} ${toggleCalender && "opacity-[.2]"}`}>
+        <div className={`bg-[#f8f5f9] flex flex-col items-end justify-center p-7 sm:px-3 w-full !h-full ${toggleNotification && "opacity-[.2]"} ${toggleCalender && "opacity-[.2]"}`}>
           <div className="flex flex-col items-start justify-start mb-[157px] mt-[35px] sm:mt-0 md:px-5 sm:px-0 w-full md:w-full">
             <div className="flex md:flex-col flex-row md:gap-5 items-center justify-between w-full">
               <div className="flex w-full items-center justify-end hidden md:flex sm:flex">
@@ -163,75 +165,45 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
                 {/* end */}
               </div>
               <div className="w-[1px] h-auto border border-solid border-[#545454] sm:hidden"></div>
-              <div className="flex flex-col gap-3 w-full">
-                <div className="bg-lime-700_75 flex md:flex-1 flex-col items-start justify-start
-                  rounded-md w-full mt-4">
-                  <div className="flex flex-row gap-3 items-center justify-start w-[58%] md:w-full">
-                    <Img
-                      className="h-[122px]"
-                      src="images/img_line3.svg"
-                      alt="lineThree"
+              <div className="flex flex-col gap-5 w-full h-full">
+                {!filterItem ? (
+                  <div className="flex justify-center items-center w-full text-[24px] h-full">
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
                     />
-                    <div className="flex flex-col items-start justify-start">
-                      <Text
-                        className="text-[19.41px] text-purple-700"
-                        size="txtPoppinsMedium1941"
-                      >
-                        Session for today
-                      </Text>
-                      <Text
-                        className="text-[16.64px] text-black-900"
-                        size="txtPoppinsRegular1664"
-                      >
-                        Session with Michael Scott
-                      </Text>
-                      <Text
-                        className="text-[16.64px] text-black-900"
-                        size="txtPoppinsRegular1664"
-                      >
-                        10:00 - 10:30am
-                      </Text>
-                    </div>
                   </div>
-                </div>
-                <div className="bg-lime-700_75 flex md:flex-1 flex-col items-start justify-start mb-[3px] 
-                  md:mt-0 mt-[7px] rounded-md w-full">
-                  <div className="flex flex-row gap-[22px] items-center justify-start w-[62%] md:w-full">
-                    <Img
-                      className="h-[122px]"
-                      src="images/img_line3.svg"
-                      alt="lineThree_One"
+                ) : (
+                  <React.Suspense fallback={<div className="flex justify-center items-center w-full text-[24px] h-full">
+                    <Oval
+                      height={30}
+                      width='100%'
+                      color="#743C95"
+                      secondaryColor="rgb(120, 86, 255)"
+                      strokeWidth={3}
                     />
-                    <div className="flex flex-col items-start justify-start">
-                      <Text
-                        className="text-[19.41px] text-purple-700"
-                        size="txtPoppinsMedium1941"
-                      >
-                        Session for tomorrow
-                      </Text>
-                      <Text
-                        className="mt-0.5 text-[16.64px] text-black-900"
-                        size="txtPoppinsRegular1664"
-                      >
-                        Session with Michael Scott
-                      </Text>
-                      <Text
-                        className="text-[16.64px] text-black-900"
-                        size="txtPoppinsRegular1664"
-                      >
-                        10:00 - 10:30am
-                      </Text>
-                    </div>
-                  </div>
-                </div>
+                  </div>}>
+                    {filterItem.length === 0 ? (
+                      <div className="flex justify-center items-center w-full text-[24px] h-full">No Sessions at the Moment</div>
+                    ) : (
+                      filterItem?.map((item) => (
+                        <SessionNotifier
+                          startTime={item.requestStartTime}
+                          name={item.requestBy.name}
+                          endTime={item.requestEndTime}
+                        />
+                      ))
+                    )}
+                  </React.Suspense>
+                )}
               </div>
             </div>
 
           </div>
         </div>
-        {/* <Sidebar1 className="!fixed !w-[316px] bg-white-A700 flex font-poppins md:hidden inset-y-[0]
-         justify-start left-[0] my-auto overflow-auto md:px-5 shadow-bs1 top-[0]" /> */}
-        {/* <Line className="absolute bg-blue_gray-700 bottom-[0] h-[768px] right-[33%] w-px" /> */}
         {toggleNotification && <DesktopNineteenPage handler={toggleHandler} />}
         {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler} />}
       </div>
