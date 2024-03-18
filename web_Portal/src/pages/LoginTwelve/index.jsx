@@ -142,7 +142,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
   }
 
-  console.log(formData);
+ 
 
   useEffect(() => {
     if (userRole === 'mentor') {
@@ -471,3 +471,4 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
 export default LoginTwelvePage;
 // (multiStep == 5 && userRole === 'mentor')
+

@@ -11,31 +11,12 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
     const [selectedDates, setSelectedDates] = useState([]);
     const [alert, setAlert] = useState([])
     const [alertDiffAvail, setAlertDiffAvail] = useState([])
-
+    const [validateAvail, setValidateAvail] = useState()
+    const [validateTime, setValidateTime] = useState()
 
     const handlerAvailData = (name, value, i) => {
         const updatedAvailData = [...availData];
-        // availData.map(item => {
-        //     const startMoment = moment(item.availabilityStartTime);
-        //     const endMoment = moment(item.availabilityEndTime);
-        //     const selectedStartMoment = moment(selectedDates[i]).set({
-        //         hour: moment(value, 'LTS').hour(),
-        //         minute: moment(value, 'LTS').minute(),
-        //         second: moment(value, 'LTS').second()
-        //     });
-        //     // let updateAlertDiffAvail = [...alertDiffAvail]
-        //     if (startMoment.isSame(moment(selectedDates[i]), 'day')) {
-        //         if (selectedStartMoment.isBetween(startMoment, endMoment)) {
-        //             console.log('Choice overlaps with an existing slot. Please select a different time.');
-        //             setAlertDiffAvail(true)
-        //         } else {
-        //             console.log('The selected time slot is available.');
-        //             setAlertDiffAvail(false)  
-        //         }
-        //     } else {
-        //         console.log('No existing slots found for the selected date.');
-        //     }
-        // })
+
         if (name === 'availabilityStartTime') {
             const endTimeMoment = moment(updatedAvailData[i]?.availabilityEndTime, 'YYYY-MM-DD HH:mm:ss');
             const StartTimeMoment = moment(`${moment(selectedDates?.[i])?.format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
@@ -45,11 +26,11 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                 availabilityDuration: (StartTimeMoment && endTimeMoment) ? `${endTimeMoment.diff(StartTimeMoment, 'minutes')} Minutes` : ''
             }
             setAvail(updatedAvailData);
-
         } else if (name === 'availabilityEndTime') {
             const startTimeMoment = moment(updatedAvailData[i].availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
             const endTimeMoment = moment(`${moment(selectedDates[i])?.format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
 
+            let updateAlertDiffAvail = [...alertDiffAvail]
             let updateAlert = [...alert]
             if (endTimeMoment.isAfter(startTimeMoment)) {
                 updatedAvailData[i] = {
@@ -60,16 +41,44 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                 updateAlert[i] = false
                 setAvail(updatedAvailData);
                 setAlert(updateAlert)
+
             } else {
                 updateAlert[i] = true
                 setAlert(updateAlert)
             }
-            // let val = availData.map((item) => { return(
-            //     moment(item.availabilityStartTime).format('YYYY-MM-DD') === moment(selectedDates[i]).format('YYYY-MM-DD')
-            //     ? ((moment(item.availabilityStartTime).format('HH:mm:ss') >= moment(value, 'LTS')?.format('HH:mm:ss'))) 
-            //     ? console.log('choice different slot') : console.log('so far good to go!') :''
-            // )})
-            // console.log("val=> ", val);
+
+            // availData.map((item) => {
+            //     console.log("test items=>", item);
+            //     if (moment(item.availabilityStartTime).format('YYYY-MM-DD') === moment(selectedDates[i]).format('YYYY-MM-DD')) {
+            //         if (moment(item.availabilityStartTime).format('HH:mm:ss') < moment(value, 'LTS')?.format('HH:mm:ss') && moment(item.availabilityEndTime).format('HH:mm:ss') > moment(value, 'LTS')?.format('HH:mm:ss')) {
+            //             updateAlertDiffAvail[i] = false
+            //             setAlertDiffAvail(updateAlertDiffAvail)
+            //             console.log('check in if condition true => ', moment(item.availabilityStartTime).format('HH:mm:ss') < moment(value, 'LTS')?.format('HH:mm:ss') && moment(item.availabilityEndTime).format('HH:mm:ss') > moment(value, 'LTS')?.format('HH:mm:ss'));
+            //         } else {
+            //             updateAlertDiffAvail[i] = true
+            //             setAlertDiffAvail(updateAlertDiffAvail)
+            //             console.log("check condition false => ", moment(item.availabilityStartTime).format('HH:mm:ss') < moment(value, 'LTS')?.format('HH:mm:ss') && moment(item.availabilityEndTime).format('HH:mm:ss') > moment(value, 'LTS')?.format('HH:mm:ss'));
+            //         }
+            //     }
+            // })
+            availData.forEach((item, index) => {
+
+                if (moment(item.availabilityStartTime).format('YYYY-MM-DD') === moment(selectedDates[i]).format('YYYY-MM-DD')) {
+                    const startTime = moment(item.availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
+                    const endTime = moment(item.availabilityEndTime, 'YYYY-MM-DD HH:mm:ss');
+                    const newTime = moment(`${moment(selectedDates[i]).format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
+                    // console.log("startTime",startTime);
+                    // console.log("endTime",endTime);
+                    // console.log("newTime",newTime);
+
+                    if (newTime.isBetween(startTime, endTime) || newTime.isSame(startTime) || newTime.isSame(endTime)) {
+                        updateAlertDiffAvail[index] = true;
+                    } else {
+                        updateAlertDiffAvail[index] = false;
+                    }
+                }
+            });
+            setAlertDiffAvail(updateAlertDiffAvail);
         }
     }
 
@@ -85,7 +94,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
             // setSelectedDate(date);
         }
     };
-    // && (moment(item.availabilityEndTime).format('HH:mm:ss') < moment(value, 'LTS')?.format('HH:mm:ss'))
+    
     const handleAddInput = (i) => {
         setSelectedDates(selectedDates.concat(selectedDates[i]));
     }
@@ -96,18 +105,22 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
 
     useEffect(() => {
         handlerChange('mentorAttributes.mentorsAvailabilities', availData)
+        let validate = alertDiffAvail.some((item) => item === true)
+        setValidateAvail(validate)
+        let validateTime = alert.some((item) => item === true)
+        setValidateTime(validateTime)
     }, [availData])
 
 
-    useEffect(() => {
-        console.log("availData=> ", availData);
-    }, [availData]);
+    // useEffect(() => {
+    //     console.log("availData=> ", availData);
+    // }, [availData]);
 
 
     return (
         <div className="w-full h-screen flex justify-center items-center fixed z-[110]" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
             <div className="bg-[#fff] flex flex-col items-start justify-start p-[30px] md:px-5 rounded-[26px] w-[41%] sm:w-full
-            sm:mx-[12px] z-[1] h-full">
+            sm:mx-[12px] z-[1] h-[90%]">
                 <div className="flex flex-col gap-5 items-start justify-start mb-[11px] md:ml-[0] w-full md:w-full overflow-y-scroll">
                     <Text
                         className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900 flex gap-2 items-center"
@@ -156,7 +169,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                                                     value={availData[i]?.availabilityStartTime ? moment(availData[i]?.availabilityStartTime).format('HH:mm') : ''}
                                                     onChange={(e) => handlerAvailData('availabilityStartTime', e.target.value, i)}
                                                 />
-                                                {/* <span className='text-[red] text-[13px] mt-1'>{alert && "please enter less than endtime"}</span> */}
+                                                <span className='text-[red] text-[13px] mt-1'>{alertDiffAvail[i] && "please chose diff!"}</span>
                                             </div>
                                             <div className='flex flex-col'>
                                                 <label htmlFor="endTime" className='text-xs text-blue_gray-700 mb-1'>end time</label>
@@ -209,10 +222,10 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                     <Button
                         className={`!text-gray-100 cursor-pointer font-poppins h-[60px] leading-[normal] md:ml-[0] mt-[15px]
                         rounded-[41px] shadow-bs5 sm:text-[26.4px] md:text-[28.4px] text-[25.4px] text-center w-full flex justify-center items-center
-                        ${availData.length === 0 && "opacity-60 cursor-not-allowed"}`}
+                        ${((availData.length === 0) || (validateAvail) || (validateTime)) && "opacity-60 cursor-not-allowed"}`}
                         size="md"
                         onClick={next}
-                        disabled={availData.length === 0}
+                        disabled={((availData.length === 0) || (validateAvail) || (validateTime))}
                     >
                         Next
                     </Button>
