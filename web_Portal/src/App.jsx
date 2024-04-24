@@ -6,7 +6,7 @@ import Routes from "./Routes";
 function App() {
   return (
     <ProSidebarProvider>
-      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+      <GoogleOAuthProvider clientId='829979121841-9cgqra6vo2nuo1lqmjnfed8u42do52ul.apps.googleusercontent.com'>
         <Routes />
       </GoogleOAuthProvider>
     </ProSidebarProvider>

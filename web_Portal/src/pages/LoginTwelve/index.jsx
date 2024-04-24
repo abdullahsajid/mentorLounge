@@ -203,11 +203,37 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
 
   const googleSignIn = useGoogleLogin({
-    onSuccess: (res) => {
-      console.log("res", res);
-      alert("Login successfull. 😍");
+    onSuccess: async (res) => {
+      const userDataResponse = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${res.access_token}`, {
+        headers: {
+          Authorization: `Bearer ${res.access_token}`,
+        },
+      });
+
+      if (userDataResponse.ok) {
+        const userData = await userDataResponse.json();
+        setFormData({
+          name: userData.name,
+          email: userData.email,
+          signuptype: "web",
+          platform: "google",
+          googleId: userData.sub,
+          active: true,
+          is_verified: true,
+          approved: true,
+          profilePic: userData.picture,
+        })
+        setMultiStep(2)
+      } else {
+        console.error('Failed to fetch user data:', userDataResponse.statusText);
+      }
     },
+    onError: (err) => {
+      console.log("err", err);
+      alert("Login failed. 😔");
+    }
   });
+
 
   const handleLogin = () => {
     setToggleLogin(!toggleLogin)
