@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Button, Input, Text } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from '@fortawesome/free-solid-svg-icons'
-const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
+const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfile,isProfileFormValid,setSkillType,skillType }) => {
   const [skills, setSkills] = useState('')
-  const [skillType, setSkillType] = useState([])
   const [addLink, setLinks] = useState([{ socialPlatformLink: '' }])
-  const [isFormValid, setIsFormValid] = useState(false)
-  const [validation, setValidation] = useState({
-    [`${formData?.role}Feilds`]:{isValid: true, errorMessage: 'Feild is required'},
-    [`${formData?.role}Description`]: { isValid: true, errorMessage: 'Description is required' },
-    [`${formData?.role}Education`]: { isValid: true, errorMessage: 'Education is required' },
-    [`${formData?.role}Experience`]: { isValid: true, errorMessage: 'Experience is required' },
-    [`${formData?.role}Price`]: { isValid: true, errorMessage: 'Price must be a number' },
-    socialMediaLinks: { isValid: true, errorMessage: 'At least one link is required' },
-  })
+  // const [isFormValid, setIsFormValid] = useState(false)
+  // const [validation, setValidation] = useState({
+  //   [`${formData?.role}Feilds`]:{isValid: true, errorMessage: 'Feild is required'},
+  //   [`${formData?.role}Description`]: { isValid: true, errorMessage: 'Description is required' },
+  //   [`${formData?.role}Education`]: { isValid: true, errorMessage: 'Education is required' },
+  //   [`${formData?.role}Experience`]: { isValid: true, errorMessage: 'Experience is required' },
+  //   [`${formData?.role}Price`]: { isValid: true, errorMessage: 'Price must be a number' },
+  //   socialMediaLinks: { isValid: true, errorMessage: 'At least one link is required' },
+  // })
   const formFields = [
     { name: `${(formData.role === 'mentor') ? 'mentorDescription' : 'menteeDescription'}`, type: 'text', label: 'Short description about yourself' },
     { name: `${(formData.role === 'mentor') ? 'mentorEducation' : 'menteeEducation'}`, type: 'text', label: 'Your Education' },
@@ -53,27 +52,26 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
     updateValues[index][name] = value
     setLinks(updateValues)
   }
+ 
+  // const validateForm = () => {
+  //   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  //   const newValidation = {
+  //     [`${formData?.role}Feilds`]:{isValid: skillType.some(skill => skill.trim() != ''), errorMessage: 'Feild is required'},
+  //     [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
+  //     [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
+  //     [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
+  //     [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
+  //     socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
+  //     formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
+  //   };
 
-  
-  const validateForm = () => {
-    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-    const newValidation = {
-      [`${formData?.role}Feilds`]:{isValid: skillType.some(skill => skill.trim() != ''), errorMessage: 'Feild is required'},
-      [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
-      [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
-      [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
-      [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
-      socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
-      formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
-    };
+  //   setValidation(newValidation);
 
-    setValidation(newValidation);
+  //   const isFormValid = Object.values(newValidation).every(field => field.isValid);
+  //   setIsFormValid(isFormValid);
 
-    const isFormValid = Object.values(newValidation).every(field => field.isValid);
-    setIsFormValid(isFormValid);
-
-    return isFormValid;
-  };
+  //   return isFormValid;
+  // };
 
   useEffect(() => {
     handlerChange(`${(formData.role === 'mentor') ? "mentorAttributes.mentorFeilds" : "menteeAttributes.menteeFeilds"}`, skillType)
@@ -139,9 +137,9 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
                     variant="fill"
                     value={skills}
                     onChange={(e) => setSkills(e.target.value)}
-                    isValid={validation[`${formData.role}Feilds`]?.isValid}
-                    errMessage={validation[`${formData.role}Feilds`]?.errorMessage}
-                    validationCondition={validateForm}
+                    isValid={validationProfile[`${formData.role}Feilds`]?.isValid}
+                    errMessage={validationProfile[`${formData.role}Feilds`]?.errorMessage}
+                    // validationCondition={validateForm}
                     errClass={'ml-[14px] mb-[4px]'}
                     onKeyPress={(e) => {
                       if (e.key === 'Enter') {
@@ -174,9 +172,9 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
                         type={type}
                         value={(formData.role === 'mentor') ? formData.mentorAttributes[name] : formData.menteeAttributes[name]}
                         onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? `mentorAttributes.${name}` : `menteeAttributes.${name}`}`, e.target.value)}
-                        isValid={validation[name]?.isValid}
-                        errMessage={validation[name]?.errorMessage}
-                        validationCondition={validateForm}
+                        isValid={validationProfile[name]?.isValid}
+                        errMessage={validationProfile[name]?.errorMessage}
+                        // validationCondition={validateForm}
                         errClass={'ml-[14px] mb-[4px]'}
                       ></Input>
                     </div>
@@ -196,7 +194,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
                     <div className="flex flex-col items-center justify-start w-full" key={index}>
                       <Input
                         name="socialPlatformLink"
-                        placeholder="Link here..."
+                        placeholder="https://socialmedia.com"
                         className="!placeholder:text-gray-900_7f !text-gray-900_7f leading-[normal] md:h-auto px[30px] px-[16px] pl-[10px] sm:h-auto text-left text-xl w-full"
                         wrapClassName="border border-gray-900_1e border-solid rounded-[22px] w-full"
                         color="gray_100_03"
@@ -204,9 +202,9 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
                         variant="fill"
                         value={item.socialPlatformLink}
                         onChange={(e) => handlerInputChange(e, index)}
-                        isValid={validation["socialMediaLinks"]?.isValid}
-                        errMessage={validation["socialMediaLinks"]?.errorMessage}
-                        validationCondition={validateForm}
+                        isValid={validationProfile["socialMediaLinks"]?.isValid}
+                        errMessage={validationProfile["socialMediaLinks"]?.errorMessage}
+                        // validationCondition={validateForm}
                         errClass={'ml-[14px] mb-[4px]'}
                       ></Input>
                     </div>
@@ -228,8 +226,8 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange }) => {
             <Button
               className={`!text-gray-100 cursor-pointer font-poppins h-[60px] leading-[normal] md:ml-[0] mt-[29px]
                rounded-[41px] shadow-bs5 sm:text-[26.4px] md:text-[28.4px] text-[25.4px] text-center w-full flex justify-center items-center
-               ${!isFormValid && "opacity-60 cursor-not-allowed"}`}
-              size="1xl" onClick={next} disabled={!isFormValid}
+               ${!isProfileFormValid && "opacity-60 cursor-not-allowed"}`}
+              size="1xl" onClick={next} disabled={!isProfileFormValid}
             >
               Next
             </Button>

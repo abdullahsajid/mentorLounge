@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Img, Input, List, Text } from "components";
 import validator from "validator";
-const LoginFourteenPage = ({ close, next, handlerChange, formData }) => {
-  const [isFormValid, setIsFormValid] = useState(false)
-  const [validation, setValidation] = useState({
-    name: { isValid: true, errMessage: 'name is required' },
-    email: { isValid: true, errMessage: 'enter valid email' },
-    password: { isValid: true, errMessage: 'password must be at least 6 character' },
-    phone: { isValid: true, errMessage: 'enter valid phone no' }
-  })
+const LoginFourteenPage = ({ close, next, handlerChange, formData,validation,isFormValid }) => {
+  // const [isFormValid, setIsFormValid] = useState(false)
+  // const [validation, setValidation] = useState({
+  //   name: { isValid: true, errMessage: 'name is required' },
+  //   email: { isValid: true, errMessage: 'enter valid email' },
+  //   password: { isValid: true, errMessage: 'password must be at least 6 character' },
+  //   phone: { isValid: true, errMessage: 'enter valid phone no' }
+  // })
   const formFields = [
     { name: 'name', type: 'text', label: 'Name' },
     { name: 'email', type: 'email', label: 'Email' },
@@ -16,20 +16,20 @@ const LoginFourteenPage = ({ close, next, handlerChange, formData }) => {
     { name: 'phone', type: 'number', label: 'Phone No' }
   ]
 
-  const validationCondition = () => {
-    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
-    const updateValidation = {
-      name: { isValid: user_regex.test(formData.name), errMessage: 'name at least 4 to 20 character' },
-      email: { isValid: validator.isEmail(formData.email), errMessage: 'enter valid email' },
-      password: { isValid: (formData.password?.length > 6), errMessage: 'password must be at least 6 character' },
-      phone: { isValid: validator.isMobilePhone(formData.phone), errMessage: 'enter valid phone no' }
-    }
+  // const validationCondition = () => {
+  //   const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+  //   const updateValidation = {
+  //     name: { isValid: user_regex.test(formData.name), errMessage: 'name at least 4 to 20 character' },
+  //     email: { isValid: validator.isEmail(formData.email), errMessage: 'enter valid email' },
+  //     password: { isValid: (formData.password?.length > 6), errMessage: 'password must be at least 6 character' },
+  //     phone: { isValid: validator.isMobilePhone(formData.phone), errMessage: 'enter valid phone no' }
+  //   }
 
-    setValidation(updateValidation)
-    const formValid = Object.values(updateValidation).every((item) => item.isValid)
-    setIsFormValid(formValid)
-    return formValid
-  }
+  //   setValidation(updateValidation)
+  //   const formValid = Object.values(updateValidation).every((item) => item.isValid)
+  //   setIsFormValid(formValid)
+  //   return formValid
+  // }
 
   return (
     <>
@@ -62,7 +62,7 @@ const LoginFourteenPage = ({ close, next, handlerChange, formData }) => {
                       onChange={(e) => handlerChange(name, e.target.value)}
                       isValid={validation[name].isValid}
                       errMessage={validation[name].errMessage}
-                      validationCondition={validationCondition}
+                      // validationCondition={validationCondition}
                     />
                   </div>
                 ))}

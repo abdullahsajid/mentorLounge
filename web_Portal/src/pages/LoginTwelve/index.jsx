@@ -4,6 +4,8 @@ import Cookies from "universal-cookie";
 import { Button, Img, List, Text } from "components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
+import { useCreditCardValidator } from "react-creditcard-validator";
 const LoginThirteenPage = lazy(() => import("pages/LoginThirteen"));
 const LoginFourteenPage = lazy(() => import("pages/LoginFourteen"));
 const LoginSixteenPage = lazy(() => import("pages/LoginSixteen"));
@@ -16,10 +18,30 @@ const cookie = new Cookies()
 const LoginTwelvePage = ({ setToggleSidebar }) => {
   const navigation = useNavigate()
   const { user } = useSelector((state) => state.user)
+  const [skillType, setSkillType] = useState([])
+  const [selectPayment, setPayment] = useState('')
+  const [isPaymentFormValid, setIsPaymentFormValid] = useState(false)
   const [toggleLogin, setToggleLogin] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
   const [multiStep, setMultiStep] = useState(1)
   const [userRole, setUserRole] = useState('')
+  const [isProfileFormValid, setIsProfileFormValid] = useState(false)
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [validation, setValidation] = useState({
+    name: { isValid: true, errMessage: 'name is required' },
+    email: { isValid: true, errMessage: 'enter valid email' },
+    password: { isValid: true, errMessage: 'password must be at least 6 character' },
+    phone: { isValid: true, errMessage: 'enter valid phone no' }
+  })
+  const [validationPayment, setPaymentValidation] = useState({
+    payType: { isValid: true, errMessage: "Enter your choice" },
+    name: { isValid: true, errMessage: 'name is required' },
+    cardNum: { isValid: false },
+    month: { isValid: true, errMessage: 'field is required' },
+    year: { isValid: true, errMessage: 'field is required' }
+  })
+
+  const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,14 +54,21 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     signuptype: "web",
     platform: "email",
   })
-
+  const [validationProfile, setProfileValidation] = useState({
+    [`${formData?.role}Feilds`]:{isValid: true, errorMessage: 'Feild is required'},
+    [`${formData?.role}Description`]: { isValid: true, errorMessage: 'Description is required' },
+    [`${formData?.role}Education`]: { isValid: true, errorMessage: 'Education is required' },
+    [`${formData?.role}Experience`]: { isValid: true, errorMessage: 'Experience is required' },
+    [`${formData?.role}Price`]: { isValid: true, errorMessage: 'Price must be a number' },
+    socialMediaLinks: { isValid: true, errorMessage: 'At least one link is required' },
+  })
   const handlerChange = (name, value) => {
     setFormData((formData) => {
       if (name.startsWith('mentorAttributes.')) {
         const attributeName = name.split('.')[1];
         if (attributeName == 'userCreditCard') {
           const cardData = name.split('.')[2]
-          return {
+          const userDetails = {
             ...formData,
             mentorAttributes: {
               ...formData.mentorAttributes,
@@ -49,22 +78,28 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               }
             }
           }
+          validationPaymentCondition()
+          return userDetails
         } else if (attributeName == 'mentorFeilds') {
-          return {
+          const userDetails = {
             ...formData,
             mentorAttributes: {
               ...formData.mentorAttributes,
               mentorFeilds: value
             }
           }
+          validateProfileForm(userDetails)
+          return userDetails
         } else if (attributeName == 'socialMediaLinks') {
-          return {
+          const userDetails = {
             ...formData,
             mentorAttributes: {
               ...formData.mentorAttributes,
               socialMediaLinks: value
             }
           }
+          validateProfileForm(userDetails)
+          return userDetails 
         } else if (attributeName == 'mentorsAvailabilities') {
           return {
             ...formData,
@@ -95,7 +130,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         const attributeName = name.split('.')[1];
         if (attributeName == 'userCreditCard') {
           const cardData = name.split('.')[2]
-          return {
+          const userDetails = {
             ...formData,
             menteeAttributes: {
               ...formData.menteeAttributes,
@@ -105,22 +140,28 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               }
             }
           }
+          validationPaymentCondition()
+          return userDetails
         } else if (attributeName == 'menteeFeilds') {
-          return {
+          const userDetails = {
             ...formData,
             menteeAttributes: {
               ...formData.menteeAttributes,
               menteeFeilds: value
             }
           }
+          validateProfileForm(userDetails)
+          return userDetails 
         } else if (attributeName == 'socialMediaLinks') {
-          return {
+          const userDetails = {
             ...formData,
             menteeAttributes: {
               ...formData.menteeAttributes,
               socialMediaLinks: value
             }
           }
+          validateProfileForm(userDetails)
+          return userDetails 
         }
         else {
           return {
@@ -133,16 +174,16 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         }
       }
       else {
-        return {
+        const userDetails = {
           ...formData,
           [name]: value,
         }
+        validationCondition(userDetails)
+        return userDetails
       }
     })
 
   }
-
- 
 
   useEffect(() => {
     if (userRole === 'mentor') {
@@ -201,6 +242,56 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     }
   }, [userRole])
 
+  const validationCondition = (data) => {
+    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+    const updateValidation = {
+      name: { isValid: user_regex.test(formData.name), errMessage: 'name at least 4 to 20 character' },
+      email: { isValid: validator.isEmail(formData.email), errMessage: 'enter valid email' },
+      password: { isValid: (formData.password?.length >= 6), errMessage: 'password must be at least 6 character' },
+      phone: { isValid: validator.isMobilePhone(formData.phone), errMessage: 'enter valid phone no' }
+    }
+
+    setValidation(updateValidation)
+    const formValid = Object.values(updateValidation).every((item) => item.isValid)
+    setIsFormValid(formValid)
+    return formValid
+  }
+
+  const validateProfileForm = () => {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const newValidation = {
+      [`${formData?.role}Feilds`]:{isValid: skillType.some(skill => skill.trim() != ''), errorMessage: 'Feild is required'},
+      [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
+      [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
+      [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
+      [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
+      socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
+      formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
+    };
+
+    setProfileValidation(newValidation);
+
+    const isFormValid = Object.values(newValidation).every(field => field.isValid);
+    setIsProfileFormValid(isFormValid);
+
+    return isFormValid;
+  };
+
+  const validationPaymentCondition = () => {
+    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+    const updateValidation = {
+      payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
+      name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
+      cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
+      month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
+      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' }
+    }
+    setPaymentValidation(updateValidation)
+    const formValid = Object.values(updateValidation).every((item) => item.isValid)
+    setIsPaymentFormValid(formValid)
+
+    return formValid
+  }
 
   const googleSignIn = useGoogleLogin({
     onSuccess: async (res) => {
@@ -484,10 +575,13 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
           </div>
         </div>
         {toggleLogin && <LoginThirteenPage close={() => setToggleLogin(false)} />}
-        {toggleSignUp && <LoginFourteenPage close={() => setToggleSignUp(false)} next={next} handlerChange={handlerChange} formData={formData} />}
+        {toggleSignUp && <LoginFourteenPage close={() => setToggleSignUp(false)} next={next} handlerChange={handlerChange} 
+          formData={formData} validation={validation} isFormValid={isFormValid}/>}
         {multiStep == 2 && <LoginSixteenPage next={next} prev={prev} formData={formData} handlerChange={handlerChange} setUserRole={setUserRole} />}
-        {multiStep == 3 && <LoginEighteenPage next={next} prev={prev} formData={formData} handlerChange={handlerChange} />}
-        {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
+        {multiStep == 3 && <LoginEighteenPage next={next} prev={prev} formData={formData} handlerChange={handlerChange}
+           isProfileFormValid={isProfileFormValid} validationProfile={validationProfile} setSkillType={setSkillType} skillType={skillType} />}
+        {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev}
+           setPayment={setPayment} selectPayment={selectPayment} validationPayment={validationPayment} isPaymentFormValid={isPaymentFormValid} />}
         {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
         {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} />}
       </div>

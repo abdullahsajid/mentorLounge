@@ -9,37 +9,37 @@ import Cookies from 'universal-cookie';
 // import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 const cookie = new Cookies()
 
-const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
+const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,validationPayment,isPaymentFormValid,selectPayment}) => {
   const [signUpUser] = useSignUpUserMutation()
   const navigation = useNavigate()
-  const [selectPayment, setPayment] = useState('')
-  const [isFormValid, setIsFormValid] = useState(false)
+  // const [selectPayment, setPayment] = useState('')
+  // const [isFormValid, setIsFormValid] = useState(false)
   // const [creditCardNumber, setCreditCardNumber] = useState('');
-  const [validation, setValidation] = useState({
-    payType: { isValid: true, errMessage: "Enter your choice" },
-    name: { isValid: true, errMessage: 'name is required' },
-    cardNum: { isValid: true },
-    month: { isValid: true, errMessage: 'field is required' },
-    year: { isValid: true, errMessage: 'field is required' }
-  })
+  // const [validation, setValidation] = useState({
+  //   payType: { isValid: true, errMessage: "Enter your choice" },
+  //   name: { isValid: true, errMessage: 'name is required' },
+  //   cardNum: { isValid: true },
+  //   month: { isValid: true, errMessage: 'field is required' },
+  //   year: { isValid: true, errMessage: 'field is required' }
+  // })
 
   const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
 
-  const validationCondition = () => {
-    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
-    const updateValidation = {
-      payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
-      name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
-      cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
-      month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
-      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' }
-    }
-    setValidation(updateValidation)
-    const formValid = Object.values(updateValidation).every((item) => item.isValid)
-    setIsFormValid(formValid)
+  // const validationCondition = () => {
+  //   const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+  //   const updateValidation = {
+  //     payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
+  //     name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
+  //     cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
+  //     month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
+  //     year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' }
+  //   }
+  //   setValidation(updateValidation)
+  //   const formValid = Object.values(updateValidation).every((item) => item.isValid)
+  //   setIsFormValid(formValid)
 
-    return formValid
-  }
+  //   return formValid
+  // }
 
   const handleSelectedPayment = (data) => {
     setPayment(data)
@@ -167,7 +167,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                   </Button>
                 </div>
                 <div className="flex items-center w-full">
-                  <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validation['payType'].isValid) && validation['payType'].errMessage}</p>
+                  <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['payType'].isValid) && validationPayment['payType'].errMessage}</p>
                 </div>
                 <Text
                   className="ml-1 md:ml-[0] mt-[30px] sm:mt-[20px] sm:text-[16.51px] md:text-[18.51px] text-[19.51px] text-black-900_01"
@@ -188,10 +188,10 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                         name="name"
                         value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['nameOnCard'] : formData.menteeAttributes.userCreditCard['nameOnCard']}
                         onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.nameOnCard' : 'menteeAttributes.userCreditCard.nameOnCard'}`, e.target.value)}
-                        onBlur={validationCondition}
+                        // onBlur={validationCondition}
                       />
                     </div>
-                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validation['name'].isValid) && validation['name'].errMessage}</p>
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['name'].isValid) && validationPayment['name'].errMessage}</p>
                   </div>
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="flex flex-col items-center justify-start w-full">
@@ -224,9 +224,9 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                       name="month"
                       value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth']}
                       onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.expiryMonth' : 'menteeAttributes.userCreditCard.expiryMonth'}`, e.target.value)}
-                      onBlur={validationCondition}
+                      // onBlur={validationCondition}
                     />
-                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validation['month'].isValid) && validation['month'].errMessage}</p>
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['month'].isValid) && validationPayment['month'].errMessage}</p>
                   </div>
 
                   <div className="flex flex-col items-center justify-start w-[100%] sm:w-[50%]">
@@ -241,15 +241,15 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev }) => {
                         name="year"
                         value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear']}
                         onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.expiryYear' : 'menteeAttributes.userCreditCard.expiryYear'}`, e.target.value)}
-                        onBlur={validationCondition}
+                        // onBlur={validationCondition}
                       />
-                      <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validation['year'].isValid) && validation['year'].errMessage}</p>
+                      <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['year'].isValid) && validationPayment['year'].errMessage}</p>
                     </div>
                   </div>
                 </div>
                 <Button className={`!text-gray-100 cursor-pointer h-[60px] leading-[normal] mb-[10px]
-                md:ml-[0] rounded-[39px] shadow-bs5 sm:text-[25.39px] md:text-[27.39px]
-                text-[25.01px] text-center w-full flex justify-center items-center mt-7 ${!isFormValid && "opacity-60 cursor-not-allowed"}`} onClick={(formData.role === 'mentor') ? next : handleSignUp} disabled={!isFormValid}>
+                  md:ml-[0] rounded-[39px] shadow-bs5 sm:text-[25.39px] md:text-[27.39px]
+                  text-[25.01px] text-center w-full flex justify-center items-center mt-7 ${!isPaymentFormValid && "opacity-60 cursor-not-allowed"}`} onClick={(formData.role === 'mentor') ? next : handleSignUp} disabled={!isPaymentFormValid}>
                   {(formData.role === 'mentor') ? 'Next' : 'Register'}
                 </Button>
               </div>
