@@ -78,7 +78,7 @@ const Input = React.forwardRef(
             placeholder={placeholder}
             required
             autoComplete="off"
-            onBlur={validationCondition}
+            // onBlur={validationCondition}
             {...restProps}
           />
           {!isValid && <p className={`text-red-500 text-sm ${restProps.errClass}`}>{errMessage}</p>}

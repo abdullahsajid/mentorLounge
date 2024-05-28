@@ -29,14 +29,16 @@ const LoginThirteenPage = ({ close }) => {
 
   const handlerChange = (name, value) => {
     setUserData((pre) => {
-      return { ...pre, [name]: value }
+      const userDetails = {...pre, [name]: value }
+      validationCondition(userDetails)
+      return userDetails
     })
   }
 
-  const validationCondition = () => {
+  const validationCondition = (data) => {
     const updateValidation = {
-      email: { isValid: validator.isEmail(userData.email), errMessage: 'enter valid email' },
-      password: { isValid: (userData.password?.length > 5), errMessage: 'password must be at least 6 character' },
+      email: { isValid: validator.isEmail(data.email), errMessage: 'enter valid email' },
+      password: { isValid: (data.password?.length > 5), errMessage: 'password must be at least 6 character' },
     }
     setValidation(updateValidation)
     const formValid = Object.values(updateValidation).every((item) => item.isValid)
@@ -124,7 +126,7 @@ const LoginThirteenPage = ({ close }) => {
                       onChange={(e) => handlerChange(name, e.target.value)}
                       isValid={validation[name].isValid}
                       errMessage={validation[name].errMessage}
-                      validationCondition={validationCondition}
+                      // validationCondition={validationCondition}
                     />
                   </div>
                 ))}
