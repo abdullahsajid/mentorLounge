@@ -7,7 +7,7 @@ const TopMentor = ({id, name, mentorFields, mentorDescription, mentorEducation, 
         navigate('/profile', { state: {id,available, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img } })
     }
     return (
-        <div className="h-full relative w-full cursor-pointer" onClick={handlerMentorProfile}>
+        <div className="h-full relative w-full cursor-pointer overflow-hidden" onClick={handlerMentorProfile}>
             <div className="h-full m-auto w-full">
                 <Img
                     className=" m-auto object-cover rounded-[13px] w-full h-full"
@@ -15,7 +15,7 @@ const TopMentor = ({id, name, mentorFields, mentorDescription, mentorEducation, 
                     alt="rectangleSix"
                 />
             </div>
-            <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%] gap-[7px]">
+            <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%] gap-[7px] overflow-y-auto">
                 <Text
                     className="text-[15px] font-bold text-white-A700 tracking-[0.10px]"
                     size="txtPoppinsMedium1009"

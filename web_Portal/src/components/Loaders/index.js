@@ -1,8 +1,8 @@
 import React from 'react'
 import { Oval } from 'react-loader-spinner'
-const Loaders = () => {
+const Loaders = (props) => {
   return (
-    <div>
+    <div className={`${props.sty}`}>
         <Oval
             height={30}
             width='100%'
