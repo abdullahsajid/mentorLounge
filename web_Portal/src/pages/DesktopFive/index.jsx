@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useBookSessionMutation } from "features/apis/mentee";
 import toast from 'react-hot-toast';
 import { Cross as Hamburger } from 'hamburger-react'
-
+import * as moment from 'moment';
 
 const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [bookSession] = useBookSessionMutation()
@@ -17,29 +17,28 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [selectQOne, setSelectQOne] = useState('Interview questions')
   const [selectQTwo, setSelectQTwo] = useState('UX Design')
   const [getQuesThree, setQuesThree] = useState('')
-  const [getDate, setDate] = useState(new Date().toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }))
+  const [getDate, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
   const [selectedDates, setSelectedDates] = useState([]);
 
   const handlerFilter = (val) => {
     let splitVal = val?.split(' ')
-    let filterRes = location?.state?.available?.filter(item => item.availabilityDuration.slice(0, 2) === splitVal[0])
+    let filterRes = location?.state?.available?.filter(item => item?.availabilityDuration?.slice(0, 2) === splitVal[0])
     // console.log("Filter Res=> ", filterRes)
     setFilterData(filterRes)
   }
+
+  // console.log("availability:",location.state.available);
 
   const handlerDurationChange = (e) => {
     setSelectDuration(e.target.id)
     handlerFilter(e.target.id)
   }
 
-  const handleFilterDate = () => {
-    const formattedDate = new Date(getDate).toLocaleDateString().replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
-    // console.log(formattedDate)
-    let filterDate = filterData?.filter(item => item.availabilityStartTime.slice(0, 10) === formattedDate)
+  const handleFilterDate = (date) => {
+    const formattedDate = moment(date)?.format('YYYY-MM-DD')
+    // console.log("filterDate:",formattedDate);
+    const filterDate = filterData?.filter(item => item?.availabilityStartTime?.slice(0, 10) == formattedDate)
+    // console.log("filterDate",filterData);
     setFilterAvailability(filterDate)
   }
 
@@ -51,9 +50,9 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     // });
 
     setDate(val)
-    handleFilterDate()
+    handleFilterDate(val)
   }
-  
+  // console.log("Get Date: ",getDate);
 
   const handlerQusOne = (val) => {
     setSelectQOne(val)
@@ -144,13 +143,17 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   ), [selectQTwo])
 
 
-  const formattedDate = new Date(getDate).toLocaleDateString().replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
+  const formattedDate = moment(getDate)?.format('YYYY-MM-DD');
+  const startTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityStartTime?.slice(-14)}`)?.toISOString();
+  const endTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityEndTime?.slice(-14)}`)?.toISOString();
+
+  // console.log("filterAvailability",filterAvailability);
 
   let bookSessionPayload = {
     sessionRequestTitle: "test007",
     requestDuration: selectDuration,
-    requestStartTime: `${formattedDate}${filterAvailability[0]?.availabilityStartTime.slice(-14)}`,
-    requestEndTime: `${formattedDate}${filterAvailability[0]?.availabilityEndTime.slice(-14)}`,
+    requestStartTime: new Date(startTime),
+    requestEndTime: new Date(endTime),
     sessionTimeZone: "Asia/karachi",
     requestStatus: "pending",
     mentor: location.state.id,
@@ -174,7 +177,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     isReferred: true
   }
 
-
+  // console.log("bookSessionPayload",bookSessionPayload);
 
   const handlerBookSession = async () => {
     if (filterAvailability.length <= 0) {
@@ -224,6 +227,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     }
   }
   
+
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-poppins items-center justify-center ml-auto w-full md:!w-full sm:!w-full" style={{
@@ -321,8 +325,17 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   <div className="my-7">
                     <Calendar 
                       value={getDate} 
-                      onChange={(date) => handleData(date)} 
+                      onChange={handleData}
+                      minDate={new Date()} 
                     />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="font-bold">Availability:</div>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {location?.state?.available?.map((val) => (
+                        <div className="border-2 px-2 rounded-md shadow">{moment(val.availabilityStartTime).format('MMMM Do YYYY')}</div>
+                      ))}
+                    </div>
                   </div>
                   <Text
                     className="mt-[49px] sm:text-[25px] md:text-[27px] text-[29px] text-black-900_01 text-center"

@@ -44,28 +44,28 @@ const Sidebar1 = (props) => {
   const sideBarMenu = [
     {
       icon: (
-        <i class="fa-solid fa-house"></i>
+        <i className="fa-solid fa-house"></i>
       ),
       label: "Home",
       href: `${((user?.role === 'mentor') || (user?.data?.role === 'mentor')) ? '/mentor' : 'mentee'}`
     },
     {
       icon: (
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <i className="fa-solid fa-magnifying-glass"></i>
       ),
       label: "Search",
       href: `${((user?.role === 'mentor') || (user?.data?.role === 'mentor')) ? '/mtrsearch' : '/search'}`
     },
     {
       icon: (
-        <i class="fa-solid fa-folder"></i>
+        <i className="fa-solid fa-folder"></i>
       ),
       label: "Sessions",
       href: `${(user?.role === 'mentor') || (user?.data?.role === 'mentor') ? '/mtrsession' : 'session'}`
     },
     {
       icon: (
-        <i class="fa-solid fa-gear"></i>
+        <i className="fa-solid fa-gear"></i>
       ),
       label: "Settings",
       href: `${(user?.role === 'mentor') || (user?.data?.role === 'mentor') ? 'mtrsettings' : '/settings'}`,
@@ -89,7 +89,7 @@ const Sidebar1 = (props) => {
         ))}
         <div className="p-[21px] pl-[41px] text-[#535353] text-[20px] flex gap-[22px] items-center mt-[10px] cursor-pointer"
           onClick={handlerLogout}>
-          <i class="fa-solid fa-right-from-bracket"></i>
+          <i className="fa-solid fa-right-from-bracket"></i>
           <span>Logout</span>
         </div>
       </Sidebar>

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Img, Text } from "components";
 import { useNavigate } from 'react-router-dom';
-const TopMentor = ({id, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img,available}) => {
+const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img,available}) => {
     const navigate = useNavigate()
     const handlerMentorProfile = () => {
         navigate('/profile', { state: {id,available, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img } })
     }
     return (
-        <div className="h-full relative w-full cursor-pointer overflow-hidden" onClick={handlerMentorProfile}>
+        <div className="h-full relative w-full cursor-pointer overflow-hidden" key={i} onClick={handlerMentorProfile}>
             <div className="h-full m-auto w-full">
                 <Img
                     className=" m-auto object-cover rounded-[13px] w-full h-full"

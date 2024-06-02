@@ -10,7 +10,7 @@ const AllMentor = ({ get_all_mentor, isLoading }) => {
         <div className="grid grid-cols-4 gap-4 sm:grid-cols-1 mt-5">
           {get_all_mentor?.allMentor?.data?.mentors.map((item, index) => (
             <TopMentor
-              key={index}
+              i={index}
               id={item?.user._id}
               name={item?.user?.name}
               img={item?.user?.profile_picture_url}
