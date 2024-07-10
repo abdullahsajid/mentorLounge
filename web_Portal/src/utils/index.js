@@ -54,7 +54,7 @@ export const FilterSessionsForMentee = () => {
   const filterItems = menteeData?.data?.sessionRequests.filter((item) => {
     return (
       (item.requestStatus === "approved") &&
-      (new Date(item.requestStartTime) >= currentDate)
+      (new Date(item.requestEndTime) >= currentDate)
     );
   });
   return filterItems;
@@ -66,7 +66,7 @@ export const FilterSessionsForMentor = () => {
   const filterItems = mentorData?.data?.sessionRequests.filter((item) => {
     return (
       item.requestStatus === "approved" &&
-      new Date(item.requestStartTime) >= currentDate
+      new Date(item.requestEndTime) >= currentDate
     );
   });
   return filterItems;

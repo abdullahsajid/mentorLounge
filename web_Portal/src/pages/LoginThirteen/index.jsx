@@ -50,7 +50,7 @@ const LoginThirteenPage = ({ close }) => {
     e.preventDefault()
     if (userData) {
       const { data } = await loginUser(userData)
-      if (data.status === 'Success') {
+      if (data?.status === 'Success') {
         toast.success(`${data.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
@@ -58,15 +58,15 @@ const LoginThirteenPage = ({ close }) => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }
         })
-        if (data.data.role === 'mentor') {
+        if (data?.data?.role === 'mentor') {
           navigation('/mentor')
-        } else if (data.data.role === 'mentee') {
+        } else if (data?.data?.role === 'mentee') {
           navigation('/mentee')
         }
-        cookie.set('loungeToken', data.token, { path: '/' })
-        localStorage.setItem('loungeUser', JSON.stringify(data.data))
-      } else if (data.status === 'Fail') {
-        toast.error(`${data.message}`, {
+        cookie.set('loungeToken', data?.token, { path: '/' })
+        localStorage.setItem('loungeUser', JSON.stringify(data?.data))
+      } else if (data?.status === 'Fail') {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -74,7 +74,7 @@ const LoginThirteenPage = ({ close }) => {
           },
         })
       } else {
-        toast.error(`${data.message}`, {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',

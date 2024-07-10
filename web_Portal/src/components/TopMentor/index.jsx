@@ -1,8 +1,10 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { Img, Text } from "components";
 import { useNavigate } from 'react-router-dom';
+
 const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img,available}) => {
     const navigate = useNavigate()
+
     const handlerMentorProfile = () => {
         navigate('/profile', { state: {id,available, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img } })
     }
@@ -11,13 +13,14 @@ const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation
             <div className="h-full m-auto w-full">
                 <Img
                     className=" m-auto object-cover rounded-[13px] w-full h-full"
-                    src={`${img ? `http://localhost:5873/${img}` : "images/default.png"}`}
+                    src={`${img ?  `${process.env.REACT_APP_LOCAL_URL}/${img}` : "images/default.png"}`}
                     alt="rectangleSix"
                 />
+                {/* `https://mentorslounge-9da6e4f7046b.herokuapp.com/${img}` */}
             </div>
-            <div className="absolute bottom-[5%] flex flex-col items-start justify-start left-[5%] w-[83%] gap-[7px] overflow-y-auto">
+            <div className="absolute bottom-[5%] h-[100px] flex flex-col items-start justify-start left-[5%] w-[83%] gap-[7px] overflow-y-auto">
                 <Text
-                    className="text-[15px] font-bold text-white-A700 tracking-[0.10px]"
+                    className="text-[15px] font-bold text-[#333] rounded px-1 tracking-[0.10px] bg-[#fff]"
                     size="txtPoppinsMedium1009"
                 >
                     {name}
@@ -28,7 +31,7 @@ const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation
                             <Text
                                 name="frameOne"
                                 placeholder="Career Advice"
-                                className="bg-blue_gray-100 h-[19px] leading-[normal] px-3 py-2 border
+                                className="bg-[#fff] h-[19px] leading-[normal] px-3 py-2 border
                               placeholder:text-black-900_01 text-[15px] text-left flex justify-center items-center rounded-lg font-semibold"
                                 wrapClassName="w-[47%]"
                                 shape="round"
@@ -41,7 +44,7 @@ const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation
                     ))}
                 </div>
                 <Text
-                    className="mt-[5px] text-[12.8px] text-lime-700 underline"
+                    className="mt-[5px] text-[12.8px] bg-[#fff] px-1 rounded text-lime-700 underline"
                     size="txtPoppinsSemiBold128"
                 >
                     Book Session

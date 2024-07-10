@@ -22,6 +22,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
   //   month: { isValid: true, errMessage: 'field is required' },
   //   year: { isValid: true, errMessage: 'field is required' }
   // })
+  
 
   const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
 
@@ -50,23 +51,23 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
     e.preventDefault()
     if (formData) {
       const { data } = await signUpUser(formData)
-      if (data.status === 'Success') {
-        toast.success(`${data.message}`, {
+      if (data?.status === 'Success') {
+        toast.success(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }
         })
-        if (data.data.role === 'mentor') {
+        if (data?.data?.role === 'mentor') {
           navigation('/mentor')
-        } else if (data.data.role === 'mentee') {
+        } else if (data?.data?.role === 'mentee') {
           navigation('/mentee')
         }
-        cookie.set('loungeToken', data.token, { path: '/' })
-        localStorage.setItem('loungeUser', JSON.stringify(data.data))
-      } else if (data.status === 'Fail') {
-        toast.error(`${data.message}`, {
+        cookie.set('loungeToken', data?.token, { path: '/' })
+        localStorage.setItem('loungeUser', JSON.stringify(data?.data))
+      } else if (data?.status === 'Fail') {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -74,7 +75,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
           },
         })
       } else {
-        toast.error(`${data.message}`, {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -176,7 +177,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                   Credit Card Details
                 </Text>
                 <div className="flex flex-col font-poppins gap-[10px] items-center justify-start ml-1 md:ml-[0] mt-7 w-full">
-                  <div className="flex flex-col items-center justify-start w-full">
+                  {/* <div className="flex flex-col items-center justify-start w-full">
                     <div className="flex flex-col items-center justify-start w-full">
                       <input
                         className="bg-gray-100_03 border border-gray-900_1e border-solid h-[79px]
@@ -192,19 +193,19 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                       />
                     </div>
                     <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['name'].isValid) && validationPayment['name'].errMessage}</p>
-                  </div>
+                  </div> */}
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="flex flex-col items-center justify-start w-full">
                       <input
-                        {...getCardNumberProps({
-                          className: "bg-gray-100_03 border border-gray-900_1e border-solid h-[79px] justify-center sm:px-5 px-[35px] py-[21px] rounded-[39px] sm:text-[16.51px] md:text-[17.01px] text-[18.01px] text-gray-900_7f w-full",
-                          size: "txtPoppinsRegular2351",
-                          placeholder: "Card Number",
-                          onChange: (e) => {
+                        // {...getCardNumberProps({
+                          className= "bg-gray-100_03 border border-gray-900_1e border-solid h-[79px] justify-center sm:px-5 px-[35px] py-[21px] rounded-[39px] sm:text-[16.51px] md:text-[17.01px] text-[18.01px] text-gray-900_7f w-full"
+                          size= "txtPoppinsRegular2351"
+                          placeholder= "Card Number"
+                          onChange= {(e) => {
                             // setCreditCardNumber(e.target.value);
                             handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.creditCardNumber' : 'menteeAttributes.userCreditCard.creditCardNumber'}`, e.target.value)
-                          },
-                        })}
+                          }}
+                        // })}
                         // value={creditCardNumber || (formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['creditCardNumber'] : formData?.menteeAttributes?.userCreditCard['creditCardNumber']}
                       />
                     </div>
@@ -245,6 +246,24 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                       />
                       <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['year'].isValid) && validationPayment['year'].errMessage}</p>
                     </div>
+                  </div>
+                </div>
+                <div className="flex flex-row font-poppins items-start justify-start ml-1 md:ml-[0] mt-[22px]
+                 md:w-full w-full sm:flex-row gap-2 sm:gap-5">
+                  <div className="flex flex-col items-center justify-start w-[100%] sm:w-[100%] md:w-full">
+                    <input
+                      className="bg-gray-100_03 border border-gray-900_1e border-solid cursor-pointer h-[79px] 
+                      leading-[normal] rounded-[39px] sm:text-[16.51px] md:text-[17.01px] text-[18.01px] w-full"
+                      color="gray_100_03"
+                      size="3xl"
+                      type="number"
+                      placeholder="846"
+                      name="cvv"
+                      value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['cvv'] : formData.menteeAttributes.userCreditCard['cvv']}
+                      onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.cvv' : 'menteeAttributes.userCreditCard.cvv'}`, e.target.value)}
+                      // onBlur={validationCondition}
+                    />
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['cvv'].isValid) && validationPayment['cvv'].errMessage}</p>
                   </div>
                 </div>
                 <Button className={`!text-gray-100 cursor-pointer h-[60px] leading-[normal] mb-[10px]

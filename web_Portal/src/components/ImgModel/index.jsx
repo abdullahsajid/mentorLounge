@@ -8,6 +8,9 @@ import { ExclamationTriangleIcon, FlagIcon } from '@heroicons/react/24/outline'
 import { Button } from 'components';
 import { useGetMenteeByIdMutation, useUploadAvatarMutation } from 'features/apis/mentee';
 import { useGetMentorByIdMutation } from 'features/apis/mentor';
+// import axios from 'axios';
+// import Cookies from "universal-cookie";
+// const cookie = new Cookies();
 
 export default function ImgModel({ setToggleModel, toggleModel }) {
     const [uploadAvatar] = useUploadAvatarMutation()
@@ -20,7 +23,7 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
     const { menteeData } = useSelector((state) => state.menteeData)
     const { mentorData } = useSelector((state) => state.mentorData)
     const { user } = useSelector((state) => state.user)
-
+    // const [imageSrc, setImageSrc] = useState('images/default.png');
     let menteePayloadData = {
         critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
         menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
@@ -92,15 +95,15 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                 }
             })
-            if (user?.role === 'mentor' || user?.data.role === 'mentor') {
+            if (user?.role === 'mentor' || user?.data?.role === 'mentor') {
                 setOpen(false)
                 getMentorById(mentorPayload)
-            } else if (user?.role === 'mentee' || user?.data.role === 'mentee') {
+            } else if (user?.role === 'mentee' || user?.data?.role === 'mentee') {
                 setOpen(false)
                 getMenteeById(menteePayloadData)
             }
         } else if (data.status === 'Fail') {
-            toast.error(`${data.message}`, {
+            toast.error(`try again!`, {
                 style: {
                     backgroundColor: '#f6f6f7',
                     border: '3px solid #fff',
@@ -108,7 +111,7 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                 },
             })
         } else {
-            toast.error(`${data.message}`, {
+            toast.error(`try again!`, {
                 style: {
                     backgroundColor: '#f6f6f7',
                     border: '3px solid #fff',
@@ -118,6 +121,29 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
         }
     }
 
+    // useEffect(() => {
+    //     const fetchImage = async () => {
+    //         try {
+    //             const token = cookie.get("loungeToken");
+      
+    //             if (menteeData?.data?.user?.profile_picture_url) {
+    //                 const response = await axios.get(`http://localhost:5873/${menteeData?.data?.user?.profile_picture_url}`, {
+    //                     headers: {
+    //                         Authorization: `Bearer ${token}`
+    //                     },
+    //                     responseType: 'blob'
+    //                 });
+      
+    //                 const imageBlob = URL.createObjectURL(response?.data);
+    //                 setImageSrc(imageBlob);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching the image:', error);
+    //         }
+    //     };
+      
+    //     fetchImage();
+    // },[menteeData])
 
 
     return (

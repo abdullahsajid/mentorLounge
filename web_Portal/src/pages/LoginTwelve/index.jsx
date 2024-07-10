@@ -35,10 +35,11 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
   })
   const [validationPayment, setPaymentValidation] = useState({
     payType: { isValid: true, errMessage: "Enter your choice" },
-    name: { isValid: true, errMessage: 'name is required' },
+    // name: { isValid: true, errMessage: 'name is required' },
     cardNum: { isValid: false },
     month: { isValid: true, errMessage: 'field is required' },
-    year: { isValid: true, errMessage: 'field is required' }
+    year: { isValid: true, errMessage: 'field is required' },
+    cvv: {isValid:true, errMessage:'field is required' }
   })
 
   const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
@@ -206,7 +207,8 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               nameOnCard: '',
               creditCardNumber: '',
               expiryMonth: '',
-              expiryYear: ''
+              expiryYear: '',
+              cvv:''
             }
           },
         }
@@ -234,7 +236,8 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               nameOnCard: "",
               creditCardNumber: "",
               expiryMonth: "",
-              expiryYear: ""
+              expiryYear: "",
+              cvv:""
             }
           }
         }
@@ -281,10 +284,11 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
     const updateValidation = {
       payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
-      name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
+      // name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
       cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
       month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
-      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' }
+      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' },
+      cvv: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['cvv'] : formData.menteeAttributes.userCreditCard['cvv'] !== '') && true, errMessage: 'field is required' }
     }
     setPaymentValidation(updateValidation)
     const formValid = Object.values(updateValidation).every((item) => item.isValid)

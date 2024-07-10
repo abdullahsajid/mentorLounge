@@ -51,6 +51,7 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
 
   const filterItem = FilterSeesionNotifierForMentor()
   
+  const now = new Date();
 
   return (
     <>
@@ -146,7 +147,7 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
                     {mentorData?.data?.sessionRequests.length === 0 ? (
                       <div className="flex justify-center items-center text-[24px] h-full">No Requests at the Moment</div>
                     ) : (
-                      mentorData?.data?.sessionRequests.map((item, index) => (
+                      mentorData?.data?.sessionRequests?.filter(item => new Date(item?.requestEndTime) >= now)?.slice()?.reverse()?.map((item, index) => (
                         <RequestMentee
                           key={index}
                           id={item?._id}
@@ -157,6 +158,7 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
                           startTime={item?.requestStartTime}
                           endTime={item?.requestEndTime}
                           questions={item?.preSessionQuestions}
+                          status={item?.requestStatus}
                         />
                       ))
                     )}

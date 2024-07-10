@@ -50,7 +50,7 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
   }
 
   let data = {
-    critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
+    critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id }` },
     menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
     menteeRefersSkip: 0,
     menteeRefersLimit: 10,
@@ -114,7 +114,7 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
                 className="md:mt-0 mt-[3px] text-5xl sm:text-[38px] md:text-[44px] text-gray-900"
                 size="txtProximaSoftSemiBold48"
               >
-                Hello, {menteeData?.data?.user?.name}
+                Hello, {menteeData?.data?.user?.name || user?.name || user?.data?.name}
               </Text>
               {/* </div> */}
               <div className="flex sm:flex-row sm:gap-3">

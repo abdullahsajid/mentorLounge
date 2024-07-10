@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from "react";
+import React, { lazy, useEffect,useState } from "react";
 import { Button, Img, Line, Text } from "components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetMenteeByIdMutation } from "features/apis/mentee";
@@ -45,6 +45,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
     setToggleSidebar(false)
   }, [])
 
+
   return (
     <>
       <div className="bg-white-A700 font-poppins ml-auto w-full md:!w-full sm:!w-full" style={{
@@ -59,7 +60,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
               <div className="h-[167px] relative w-[167px]">
                 <Img
                   className="h-[167px] m-auto rounded-[50%] w-[167px] sm:w-[148px] sm:h-[148px]"
-                  src={`${location.state.img ? `http://localhost:5873/${location.state.img}` : "images/default.png"}`}
+                  src={`${location?.state?.img ? `http://localhost:5873/${location?.state?.img}` : "images/default.png"}`}
                   alt="ellipseTwentyFive"
                 />
                 <Img
@@ -73,10 +74,10 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
                   className="text-5xl sm:text-[38px] md:text-[44px] text-black-900"
                   size="txtProximaSoftMedium48"
                 >
-                  {location.state.name}
+                  {location?.state?.name}
                 </Text>
                 <div className="flex flex-row gap-3">
-                  {location.state.mentorFields.map((item) => (
+                  {location?.state?.mentorFields?.map((item) => (
                     <Text
                       className="text-[19px] text-black-900"
                       size="txtPoppinsRegular19"
@@ -140,7 +141,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
               className="md:ml-[0] ml-[3px] mt-1 text-base text-blue_gray-700"
               size="txtPoppinsMedium16"
             >
-              ${location.state.mentorPrice} per Session
+              ${location?.state?.mentorPrice} per Session
             </Text>
             <Text
               className="md:ml-[0] ml-[3px] mt-[7px] text-[19px] text-black-900"
@@ -153,7 +154,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
               size="txtPoppinsMedium16"
             >
               <>
-                {location.state.mentorDescription}
+                {location?.state?.mentorDescription}
               </>
             </Text>
             <div className="grid grid-cols-2 sm:grid-cols-1 gap-7 sm:gap-1 items-center w-full">
@@ -189,7 +190,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
                     className="text-base text-blue_gray-700"
                     size="txtPoppinsMedium16"
                   >
-                    {location.state.mentorEducation}
+                    {location?.state?.mentorEducation}
                   </Text>
                 </div>
               </div>
@@ -206,7 +207,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
               className="ml-0.5 md:ml-[0] mt-0.5 text-base text-blue_gray-700"
               size="txtPoppinsMedium16"
             >
-              {location.state.mentorExperience}
+              {location?.state?.mentorExperience}
             </Text>
             <Text
               className="md:ml-[0] ml-[3px] mt-[33px] text-[19px] text-black-900"
@@ -273,7 +274,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
             </Text>
             <div className="flex flex-row items-center justify-center gap-2 mt-7 w-full">
               {location?.state?.links ?
-                (<IconsContainer links={location.state.links}/>)
+                (<IconsContainer links={location?.state?.links}/>)
               :(<><Loaders/></>)}
             </div>
           </div>

@@ -2,16 +2,18 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button, Text } from "components";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useBookSessionMutation } from "features/apis/mentee";
 import toast from 'react-hot-toast';
 import { Cross as Hamburger } from 'hamburger-react'
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import moment from 'moment-timezone';
 
 const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [bookSession] = useBookSessionMutation()
   const [selectDuration, setSelectDuration] = useState('20 minutes')
   const location = useLocation()
+  const navigation = useNavigate()
   const [filterData, setFilterData] = useState([])
   const [filterAvailability, setFilterAvailability] = useState([])
   const [selectQOne, setSelectQOne] = useState('Interview questions')
@@ -29,6 +31,29 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
 
   // console.log("availability:",location.state.available);
 
+  // const getSessionTimeInMinutes = (
+  //   availabilityStartTime,
+  //   availabilityEndTime
+  // ) => {
+  //   const startTime = new Date(availabilityStartTime);
+  //   const endTime = new Date(availabilityEndTime);
+  
+  //   // Calculate the difference in milliseconds
+  //   const timeDifference = endTime - startTime;
+  
+  //   // Convert milliseconds to minutes
+  //   const minutes = Math.floor(timeDifference / (1000 * 60));
+  
+  //   return minutes;
+  // };
+
+  // let resmin = getSessionTimeInMinutes(location?.state?.available[1]?.availabilityStartTime,location?.state?.available[1]?.availabilityEndTime)
+  // console.log("minutes: ",resmin);
+  // const gettimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  // console.log("gettimezone",gettimezone);
+
+  
+
   const handlerDurationChange = (e) => {
     setSelectDuration(e.target.id)
     handlerFilter(e.target.id)
@@ -37,8 +62,8 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const handleFilterDate = (date) => {
     const formattedDate = moment(date)?.format('YYYY-MM-DD')
     // console.log("filterDate:",formattedDate);
-    const filterDate = filterData?.filter(item => item?.availabilityStartTime?.slice(0, 10) == formattedDate)
-    // console.log("filterDate",filterData);
+    const filterDate = filterData?.filter(item => item?.availabilityStartTime?.slice(0, 10) === formattedDate)
+    // console.log("filterDate",filterDate);
     setFilterAvailability(filterDate)
   }
 
@@ -48,7 +73,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     //   month: '2-digit',
     //   day: '2-digit',
     // });
-
+    // console.log("date",val);
     setDate(val)
     handleFilterDate(val)
   }
@@ -144,16 +169,20 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
 
 
   const formattedDate = moment(getDate)?.format('YYYY-MM-DD');
-  const startTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityStartTime?.slice(-14)}`)?.toISOString();
-  const endTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityEndTime?.slice(-14)}`)?.toISOString();
+  const startTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityStartTime?.slice(-13)}`)?.toISOString();
+  const endTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityEndTime?.slice(-13)}`)?.toISOString();
 
-  // console.log("filterAvailability",filterAvailability);
+  // useEffect(() => {
+  //   console.log("filterAvailability",filterAvailability);
+  //   console.log("formattedDate",formattedDate,"startTime",startTime,"endTime",endTime);
+  //   console.log(filterAvailability[0]?.availabilityStartTime?.slice(-13));
+  // },[filterAvailability])
 
   let bookSessionPayload = {
-    sessionRequestTitle: "test007",
+    sessionRequestTitle: "Product Developer as a Career",
     requestDuration: selectDuration,
-    requestStartTime: new Date(startTime),
-    requestEndTime: new Date(endTime),
+    requestStartTime: startTime,
+    requestEndTime: endTime,
     sessionTimeZone: "Asia/karachi",
     requestStatus: "pending",
     mentor: location.state.id,
@@ -198,8 +227,8 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
       })
     } else if (filterAvailability.length > 0) {
       const { data } = await bookSession(bookSessionPayload)
-      if (data.status === 'Success') {
-        toast.success(`${data.message}`, {
+      if (data?.status === 'Success') {
+        toast.success(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -207,8 +236,9 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
           }
         })
         setQuesThree('')
-      } else if (data.status === 'Fail') {
-        toast.error(`${data.message}`, {
+        navigation('/mentee')
+      } else if (data?.status === 'Fail') {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -216,7 +246,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
           },
         })
       } else {
-        toast.error(`${data.message}`, {
+        toast.error(`${data?.message}`, {
           style: {
             backgroundColor: '#f6f6f7',
             border: '3px solid #fff',
@@ -332,9 +362,25 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   <div className="flex flex-col">
                     <div className="font-bold">Availability:</div>
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {location?.state?.available?.map((val) => (
-                        <div className="border-2 px-2 rounded-md shadow">{moment(val.availabilityStartTime).format('MMMM Do YYYY')}</div>
-                      ))}
+                      {location?.state?.available?.map((val) => {
+                        // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                        const formattedDate = val?.availabilityStartTime.slice(0,10)
+                        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                        const startTimeFormatted = moment(val?.availabilityStartTime).tz(timezone).format('HH:mm');
+                        const endTimeFormatted = moment(val?.availabilityEndTime).tz(timezone).format('HH:mm');
+//                         console.log('Start Time:', startTimeFormatted);
+// console.log('End Time:', endTimeFormatted);
+                      return (
+                        <>
+                          <div className="flex flex-col items-center justify-center border-2 px-2 rounded-md shadow hover:border-[#333] transition-all">
+                            <div>{formattedDate}</div>
+                            <hr className="border border-[#333] w-full"/>
+                            <div className="flex gap-1">
+                              {startTimeFormatted} - {endTimeFormatted}
+                            </div>
+                          </div>
+                        </>
+                      )})}
                     </div>
                   </div>
                   <Text

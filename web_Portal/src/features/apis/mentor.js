@@ -5,7 +5,7 @@ const cookie = new Cookies();
 export const mentorApi = createApi({
     reducerPath:'montor',
     baseQuery:fetchBaseQuery({
-        baseUrl:'http://localhost:5873/'
+        baseUrl:`${process.env.REACT_APP_LOCAL_URL}`
     }),
     endpoints: (builder) => ({
         getMentorById: builder.mutation({

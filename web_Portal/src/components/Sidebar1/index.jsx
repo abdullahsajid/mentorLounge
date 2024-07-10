@@ -31,7 +31,7 @@ const Sidebar1 = (props) => {
       })
     } else {
       console.log(data)
-      toast.error(`${data.message}`, {
+      toast.error(`try again!`, {
         style: {
           backgroundColor: '#f6f6f7',
           border: '3px solid #fff',

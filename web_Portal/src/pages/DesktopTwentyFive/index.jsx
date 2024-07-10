@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Img, Text } from "components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUpdateSessionRequestMutation } from "features/apis/mentor";
 import toast from 'react-hot-toast';
 import { Cross as Hamburger } from 'hamburger-react'
@@ -8,10 +8,10 @@ import { Cross as Hamburger } from 'hamburger-react'
 const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [updateSessionRequest] = useUpdateSessionRequestMutation()
   const location = useLocation()
-
+  const navigation = useNavigate()
   const handlerRequestStatus = async (val) => {
     let payloadRequest = {
-      sessionRequestid: location.state.id,
+      sessionRequestid: location?.state?.id,
 
       requestStatus: val,
       active: true
@@ -25,6 +25,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
         }
       })
+      navigation('/mentor')
     } else if (data.status === 'Fail') {
       toast.error(`${data.message}`, {
         style: {
@@ -62,7 +63,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
               <div className="h-[167px] relative w-[167px]">
                 <Img
                   className="h-[167px] m-auto rounded-[50%] w-[167px] object-cover"
-                  src={`${location.state.img ? `http://localhost:5873/${location.state.img}` : "images/default.png"}`}
+                  src={`${location?.state?.img ? `http://localhost:5873/${location?.state?.img}` : "images/default.png"}`}
                   alt="ellipseTwentyFive"
                 />
                 <Img
@@ -76,7 +77,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   className="text-5xl sm:text-[38px] md:text-[44px] text-black-900"
                   size="txtProximaSoftMedium48"
                 >
-                  {location.state.name}
+                  {location?.state?.name}
                 </Text>
                 <Text
                   className="text-[19px] text-black-900"
@@ -97,7 +98,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   className="mt-2 sm:text-[19.77px] md:text-[21.77px] text-[23.77px] text-gray-700_01"
                   size="txtProximaSoftRegular2377"
                 >
-                  {location.state.startTimeFormatted} - {location.state.endTimeFormatted}
+                  {location?.state?.startTimeFormatted} - {location?.state?.endTimeFormatted}
                 </Text>
               </div>
               <div className="flex flex-row gap-[9px] items-end justify-start w-full">
@@ -110,7 +111,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   className="capitalize mb-0.5 mt-2 text-[19.2px] text-blue_gray-700"
                   size="txtProximaSoftRegular192"
                 >
-                  {location.state.dayOfWeek},{location.state.date} {location.state.month}
+                  {location?.state?.dayOfWeek},{location?.state?.date} {location?.state?.month}
                 </Text>
               </div>
             </div>
@@ -120,7 +121,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
             >
               Answers
             </Text>
-            {location.state.questions.map((item) => (
+            {location?.state?.questions?.map((item) => (
               <>
                 <div className="flex flex-row font-poppins gap-[7px] items-start justify-start ml-3 md:ml-[0] mt-2 w-full md:w-full">
                   <div className="border-[6px] border-purple-700 border-solid h-[19px] sm:mt-0 mt-1 rounded-[9px] w-[19px]"></div>
@@ -128,7 +129,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                     className="sm:text-[18.19px] md:text-[20.19px] text-[22.19px] text-black-900_01"
                     size="txtPoppinsRegular2219"
                   >
-                    {item.questionText}
+                    {item?.questionText}
                   </Text>
                 </div>
                 <Button
@@ -136,7 +137,7 @@ const DesktopTwentyFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                   size="md"
                   variant="outline"
                 >
-                  {item.menteesAnswer}
+                  {item?.menteesAnswer}
                 </Button>
               </>
             ))}

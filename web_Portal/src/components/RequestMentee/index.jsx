@@ -2,7 +2,7 @@ import React from 'react'
 import { Img, Text } from "components";
 import { useNavigate } from 'react-router-dom';
 
-const RequestMentee = ({id, name, img, title, duration, startTime, endTime, questions }) => {
+const RequestMentee = ({id, name, img, title, duration, startTime, endTime, questions,status}) => {
     const navigation = useNavigate()
     let getDates = startTime.slice(0, 10)
     let sTime = new Date(startTime)
@@ -13,7 +13,9 @@ const RequestMentee = ({id, name, img, title, duration, startTime, endTime, ques
     const dayOfWeek = dateObject.toLocaleDateString('en-US', { weekday: 'long' });
     const month = dateObject.toLocaleDateString('en-US', { month: 'long' });
     const date = dateObject.getDate();
-
+    // let t = getutcTime(startTime)
+    // console.log(startTimeFormatted,endTimeFormatted);
+    // console.log("starttime:",t);
     const handlerRequest = () => {
         navigation('/mtr-Request-Session', { state: {id, name, img, dayOfWeek, month, date,startTimeFormatted,endTimeFormatted,questions } })
     }
@@ -28,13 +30,14 @@ const RequestMentee = ({id, name, img, title, duration, startTime, endTime, ques
                         alt="ellipseFortyThree"
                     />
                     <div className="flex flex-col items-center w-full">
-                        <div className="flex flex-row items-start justify-between w-full">
+                        <div className="flex flex-row items-start justify-start gap-2 w-full">
                             <Text
                                 className="mt-1 text-[18.84px] text-black-900 sm:text-[15px]"
                                 size="txtPoppinsSemiBold1884"
                             >
-                                {title}
+                                {title} 
                             </Text>
+                            <span className={`${status === 'pending' ? "bg-[#F2B809]" : "bg-[#1F8A59]"} px-2 rounded text-[#fff]`}>{status}</span>
                         </div>
                         <div className="w-full">
                             <Text
@@ -80,7 +83,7 @@ const RequestMentee = ({id, name, img, title, duration, startTime, endTime, ques
                             className="text-[15.7px] text-blue_gray-700"
                             size="txtPoppinsMedium157"
                         >
-                            3m
+                            1m
                         </Text>
                         <Text
                             className="text-[15.7px] text-purple-700 underline w-max cursor-pointer"

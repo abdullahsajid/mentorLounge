@@ -72,14 +72,6 @@ const DesktopThreePage = ({ toggle }) => {
                   />
                 </div>
               </div>
-
-              <Button
-                className="cursor-pointer font-poppins leading-[normal] max-w-[140px] rounded-[17px] text-center text-xs"
-                size="md"
-                variant="outline"
-              >
-                + Add to calender
-              </Button>
             </div>
             <Calendar />
             <div className="flex flex-row font-poppins gap-[9px] items-center justify-start w-[53%] md:w-full">

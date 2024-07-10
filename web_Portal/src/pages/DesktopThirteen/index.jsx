@@ -25,8 +25,7 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const [appNotifications, setAppNotifications] = useState(null);
   const [promotionalNotifications, setPromotionalNotifications] = useState(null);
   const [updatesNotifications, setUpdatesNotifications] = useState(null);
-  const [isValid, setIsValid] = useState(false);
-
+  const [isValid, setIsValid] = useState(true);
   let menteePayloadData = {
     critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
     menteeRefersReferralFields: "invitationLink inviteType inviteeEmail referred dateInvited referralStatus",
@@ -258,7 +257,7 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
                     <div className="md:h-[147px] mt-[37px] relative w-full flex item-center justify-start">
                       <Img
                         className="h-[110px] rounded-[50%] w-[110px] object-cover border"
-                        src={`${menteeData?.data?.user?.profile_picture_url ? `http://localhost:5873/${menteeData?.data?.user?.profile_picture_url}` : "images/default.png"}`}
+                        src={menteeData?.data?.user?.profile_picture_url ?`http://localhost:5873/${menteeData?.data?.user?.profile_picture_url}` : 'images/default.png'}
                         alt="ellipseTwentyFive"
                       />
                       <Button

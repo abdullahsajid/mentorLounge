@@ -5,7 +5,7 @@ const cookie = new Cookies();
 export const menteeApi = createApi({
   reducerPath: "mentee",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5873/",
+    baseUrl: `${process.env.REACT_APP_LOCAL_URL}`,
   }),
   tagTypes: ["getMentee"],
   endpoints: (builder) => ({

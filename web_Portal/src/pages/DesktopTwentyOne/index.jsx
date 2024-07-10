@@ -1,8 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Button, Img, Input, Line, List, Text } from "components";
 import { Cross as Hamburger } from 'hamburger-react'
+import useDebounce from "hooks/useDebounce";
+import ResultList from "components/SearchResult/ResultList";
+import { searchUserApi } from "features/search/SearchApi";
 
 const DesktopTwentyOnePage = ({ toggleSideBar, setToggleSidebar }) => {
+  const [searchValue, setSearchValue] = useState('')
+  const [results, setResults] = useState([]);
+  // const fetchResult = searchUserApi(searchValue)
+  const debounceRes = useDebounce(searchValue,1000)
+
+
+
+  useEffect(() => {
+    if (debounceRes) {
+      const fetchResults = async () => {
+        const res = await searchUserApi(debounceRes);
+        setResults(res);
+      };
+      fetchResults();
+    } else {
+      setResults([]);
+    }
+  }, [debounceRes]);
+  
+  useEffect(() => {
+    setToggleSidebar(false)
+  }, [])
 
   useEffect(() => {
     setToggleSidebar(false)
@@ -20,7 +45,7 @@ const DesktopTwentyOnePage = ({ toggleSideBar, setToggleSidebar }) => {
           </div>
           <div className="bg-white-A700 flex flex-1 flex-col items-center justify-start mb-[27px] py-[39px] rounded-[31px] shadow-bs3 w-full">
             <div className="flex flex-col gap-[26px] justify-start mb-[741px] sm:mb-0 w-full">
-              <div className="flex flex-col gap-[22px] items-start justify-start md:ml-[0] ml-[26px] w-3/4 md:items-center md:w-full sm:items-center">
+              <div className="flex flex-col gap-[22px] relative items-center justify-center md:ml-[0] ml-[26px] w-3/4 md:items-center md:w-full sm:items-center">
                 <Input
                   name="groupNinetyFour"
                   placeholder="Product designer"
@@ -33,10 +58,13 @@ const DesktopTwentyOnePage = ({ toggleSideBar, setToggleSidebar }) => {
                       alt="Outline / Search / Rounded Magnifer"
                     />
                   }
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   color="gray_200"
                   size="xl"
                   variant="fill"
                 ></Input>
+                {results?.data?.length > 0 && <ResultList results={results}/>}
                 <div className="flex sm:flex-col flex-row sm:flex-wrap md:items-center md:justify-center items-center w-full gap-3 px-4">
                   <Button
                     className="cursor-pointer font-medium leading-[normal] min-w-[157px] rounded-[19px] text-[15.17px] text-center"
