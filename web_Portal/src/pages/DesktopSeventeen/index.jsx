@@ -9,7 +9,7 @@ const RequestMentee = lazy(() => import("components/RequestMentee"));
 const DesktopNineteenPage = lazy(() => import("pages/DesktopNineteen"));
 const DesktopThreePage = lazy(() => import("pages/DesktopThree"))
 const SessionNotifier = lazy(() => import("components/SessionNotifier"))
-
+const MentorCal = lazy(() => import('pages/MentorCal'))
 const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const { user } = useSelector((state) => state.user)
   const { mentorData } = useSelector((state) => state.mentorData)
@@ -207,7 +207,7 @@ const DesktopSeventeenPage = ({ toggleSideBar, setToggleSidebar }) => {
           </div>
         </div>
         {toggleNotification && <DesktopNineteenPage handler={toggleHandler} />}
-        {toggleCalender && <DesktopThreePage toggle={toggleCalenderHandler} />}
+        {toggleCalender && <MentorCal toggle={toggleCalenderHandler} />}
       </div>
     </>
   );

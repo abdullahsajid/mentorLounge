@@ -31,6 +31,94 @@ export const FilterSessionForNotifier = () => {
   return filterItems;
 };
 
+export const FilterSessionForNotifierBaseOnToday = () => {
+  const { menteeData } = useSelector((state) => state.menteeData);
+  const currentDate = new Date().toDateString();
+  const filterItems = menteeData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() === currentDate)
+    );
+  });
+
+  return filterItems;
+};
+
+export const FilterSessionForNotifierBaseOnDate = (date) => {
+  const { menteeData } = useSelector((state) => state.menteeData);
+  const currentDate = new Date(date).toDateString();
+  const filterItems = menteeData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() === currentDate)
+    );
+  });
+
+  return filterItems;
+};
+
+
+export const FilterSessionForNotifierBaseOnUpcomingDate = () => {
+  const { menteeData } = useSelector((state) => state.menteeData);
+  const currentDate = new Date().toDateString();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(tomorrowDate.getDate() + 4);
+  console.log("check date",tomorrowDate);
+  const tDString = tomorrowDate.toDateString();
+  const filterItems = menteeData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() > currentDate && new Date(item.requestStartTime).toDateString() <= tDString)
+    );
+  });
+
+  return filterItems;
+};
+
+export const FilterSessionForNotifierBaseOnTodayForMentor = () => {
+  const { mentorData } = useSelector((state) => state.mentorData);
+  const currentDate = new Date().toDateString();
+  const filterItems = mentorData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() === currentDate)
+    );
+  });
+
+  return filterItems;
+};
+
+export const FilterSessionForNotifierBaseOnDateForMentor = (date) => {
+  const { mentorData } = useSelector((state) => state.mentorData);
+  const currentDate = new Date(date).toDateString();
+  const filterItems = mentorData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() === currentDate)
+    );
+  });
+
+  return filterItems;
+};
+
+
+export const FilterSessionForNotifierBaseOnUpcomingDateForMentor = () => {
+  const { mentorData } = useSelector((state) => state.mentorData);
+  const currentDate = new Date().toDateString();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(tomorrowDate.getDate() + 4);
+  // console.log("check date",tomorrowDate);
+  const tDString = tomorrowDate.toDateString();
+  const filterItems = mentorData?.data?.sessionRequests.filter((item) => {
+    return (
+      item.requestStatus === "approved" &&
+      (new Date(item.requestStartTime).toDateString() > currentDate && new Date(item.requestStartTime).toDateString() <= tDString)
+    );
+  });
+
+  return filterItems;
+};
+
 export const FilterSeesionNotifierForMentor = () => {
   const { mentorData } = useSelector((state) => state.mentorData);
   const currentDate = new Date().toDateString();

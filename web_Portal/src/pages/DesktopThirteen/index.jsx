@@ -97,7 +97,7 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
   }
   const handlerUpdate = async () => {
     if ((menteeData?.data?.menteeDescription === menteeDescription) && (menteeData?.data?.menteeEducation === menteeEducation) &&
-      (menteeData?.data?.menteeExperience === menteeExperience) && ((socialLink.length === 0) || (socialLink.some(item => item.socialPlatformLink === ''))) && (menteeData?.data?.user?.name === name)) {
+      (menteeData?.data?.menteeExperience === menteeExperience) && ((socialLink?.length === 0) || (socialLink?.some(item => item.socialPlatformLink === ''))) && (menteeData?.data?.user?.name === name)) {
       return toast.error(`nothing change!`, {
         style: {
           backgroundColor: '#f6f6f7',
@@ -127,12 +127,12 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
     if (menteeData?.data?.menteeExperience !== menteeExperience) {
       updateData['menteeExperience'] = menteeExperience
     }
-    if (socialLink.length > 0) {
+    if (socialLink?.length > 0) {
       socialLink.push(...menteeData?.data?.socialMediaLinks.flat());
       updateData['socialMediaLinks'] = socialLink
     }
     const { data } = await updateMenteeDetail(updateData)
-    if (data.status === 'Success') {
+    if (data?.status === 'Success') {
       toast.success(`${data.message}`, {
         style: {
           backgroundColor: '#f6f6f7',
@@ -142,8 +142,8 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
       })
       setLinks([])
       getMenteeById(menteePayloadData)
-    } else if (data.status === 'Fail') {
-      toast.error(`${data.message}`, {
+    } else if (data?.status === 'Fail') {
+      toast.error(`try again!`, {
         style: {
           backgroundColor: '#f6f6f7',
           border: '3px solid #fff',
@@ -151,7 +151,7 @@ const DesktopThirteenPage = ({ toggleSideBar, setToggleSidebar }) => {
         },
       })
     } else {
-      toast.error(`${data.message}`, {
+      toast.error(`try again!`, {
         style: {
           backgroundColor: '#f6f6f7',
           border: '3px solid #fff',

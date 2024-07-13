@@ -6,6 +6,8 @@ import { useLoginUserMutation } from "features/apis/user";
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 const cookie = new Cookies()
 
 const LoginThirteenPage = ({ close }) => {
@@ -97,14 +99,16 @@ const LoginThirteenPage = ({ close }) => {
             md:mx-3 rounded-[26px] shadow-bs3 w-[41%] sm:w-full h-[500px] relative sm:h-[500px]"
           onClick={e => { e.stopPropagation() }}>
           <div className=" bg-white-A700 flex flex-col font-proximasoft 
-              h-full justify-center m-auto rounded-[26px] shadow-bs10 w-full items-center sm:p-[12px] p-[30px] gap-5">
+              h-full justify-center m-auto rounded-[26px] shadow-bs10 w-full items-center sm:p-[12px] p-[30px] gap-1">
             {/* <Img
               className="h-[209px] md:h-auto md:ml-[0] rounded-[50%] w-[209px] sm:w-[120px]"
               src="images/img_ellipse19.png"
               alt="ellipseNineteen"
             /> */}
-
-            <div className="flex flex-1 flex-col items-center justify-center w-full gap-5">
+            <div className="w-full transition-all"onClick={() => close()}>
+              <FontAwesomeIcon icon={faXmark} className="hover:bg-[#F7F6F6] px-3 py-2 rounded-lg cursor-pointer transition-all"/>
+            </div>
+            <div className="flex flex-1 flex-col items-center justify-center w-full gap-3">
               <Text
                 className="md:ml-[0] sm:text-[30px] md:text-[34.91px] text-[36.91px] text-gray-900 mb-5"
                 size="txtProximaSoftSemiBold3691"

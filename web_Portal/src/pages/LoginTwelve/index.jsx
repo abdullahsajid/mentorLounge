@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import { useCreditCardValidator } from "react-creditcard-validator";
+import { useLoginUserMutation } from "features/apis/user";
+import toast from 'react-hot-toast';
 const LoginThirteenPage = lazy(() => import("pages/LoginThirteen"));
 const LoginFourteenPage = lazy(() => import("pages/LoginFourteen"));
 const LoginSixteenPage = lazy(() => import("pages/LoginSixteen"));
@@ -17,6 +19,7 @@ const cookie = new Cookies()
 
 const LoginTwelvePage = ({ setToggleSidebar }) => {
   const navigation = useNavigate()
+  const [loginUser] = useLoginUserMutation()
   const { user } = useSelector((state) => state.user)
   const [skillType, setSkillType] = useState([])
   const [selectPayment, setPayment] = useState('')
@@ -63,6 +66,59 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     [`${formData?.role}Price`]: { isValid: true, errorMessage: 'Price must be a number' },
     socialMediaLinks: { isValid: true, errorMessage: 'At least one link is required' },
   })
+
+  const validationCondition = (data) => {
+    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+    const updateValidation = {
+      name: { isValid: user_regex.test(formData.name), errMessage: 'name at least 4 to 20 character' },
+      email: { isValid: validator.isEmail(formData.email), errMessage: 'enter valid email' },
+      password: { isValid: (formData.password?.length >= 6), errMessage: 'password must be at least 6 character' },
+      phone: { isValid: validator.isMobilePhone(formData.phone), errMessage: 'enter valid phone no' }
+    }
+
+    setValidation(updateValidation)
+    const formValid = Object.values(updateValidation).every((item) => item.isValid)
+    setIsFormValid(formValid)
+    return formValid
+  }
+
+  const validateProfileForm = () => {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const newValidation = {
+      [`${formData?.role}Feilds`]:{isValid: skillType.some(skill => skill.trim() != ''), errorMessage: 'Feild is required'},
+      [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
+      [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
+      [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
+      [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
+      socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
+      formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
+    };
+
+    setProfileValidation(newValidation);
+
+    const isFormValid = Object.values(newValidation).every(field => field.isValid);
+    setIsProfileFormValid(isFormValid);
+
+    return isFormValid;
+  };
+
+  const validationPaymentCondition = () => {
+    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
+    const updateValidation = {
+      payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
+      // name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
+      cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
+      month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
+      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' },
+      cvv: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['cvv'] : formData.menteeAttributes.userCreditCard['cvv'] !== '') && true, errMessage: 'field is required' }
+    }
+    setPaymentValidation(updateValidation)
+    const formValid = Object.values(updateValidation).every((item) => item.isValid)
+    setIsPaymentFormValid(formValid)
+
+    return formValid
+  }
+
   const handlerChange = (name, value) => {
     setFormData((formData) => {
       if (name.startsWith('mentorAttributes.')) {
@@ -197,7 +253,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
             mentorDescription: '',
             mentorEducation: '',
             mentorExperience: '',
-            socialMediaLinks: [],
+            socialMediaLinks: [{ socialPlatformLink: "" }],
             mentorPrice: '',
             currency: 'USD',
             mentorsAvailabilities: [],
@@ -226,7 +282,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
             menteeDescription: "",
             menteeEducation: "",
             menteeExperience: "",
-            socialMediaLinks: [],
+            socialMediaLinks: [{ socialPlatformLink: "" }],
             // menteeRefers: [],
             // sessionRequests: [],
             // recentSearches: [],
@@ -245,89 +301,93 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     }
   }, [userRole])
 
-  const validationCondition = (data) => {
-    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
-    const updateValidation = {
-      name: { isValid: user_regex.test(formData.name), errMessage: 'name at least 4 to 20 character' },
-      email: { isValid: validator.isEmail(formData.email), errMessage: 'enter valid email' },
-      password: { isValid: (formData.password?.length >= 6), errMessage: 'password must be at least 6 character' },
-      phone: { isValid: validator.isMobilePhone(formData.phone), errMessage: 'enter valid phone no' }
-    }
 
-    setValidation(updateValidation)
-    const formValid = Object.values(updateValidation).every((item) => item.isValid)
-    setIsFormValid(formValid)
-    return formValid
-  }
-
-  const validateProfileForm = () => {
-    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-    const newValidation = {
-      [`${formData?.role}Feilds`]:{isValid: skillType.some(skill => skill.trim() != ''), errorMessage: 'Feild is required'},
-      [`${formData?.role}Description`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Description`]?.trim() !== '', errorMessage: 'Description is required' },
-      [`${formData?.role}Education`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Education`]?.trim() !== '', errorMessage: 'Education is required' },
-      [`${formData?.role}Experience`]: { isValid: formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Experience`]?.trim() !== '', errorMessage: 'Experience is required' },
-      [`${(formData?.role === 'mentor') ? `${formData?.role}Price` : 'reasonOfJoining'}`]: { isValid: (formData.role === 'mentor')? formData?.[`${formData?.role}Attributes`]?.[`${formData?.role}Price`]?.trim() !== '':formData?.[`${formData?.role}Attributes`]?.[`reasonOfJoining`]?.trim() !== '', errorMessage: `${formData.role === 'mentor'?'Price must be a number':'please fill field!'}` },
-      socialMediaLinks: { isValid: (formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => urlRegex.test(link.socialPlatformLink)) &&
-      formData?.[`${formData?.role}Attributes`]?.socialMediaLinks.some(link => link.socialPlatformLink.trim() !== '')), errorMessage: 'invalid link' },
-    };
-
-    setProfileValidation(newValidation);
-
-    const isFormValid = Object.values(newValidation).every(field => field.isValid);
-    setIsProfileFormValid(isFormValid);
-
-    return isFormValid;
-  };
-
-  const validationPaymentCondition = () => {
-    const user_regex = /^[A-z][A-z0-9-_]{3,23}$/;
-    const updateValidation = {
-      payType: { isValid: (selectPayment != '') && true, errMessage: "required to select" },
-      // name: { isValid: user_regex.test((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard.nameOnCard : formData.menteeAttributes.userCreditCard.nameOnCard), errMessage: 'name is required' },
-      cardNum: { isValid: (erroredInputs.cardNumber) ? false : true },
-      month: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth'] !== '') && true, errMessage: 'field is required' },
-      year: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear'] !== '') && true, errMessage: 'field is required' },
-      cvv: { isValid: ((formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['cvv'] : formData.menteeAttributes.userCreditCard['cvv'] !== '') && true, errMessage: 'field is required' }
-    }
-    setPaymentValidation(updateValidation)
-    const formValid = Object.values(updateValidation).every((item) => item.isValid)
-    setIsPaymentFormValid(formValid)
-
-    return formValid
-  }
 
   const googleSignIn = useGoogleLogin({
     onSuccess: async (res) => {
-      const userDataResponse = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${res.access_token}`, {
-        headers: {
-          Authorization: `Bearer ${res.access_token}`,
-        },
-      });
-
-      if (userDataResponse.ok) {
+      try {
+        const userDataResponse = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${res.access_token}`, {
+          headers: {
+            Authorization: `Bearer ${res.access_token}`,
+          },
+        });
+  
+        if (!userDataResponse.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+  
         const userData = await userDataResponse.json();
-        setFormData({
-          name: userData.name,
-          email: userData.email,
-          signuptype: "web",
+        const userDetails = {
+          email: userData?.email,
+          googleId: userData?.sub,
           platform: "google",
-          googleId: userData.sub,
-          active: true,
-          is_verified: true,
-          approved: true,
-          profilePic: userData.picture,
-        })
-        setMultiStep(2)
-      } else {
-        console.error('Failed to fetch user data:', userDataResponse.statusText);
+          signintype: "web"
+        };
+  
+        const { data } = await loginUser(userDetails);
+  
+        if (data?.status === 'Success') {
+          toast.success(data.message, {
+            style: {
+              backgroundColor: '#f6f6f7',
+              border: '3px solid #fff',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            },
+          });
+  
+          const redirectPath = data?.data?.role === 'mentor' ? '/mentor' : '/mentee';
+          navigation(redirectPath);
+  
+          cookie.set('loungeToken', data?.token, { path: '/' });
+          localStorage.setItem('loungeUser', JSON.stringify(data?.data));
+  
+        } else if (data?.status === 'Fail') {
+          setFormData({
+            name: userData.name,
+            email: userData.email,
+            signuptype: "web",
+            platform: "google",
+            phone: '012597845465',
+            googleId: userData.sub,
+            active: true,
+            is_verified: true,
+            approved: true,
+            profilePic: userData.picture,
+          });
+          setMultiStep(2);
+  
+        } else {
+          toast.error(data?.message, {
+            style: {
+              backgroundColor: '#f6f6f7',
+              border: '3px solid #fff',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            },
+          });
+        }
+      } catch (error) {
+        console.error('An error occurred during Google Sign-In:', error);
+        toast.error('An error occurred during Google Sign-In. Please try again.', {
+          style: {
+            backgroundColor: '#f6f6f7',
+            border: '3px solid #fff',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          },
+        });
       }
     },
     onError: (err) => {
-      console.log("err", err);
-      alert("Login failed. 😔");
+      console.error("Google Sign-In error:", err);
+      toast.error('Login failed. 😔', {
+        style: {
+          backgroundColor: '#f6f6f7',
+          border: '3px solid #fff',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        },
+      });
     }
   });
+  
 
 
   const handleLogin = () => {
@@ -353,15 +413,17 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
   useEffect(() => {
     const token = cookie.get("loungeToken");
-    if ((user._id) && token) {
-      if (user.role === 'mentor') {
+    if ((user?._id) && token) {
+      if (user?.role === 'mentor') {
         return navigation('/mentor')
-      } else if (user.role === 'mentee') {
+      } else if (user?.role === 'mentee') {
         return navigation('/mentee')
       }
     }
     setToggleSidebar(false)
   }, [])
+
+  console.log(formData)
 
   return (
     <>
@@ -479,7 +541,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               Continue with Google
             </Text>
           </div>
-          <div className="bg-white-A700 border border-gray-900_1e border-solid flex sm:flex-row
+          {/* <div className="bg-white-A700 border border-gray-900_1e border-solid flex sm:flex-row
            flex-row gap-[18px] h-[97px] md:h-auto items-center justify-start mb-[91px] mt-9 md:px-10
             sm:px-5 px-[15px] py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full sm:h-[60px]">
             <Img
@@ -493,7 +555,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
             >
               Continue with Facebook
             </Text>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col font-poppins items-center justify-start mb-[174px] ml-[73px] mt-[50px] md:px-5 w-[23%] z-[1]
           sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5 sm:hidden">
@@ -587,7 +649,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev}
            setPayment={setPayment} selectPayment={selectPayment} validationPayment={validationPayment} isPaymentFormValid={isPaymentFormValid} />}
         {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
-        {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} />}
+        {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} prev={prev} />}
       </div>
     </>
   );
@@ -595,4 +657,9 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
 
 export default LoginTwelvePage;
 // (multiStep == 5 && userRole === 'mentor')
-
+// multiStep == 2
+// toggleSignUp
+// multiStep == 3
+// multiStep == 4
+// (multiStep == 5 && userRole === 'mentor')
+// (multiStep == 6 && userRole === 'mentor')

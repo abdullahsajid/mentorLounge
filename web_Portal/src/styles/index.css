@@ -270,6 +270,9 @@ input:checked + .approve-toggle:before{
   background: #6b6b6b;
   border-radius: 10px;
 }
+.sc-none::-webkit-scrollbar{
+  display: none;
+}
 
 #sc::-webkit-scrollbar-track{
   margin-top: 16px;

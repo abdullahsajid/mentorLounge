@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Input, Text } from "components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfile,isProfileFormValid,setSkillType,skillType }) => {
   const [skills, setSkills] = useState('')
-  const [addLink, setLinks] = useState([{ socialPlatformLink: '' }])
+  const [addLink, setLinks] = useState(formData?.[`${formData?.role}Attributes`]?.socialMediaLinks || [{ socialPlatformLink: '' }])
   // const [isFormValid, setIsFormValid] = useState(false)
   // const [validation, setValidation] = useState({
   //   [`${formData?.role}Feilds`]:{isValid: true, errorMessage: 'Feild is required'},
@@ -25,9 +27,9 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
   ]
 
   const handleSkill = () => {
-    if ((skills.trim() !== '') && (skillType.length < 3)) {
+    if ((skills.trim() !== '') && (skillType?.length < 3)) {
       setSkillType((preSkill) => {
-        if (!preSkill.includes(skills)) {
+        if (!preSkill?.includes(skills)) {
           return [...preSkill, skills]
         }
         return preSkill
@@ -37,7 +39,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
   }
 
   const handleRemoveSkill = (index) => {
-    const updateSkill = skillType.filter((_, i) => i !== index)
+    const updateSkill = skillType?.filter((_, i) => i !== index)
     setSkillType(updateSkill)
   }
 
@@ -74,11 +76,11 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
   // };
 
   useEffect(() => {
-    handlerChange(`${(formData.role === 'mentor') ? "mentorAttributes.mentorFeilds" : "menteeAttributes.menteeFeilds"}`, skillType)
+    handlerChange(`${(formData?.role === 'mentor') ? "mentorAttributes.mentorFeilds" : "menteeAttributes.menteeFeilds"}`, skillType)
   }, [skillType])
 
   useEffect(() => {
-    handlerChange(`${(formData.role === 'mentor') ? "mentorAttributes.socialMediaLinks" : "menteeAttributes.socialMediaLinks"}`, addLink)
+    handlerChange(`${(formData?.role === 'mentor') ? "mentorAttributes.socialMediaLinks" : "menteeAttributes.socialMediaLinks"}`, addLink)
   }, [addLink])
 
   
@@ -91,16 +93,18 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
           className="bg-[#fff] flex flex-col items-center p-6 md:px-5 h-[670px] w-[41%] sm:w-full sm:mx-[12px]"
           style={{ borderRadius: "20px", overflowY: 'scroll' }} id="sc"
         >
-          <div className="flex flex-col items-start justify-start mt-1.5 w-full md:w-full">
-            {/* <div className="mb-2">
-              <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
-            </div> */}
-            <Text
-              className="ml-1 md:ml-[0] md:text-3xl sm:text-[28px] text-[32px] text-black-900"
-              size="txtProximaSoftSemiBold32"
-            >
-              Setup your Profile
-            </Text>
+          <div className="flex flex-col items-start justify-start mt-1.5 w-full md:w-full transition-all">
+            <div className="flex items-center gap-1">
+              <div className="hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all"onClick={prev}>
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </div>
+              <Text
+                className="ml-1 md:ml-[0] md:text-3xl sm:text-[28px] text-[32px] text-black-900"
+                size="txtProximaSoftSemiBold32"
+              >
+                Setup your Profile
+              </Text>
+            </div>
             <div className="flex flex-col items-start justify-start md:ml-[0] ml-[3px] mt-3.5 w-full md:w-full">
               <Text
                 className="text-gray-700_02 text-xl"
@@ -115,7 +119,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
                 You can add maximum of three
               </Text>
               <div className="flex flex-row gap-2">
-                {skillType.map((item, index) => (
+                {skillType?.map((item, index) => (
                   <div className="text-[#000] border border-[#ddd] p-1 py-0 rounded-md shadow-lg" key={index}>
                     {item}
                     <FontAwesomeIcon icon={faClose}
@@ -128,7 +132,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
               <div className="flex flex-col font-poppins items-center justify-start mt-1.5 w-full">
                 <div className="flex flex-col items-center justify-start w-full">
                   <Input
-                    name={`${formData.role}Feilds`}
+                    name={`${formData?.role}Feilds`}
                     placeholder="Type “Product Design” and Enter"
                     className="!placeholder:text-gray-900_7f !text-gray-900_7f leading-[normal] px[30px] px-[16px] pl-[10px] md:h-auto p-0 sm:h-auto text-left text-lg w-full"
                     wrapClassName="border border-gray-900_1e border-solid rounded-[22px] w-full"
@@ -137,8 +141,8 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
                     variant="fill"
                     value={skills}
                     onChange={(e) => setSkills(e.target.value)}
-                    isValid={validationProfile[`${formData.role}Feilds`]?.isValid}
-                    errMessage={validationProfile[`${formData.role}Feilds`]?.errorMessage}
+                    isValid={validationProfile[`${formData?.role}Feilds`]?.isValid}
+                    errMessage={validationProfile[`${formData?.role}Feilds`]?.errorMessage}
                     // validationCondition={validateForm}
                     errClass={'ml-[14px] mb-[4px]'}
                     onKeyPress={(e) => {
@@ -152,7 +156,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
               </div>
             </div>
             <div className="flex flex-col font-poppins items-center justify-start mt-[7px] w-full gap-3 md:w-full">
-              {formFields.map(({ name, type, label }, index) => (
+              {formFields?.map(({ name, type, label }, index) => (
                 <div className="flex flex-col gap-1.5 items-start justify-start w-full" key={index}>
                   <Text
                     className="text-base text-blue_gray-700"
@@ -170,8 +174,8 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
                         color="gray_100_03"
                         variant="fill"
                         type={type}
-                        value={(formData.role === 'mentor') ? formData.mentorAttributes[name] : formData.menteeAttributes[name]}
-                        onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? `mentorAttributes.${name}` : `menteeAttributes.${name}`}`, e.target.value)}
+                        value={(formData?.role === 'mentor') ? formData?.mentorAttributes?.[name] : formData?.menteeAttributes?.[name]}
+                        onChange={(e) => handlerChange(`${(formData?.role === 'mentor') ? `mentorAttributes.${name}` : `menteeAttributes.${name}`}`, e.target.value)}
                         isValid={validationProfile[name]?.isValid}
                         errMessage={validationProfile[name]?.errorMessage}
                         // validationCondition={validateForm}
@@ -190,7 +194,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
                   Links of Social Media Plateforms
                 </Text>
                 <div className="flex flex-col items-center justify-start mt-0.5 gap-2 w-full">
-                  {addLink.map((item, index) => (
+                  {addLink?.map((item, index) => (
                     <div className="flex flex-col items-center justify-start w-full" key={index}>
                       <Input
                         name="socialPlatformLink"
@@ -200,7 +204,7 @@ const LoginEighteenPage = ({ next, prev, formData, handlerChange,validationProfi
                         color="gray_100_03"
                         size="md"
                         variant="fill"
-                        value={item.socialPlatformLink}
+                        value={item?.socialPlatformLink}
                         onChange={(e) => handlerInputChange(e, index)}
                         isValid={validationProfile["socialMediaLinks"]?.isValid}
                         errMessage={validationProfile["socialMediaLinks"]?.errorMessage}

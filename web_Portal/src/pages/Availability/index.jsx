@@ -3,8 +3,8 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { Button, Text } from "components";
 import moment from 'moment';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 const Availability = ({ formData, handlerChange, next, prev }) => {
     const [availData, setAvail] = useState([])
@@ -27,7 +27,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
             }
             setAvail(updatedAvailData);
         } else if (name === 'availabilityEndTime') {
-            const startTimeMoment = moment(updatedAvailData[i].availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
+            const startTimeMoment = moment(updatedAvailData[i]?.availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
             const endTimeMoment = moment(`${moment(selectedDates[i])?.format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
 
             let updateAlertDiffAvail = [...alertDiffAvail]
@@ -61,17 +61,17 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
             //         }
             //     }
             // })
-            availData.forEach((item, index) => {
+            availData?.forEach((item, index) => {
 
-                if (moment(item.availabilityStartTime).format('YYYY-MM-DD') === moment(selectedDates[i]).format('YYYY-MM-DD')) {
-                    const startTime = moment(item.availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
-                    const endTime = moment(item.availabilityEndTime, 'YYYY-MM-DD HH:mm:ss');
-                    const newTime = moment(`${moment(selectedDates[i]).format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
+                if (moment(item?.availabilityStartTime)?.format('YYYY-MM-DD') === moment(selectedDates[i])?.format('YYYY-MM-DD')) {
+                    const startTime = moment(item?.availabilityStartTime, 'YYYY-MM-DD HH:mm:ss');
+                    const endTime = moment(item?.availabilityEndTime, 'YYYY-MM-DD HH:mm:ss');
+                    const newTime = moment(`${moment(selectedDates[i])?.format('YYYY-MM-DD')} ${value}`, 'YYYY-MM-DD LTS');
                     // console.log("startTime",startTime);
                     // console.log("endTime",endTime);
                     // console.log("newTime",newTime);
 
-                    if (newTime.isBetween(startTime, endTime) || newTime.isSame(startTime) || newTime.isSame(endTime)) {
+                    if (newTime?.isBetween(startTime, endTime) || newTime?.isSame(startTime) || newTime?.isSame(endTime)) {
                         updateAlertDiffAvail[index] = true;
                     } else {
                         updateAlertDiffAvail[index] = false;
@@ -85,9 +85,9 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
 
 
     const handleDateSelect = (date) => {
-        if (selectedDates.find(selectedDate => selectedDate.getTime() === date.getTime())) {
-            setSelectedDates(selectedDates.filter(selectedDate => selectedDate.getTime() !== date.getTime()));
-            setAvail(availData.filter(selectDate => moment(selectDate.availabilityStartTime).format('YYYY-MM-DD') !== moment(date).format('YYYY-MM-DD')));
+        if (selectedDates?.find(selectedDate => selectedDate?.getTime() === date?.getTime())) {
+            setSelectedDates(selectedDates?.filter(selectedDate => selectedDate?.getTime() !== date?.getTime()));
+            setAvail(availData?.filter(selectDate => moment(selectDate?.availabilityStartTime)?.format('YYYY-MM-DD') !== moment(date)?.format('YYYY-MM-DD')));
             // setSelectedDate(date);
         } else {
             setSelectedDates([...selectedDates, date]);
@@ -96,18 +96,18 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
     };
     
     const handleAddInput = (i) => {
-        setSelectedDates(selectedDates.concat(selectedDates[i]));
+        setSelectedDates(selectedDates?.concat(selectedDates[i]));
     }
 
     const tileClassName = ({ date }) => {
-        return selectedDates.find(selectedDate => selectedDate.getTime() === date.getTime()) ? 'react-calendar__tile--active' : null;
+        return selectedDates?.find(selectedDate => selectedDate?.getTime() === date?.getTime()) ? 'react-calendar__tile--active' : null;
     };
 
     useEffect(() => {
         handlerChange('mentorAttributes.mentorsAvailabilities', availData)
-        let validate = alertDiffAvail.some((item) => item === true)
+        let validate = alertDiffAvail?.some((item) => item === true)
         setValidateAvail(validate)
-        let validateTime = alert.some((item) => item === true)
+        let validateTime = alert?.some((item) => item === true)
         setValidateTime(validateTime)
     }, [availData])
 
@@ -126,7 +126,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                         className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900 flex gap-2 items-center"
                         size="txtProximaSoftSemiBold3832"
                     >
-                        {/* <FontAwesomeIcon icon={faArrowLeft} className='text-[18px]' onClick={prev} /> */}
+                        <FontAwesomeIcon icon={faArrowLeft} className='text-[18px] hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all' onClick={prev} />
                         Mark Your Availability
                     </Text>
                     <div>
@@ -148,7 +148,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                             </Text>
                         </div>
                         <div className='flex flex-col gap-2'>
-                            {selectedDates.length > 0 && Array.from({ length: selectedDates.length }, (_, i) => (
+                            {selectedDates?.length > 0 && Array?.from({ length: selectedDates?.length }, (_, i) => (
                                 <>
                                     <div className='flex justify-between gap-2' key={i}>
                                         <div className='flex gap-2'>
@@ -180,7 +180,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                                                     color="gray_100_03"
                                                     variant="fill"
                                                     required
-                                                    value={availData[i]?.availabilityEndTime ? moment(availData[i]?.availabilityEndTime).format('HH:mm') : ''}
+                                                    value={availData[i]?.availabilityEndTime ? moment(availData[i]?.availabilityEndTime)?.format('HH:mm') : ''}
                                                     onChange={(e) => handlerAvailData('availabilityEndTime', e.target.value, i)}
                                                 />
                                                 <span className='text-[red] text-[13px] mt-1'>{alert[i] && "please enter greater than starttime"}</span>
@@ -222,10 +222,10 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                     <Button
                         className={`!text-gray-100 cursor-pointer font-poppins h-[60px] leading-[normal] md:ml-[0] mt-[15px]
                         rounded-[41px] shadow-bs5 sm:text-[26.4px] md:text-[28.4px] text-[25.4px] text-center w-full flex justify-center items-center
-                        ${((availData.length === 0) || (validateAvail) || (validateTime)) && "opacity-60 cursor-not-allowed"}`}
+                        ${((availData?.length === 0) || (validateAvail) || (validateTime)) && "opacity-60 cursor-not-allowed"}`}
                         size="md"
                         onClick={next}
-                        disabled={((availData.length === 0) || (validateAvail) || (validateTime))}
+                        disabled={((availData?.length === 0) || (validateAvail) || (validateTime))}
                     >
                         Next
                     </Button>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Img, Input, List, Text } from "components";
 import validator from "validator";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 const LoginFourteenPage = ({ close, next, handlerChange, formData,validation,isFormValid }) => {
   // const [isFormValid, setIsFormValid] = useState(false)
   // const [validation, setValidation] = useState({
@@ -41,21 +43,26 @@ const LoginFourteenPage = ({ close, next, handlerChange, formData,validation,isF
           onClick={e => { e.stopPropagation() }}
         >
           <div className="flex flex-col gap-11 items-start justify-start mb-[11px] md:ml-[0] w-full md:w-full">
-            <Text
-              className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900"
-              size="txtProximaSoftSemiBold3832"
-            >
-              Sign Up
-            </Text>
+            <div className="flex items-center gap-2 w-full">
+              <div className="transition-all"onClick={() => close()}>
+                <FontAwesomeIcon icon={faXmark} className="hover:bg-[#F7F6F6] px-3 py-2 rounded-lg cursor-pointer transition-all"/>
+              </div>
+              <Text
+                className="sm:text-[34.32px] md:text-[36.32px] text-[36px] text-gray-900"
+                size="txtProximaSoftSemiBold3832"
+              >
+                Sign Up
+              </Text>
+            </div>
             <div className="flex flex-1 flex-col items-center justify-start w-full">
               <div className="flex flex-col items-center justify-center w-full gap-3">
                 {formFields.map(({ name, type, label }, index) => (
                   <div className="bg-gray-100_03 border border-gray-900_1e border-solid md:px-10 sm:px-5  h-[69px] px-[50px] py-[12px] 
-                      relative rounded-[34px] w-full flex items-center"key={index}>
+                      relative rounded-[34px] w-full flex items-center transition-all"key={index}>
                     <Input
                       type={type}
                       name={name}
-                      className='w-full pl-0'
+                      className='w-full bg-[#F7F6F6] rounded pl-1 transition-all'
                       wrapClassName='w-full'
                       placeholder={`Enter ${label} ...`}
                       value={formData[name]}

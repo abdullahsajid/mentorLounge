@@ -87,8 +87,8 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
             })
         }
         const { data } = await uploadAvatar(avatar)
-        if (data.status === 'Success') {
-            toast.success(`${data.message}`, {
+        if (data?.status === 'Success') {
+            toast.success(`${data?.message}`, {
                 style: {
                     backgroundColor: '#f6f6f7',
                     border: '3px solid #fff',
@@ -102,7 +102,7 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                 setOpen(false)
                 getMenteeById(menteePayloadData)
             }
-        } else if (data.status === 'Fail') {
+        } else if (data?.status === 'Fail') {
             toast.error(`try again!`, {
                 style: {
                     backgroundColor: '#f6f6f7',

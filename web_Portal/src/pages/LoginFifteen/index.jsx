@@ -5,8 +5,8 @@ import { useSignUpUserMutation } from "features/apis/user";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 const cookie = new Cookies()
 
 const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,validationPayment,isPaymentFormValid,selectPayment}) => {
@@ -44,7 +44,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
 
   const handleSelectedPayment = (data) => {
     setPayment(data)
-    handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes' : 'menteeAttributes'}.userCreditCard.creditCardType`, data)
+    handlerChange(`${(formData?.role === 'mentor') ? 'mentorAttributes' : 'menteeAttributes'}.userCreditCard.creditCardType`, data)
   }
 
   const handleSignUp = async (e) => {
@@ -98,16 +98,18 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
         >
           <div className="h-[555px] md:h-full md:ml-[0] sm:mt-0 relative w-full sm:w-full">
             <div className=" flex flex-col h-full items-center m-auto">
-              <div className="flex flex-col items-start justify-start w-full">
-                {/* <div className="mb-3">
-                  <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
-                </div> */}
-                <Text
-                  className="sm:text-[33.08px] md:text-[35.08px] text-[37.08px] text-black-900_01"
-                  size="txtProximaSoftMedium4408"
-                >
-                  Payment
-                </Text>
+              <div className="flex flex-col items-start justify-start w-full transition-all">
+                <div className="flex items-center gap-2">
+                  <div className="hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all"onClick={prev}>
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                  </div>
+                  <Text
+                    className="sm:text-[33.08px] md:text-[35.08px] text-[37.08px] text-black-900_01"
+                    size="txtProximaSoftMedium4408"
+                  >
+                    Payment
+                  </Text>
+                </div>
                 <Text
                   className="capitalize ml-0.5 md:ml-[0] mt-[5px] sm:text-[16.51px] md:text-[18.51px] text-[19.51px] text-black-900"
                   size="txtPoppinsMedium2351"
@@ -168,7 +170,7 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                   </Button>
                 </div>
                 <div className="flex items-center w-full">
-                  <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['payType'].isValid) && validationPayment['payType'].errMessage}</p>
+                  <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['payType']?.isValid) && validationPayment['payType']?.errMessage}</p>
                 </div>
                 <Text
                   className="ml-1 md:ml-[0] mt-[30px] sm:mt-[20px] sm:text-[16.51px] md:text-[18.51px] text-[19.51px] text-black-900_01"
@@ -203,13 +205,13 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                           placeholder= "Card Number"
                           onChange= {(e) => {
                             // setCreditCardNumber(e.target.value);
-                            handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.creditCardNumber' : 'menteeAttributes.userCreditCard.creditCardNumber'}`, e.target.value)
+                            handlerChange(`${(formData?.role === 'mentor') ? 'mentorAttributes.userCreditCard.creditCardNumber' : 'menteeAttributes.userCreditCard.creditCardNumber'}`, e.target.value)
                           }}
                         // })}
-                        // value={creditCardNumber || (formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['creditCardNumber'] : formData?.menteeAttributes?.userCreditCard['creditCardNumber']}
+                        value={(formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard?.['creditCardNumber'] : formData?.menteeAttributes?.userCreditCard?.['creditCardNumber']}
                       />
                     </div>
-                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{erroredInputs.cardNumber && erroredInputs.cardNumber}</p>
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{erroredInputs?.cardNumber && erroredInputs?.cardNumber}</p>
                   </div>
                 </div>
                 <div className="flex flex-row font-poppins items-start justify-start ml-1 md:ml-[0] mt-[22px]
@@ -223,11 +225,11 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                       type="text"
                       placeholder="march"
                       name="month"
-                      value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryMonth'] : formData.menteeAttributes.userCreditCard['expiryMonth']}
+                      value={(formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['expiryMonth'] : formData?.menteeAttributes?.userCreditCard?.['expiryMonth']}
                       onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.expiryMonth' : 'menteeAttributes.userCreditCard.expiryMonth'}`, e.target.value)}
                       // onBlur={validationCondition}
                     />
-                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['month'].isValid) && validationPayment['month'].errMessage}</p>
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['month']?.isValid) && validationPayment['month']?.errMessage}</p>
                   </div>
 
                   <div className="flex flex-col items-center justify-start w-[100%] sm:w-[50%]">
@@ -240,11 +242,11 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                         type="number"
                         placeholder="2023"
                         name="year"
-                        value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['expiryYear'] : formData.menteeAttributes.userCreditCard['expiryYear']}
-                        onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.expiryYear' : 'menteeAttributes.userCreditCard.expiryYear'}`, e.target.value)}
+                        value={(formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['expiryYear'] : formData?.menteeAttributes?.userCreditCard['expiryYear']}
+                        onChange={(e) => handlerChange(`${(formData?.role === 'mentor') ? 'mentorAttributes.userCreditCard.expiryYear' : 'menteeAttributes.userCreditCard.expiryYear'}`, e.target.value)}
                         // onBlur={validationCondition}
                       />
-                      <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['year'].isValid) && validationPayment['year'].errMessage}</p>
+                      <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['year']?.isValid) && validationPayment['year']?.errMessage}</p>
                     </div>
                   </div>
                 </div>
@@ -259,17 +261,17 @@ const LoginFifteenPage = ({ formData, handlerChange, next, prev,setPayment,valid
                       type="number"
                       placeholder="846"
                       name="cvv"
-                      value={(formData.role === 'mentor') ? formData.mentorAttributes.userCreditCard['cvv'] : formData.menteeAttributes.userCreditCard['cvv']}
-                      onChange={(e) => handlerChange(`${(formData.role === 'mentor') ? 'mentorAttributes.userCreditCard.cvv' : 'menteeAttributes.userCreditCard.cvv'}`, e.target.value)}
+                      value={(formData?.role === 'mentor') ? formData?.mentorAttributes?.userCreditCard['cvv'] : formData?.menteeAttributes?.userCreditCard['cvv']}
+                      onChange={(e) => handlerChange(`${(formData?.role === 'mentor') ? 'mentorAttributes.userCreditCard.cvv' : 'menteeAttributes.userCreditCard.cvv'}`, e.target.value)}
                       // onBlur={validationCondition}
                     />
-                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['cvv'].isValid) && validationPayment['cvv'].errMessage}</p>
+                    <p className="w-full flex items-center pl-[10px] pt-[10px] text-red-700">{(!validationPayment['cvv']?.isValid) && validationPayment['cvv']?.errMessage}</p>
                   </div>
                 </div>
                 <Button className={`!text-gray-100 cursor-pointer h-[60px] leading-[normal] mb-[10px]
                   md:ml-[0] rounded-[39px] shadow-bs5 sm:text-[25.39px] md:text-[27.39px]
-                  text-[25.01px] text-center w-full flex justify-center items-center mt-7 ${!isPaymentFormValid && "opacity-60 cursor-not-allowed"}`} onClick={(formData.role === 'mentor') ? next : handleSignUp} disabled={!isPaymentFormValid}>
-                  {(formData.role === 'mentor') ? 'Next' : 'Register'}
+                  text-[25.01px] text-center w-full flex justify-center items-center mt-7 ${!isPaymentFormValid && "opacity-60 cursor-not-allowed"}`} onClick={(formData?.role === 'mentor') ? next : handleSignUp} disabled={!isPaymentFormValid}>
+                  {(formData?.role === 'mentor') ? 'Next' : 'Register'}
                 </Button>
               </div>
             </div>

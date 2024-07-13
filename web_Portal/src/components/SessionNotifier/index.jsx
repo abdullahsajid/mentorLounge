@@ -32,8 +32,8 @@ const SessionNotifier = ({ startTime, name, endTime }) => {
     return (
         <>
             {isToday &&
-                <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-full">
-                    <div className="flex flex-row gap-3 items-center justify-start w-[52%] md:w-full">
+                <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-[100%]">
+                    <div className="flex flex-row gap-3 items-center justify-start w-[400px]">
                         <Img
                             className="h-[122px]"
                             src="images/img_line3.svg"
@@ -61,6 +61,7 @@ const SessionNotifier = ({ startTime, name, endTime }) => {
                         </div>
                     </div>
                 </div>
+                
             }
             {isTomorrow &&
                 <div className="bg-[#EBDCC1] flex flex-col items-start justify-start rounded-md w-full">

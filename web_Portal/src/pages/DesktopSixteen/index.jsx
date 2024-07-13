@@ -57,7 +57,7 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
     menteeRefersSessionFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
     menteeRefersSessionSkip: 0,
     menteeRefersSessionLimit: 10,
-    sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc",
+    sessionRequestsFields: "sessionRequestTitle requestStartTime requestEndTime requestDuration requestStatus expectedFromSession askRelatedTo requestDescription preSessionQuestions sessionType sessionPrice sessionCommission sessCommPerc zoomMeeting",
     sessionRequestsSkip: 0,
     sessionRequestsLimit: 10,
     recentSearchesFields: "searchKeyWords mentors",
@@ -184,9 +184,10 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
                 {filterNotifier.length === 0 ? (
                   <div className="flex justify-center items-center w-full text-[24px] h-full border-b-2 py-3">No Sessions at the Moment</div>
                 ) : (
-                  <List
-                    className="sm:flex-col flex-row font-poppins gap-7 grid md:grid-cols-1 grid-cols-2 mt-[31px] w-[95%] sm:w-full"
-                    orientation="horizontal"
+                  <div
+                    className="flex sm:flex-row flex-row font-poppins gap-7 w-[95%] overflow-x-auto mt-[31px] pb-[10px] sc-none"
+                    // orientation="horizontal"
+                    style={{ flexWrap: 'nowrap' }}
                   >
                     {filterNotifier?.map((item,index) => (
                       <SessionNotifier
@@ -196,7 +197,7 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
                         key={index}
                       />
                     ))}
-                  </List>
+                  </div>
                 )}
               </React.Suspense>
             )}

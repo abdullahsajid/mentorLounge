@@ -3,8 +3,8 @@ import { Button, Text } from "components";
 import { useSignUpUserMutation } from "features/apis/user";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'universal-cookie';
 const cookie = new Cookies()
 
@@ -17,7 +17,7 @@ const PreQues = ({ formData, handlerChange,prev }) => {
     const [signUpUser] = useSignUpUserMutation()
     const navigation = useNavigate()
     const validationCondition = () => {
-        const updateValidation = addQues.map((ques, index) => ({
+        const updateValidation = addQues?.map((ques, index) => ({
             questionText: {
                 isValid: ques.questionText.trim() !== '' && true,
                 errMessage: 'please add Question!'
@@ -26,7 +26,7 @@ const PreQues = ({ formData, handlerChange,prev }) => {
 
         setValidation(updateValidation)
         console.log(updateValidation)
-        const formValid = updateValidation.every((item) => item.questionText.isValid)
+        const formValid = updateValidation?.every((item) => item.questionText.isValid)
         setIsFormValid(formValid)
         console.log(formValid)
         return formValid
@@ -47,23 +47,23 @@ const PreQues = ({ formData, handlerChange,prev }) => {
         e.preventDefault()
         if (formData) {
             const { data } = await signUpUser(formData)
-            if (data.status === 'Success') {
-                toast.success(`${data.message}`, {
+            if (data?.status === 'Success') {
+                toast.success(`${data?.message}`, {
                     style: {
                         backgroundColor: '#f6f6f7',
                         border: '3px solid #fff',
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                     }
                 })
-                if (data.data.role === 'mentor') {
+                if (data?.data?.role === 'mentor') {
                     navigation('/mentor')
-                } else if (data.data.role === 'mentee') {
+                } else if (data?.data?.role === 'mentee') {
                     navigation('/mentee')
                 }
-                cookie.set('loungeToken', data.token, { path: '/' })
-                localStorage.setItem('loungeUser', JSON.stringify(data.data))
-            } else if (data.status === 'Fail') {
-                toast.error(`${data.message}`, {
+                cookie.set('loungeToken', data?.token, { path: '/' })
+                localStorage.setItem('loungeUser', JSON.stringify(data?.data))
+            } else if (data?.status === 'Fail') {
+                toast.error(`try again!`, {
                     style: {
                         backgroundColor: '#f6f6f7',
                         border: '3px solid #fff',
@@ -71,7 +71,7 @@ const PreQues = ({ formData, handlerChange,prev }) => {
                     },
                 })
             } else {
-                toast.error(`${data.message}`, {
+                toast.error(`try again!`, {
                     style: {
                         backgroundColor: '#f6f6f7',
                         border: '3px solid #fff',
@@ -92,17 +92,19 @@ const PreQues = ({ formData, handlerChange,prev }) => {
             <div className="bg-[#fff] flex flex-col items-start justify-start p-[30px] md:px-5 rounded-[26px] w-[41%] sm:w-full
             sm:mx-[12px] z-[1]">
                 <div className="flex flex-col gap-5 items-start justify-start mb-[11px] md:ml-[0] w-full md:w-full">
-                    {/* <div className="mb-3">
-                        <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
-                    </div> */}
-                    <Text
-                        className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900"
-                        size="txtProximaSoftSemiBold3832"
-                    >
-                        Pre-Session Questions
-                    </Text>
+                    <div className='flex items-center gap-2'>
+                        <div onClick={prev}>
+                            <FontAwesomeIcon icon={faArrowLeft} className='hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all'  />
+                        </div>
+                        <Text
+                            className="sm:text-[34.32px] md:text-[36.32px] text-[38.32px] text-gray-900"
+                            size="txtProximaSoftSemiBold3832"
+                        >
+                            Pre-Session Questions
+                        </Text>
+                    </div>
                     <div className='flex flex-col gap-2 w-full'>
-                        {addQues.map((item, index) => (
+                        {addQues?.map((item, index) => (
                             <>
                                 <div key={index}>
                                     <Text
@@ -124,7 +126,7 @@ const PreQues = ({ formData, handlerChange,prev }) => {
                                     />
                                 </div>
                                 <div>
-                                    <p className='text-red-700'>{(!validation[index]?.questionText.isValid) && validation[index]?.questionText.errMessage}</p>
+                                    <p className='text-red-700'>{(!validation[index]?.questionText?.isValid) && validation[index]?.questionText?.errMessage}</p>
                                 </div>
                             </>
                         ))}

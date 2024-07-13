@@ -4,6 +4,25 @@ import { useNavigate } from 'react-router-dom';
 
 const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img,available}) => {
     const navigate = useNavigate()
+    const [imageSrc, setImageSrc] = useState('images/default.png');
+
+    useEffect(() => {
+        if (img) {
+            const checkImage = async () => {
+                try {
+                    const response = await fetch(`${process.env.REACT_APP_LOCAL_URL}/${img}`);
+                    if (response.ok) {
+                        setImageSrc(`${process.env.REACT_APP_LOCAL_URL}/${img}`);
+                    } else {
+                        setImageSrc('images/default.png');
+                    }
+                } catch (error) {
+                    setImageSrc('images/default.png');
+                }
+            };
+            checkImage();
+        }
+    }, [img]);
 
     const handlerMentorProfile = () => {
         navigate('/profile', { state: {id,available, name, mentorFields, mentorDescription, mentorEducation, mentorExperience, mentorPrice, links, img } })
@@ -13,7 +32,7 @@ const TopMentor = ({i,id, name, mentorFields, mentorDescription, mentorEducation
             <div className="h-full m-auto w-full">
                 <Img
                     className=" m-auto object-cover rounded-[13px] w-full h-full"
-                    src={`${img ?  `${process.env.REACT_APP_LOCAL_URL}/${img}` : "images/default.png"}`}
+                    src={imageSrc}
                     alt="rectangleSix"
                 />
                 {/* `https://mentorslounge-9da6e4f7046b.herokuapp.com/${img}` */}

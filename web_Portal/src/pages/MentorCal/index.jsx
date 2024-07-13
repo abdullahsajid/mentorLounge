@@ -6,7 +6,7 @@ import { Button, Img, Input, Line, List, Text } from "components";
 import Sidebar1 from "components/Sidebar1";
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
-import { FilterSessionForNotifierBaseOnDate,FilterSessionForNotifierBaseOnUpcomingDate,FilterSessionForNotifierBaseOnToday} from "utils";
+import { FilterSessionForNotifierBaseOnDateForMentor,FilterSessionForNotifierBaseOnUpcomingDateForMentor,FilterSessionForNotifierBaseOnTodayForMentor} from "utils";
 import * as moment from "moment";
 
 const DesktopThreePage = ({ toggle }) => {
@@ -34,9 +34,9 @@ const DesktopThreePage = ({ toggle }) => {
     setDate(null)
   };
 
-  const baseOnDate = FilterSessionForNotifierBaseOnDate(getDate)
-  const upcompingSession = FilterSessionForNotifierBaseOnUpcomingDate()
-  const todaySession = FilterSessionForNotifierBaseOnToday()
+  const baseOnDate = FilterSessionForNotifierBaseOnDateForMentor(getDate)
+  const upcompingSession = FilterSessionForNotifierBaseOnUpcomingDateForMentor()
+  const todaySession = FilterSessionForNotifierBaseOnTodayForMentor()
   // console.log(getDate);
   // console.log("selected Date:",baseOnDate);
   // console.log("upcoming",upcompingSession);

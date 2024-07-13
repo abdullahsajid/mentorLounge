@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Button, Text } from "components";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 const LoginSixteenPage = ({ next,prev, formData, handlerChange, setUserRole }) => {
   const [role, setRole] = useState('')
   const [validateRole, setValidateRole] = useState(false)
+
   const handlerRole = (data) => {
     setRole(data)
     handlerChange('role', data)
     setValidateRole(true)
     setUserRole(data)
   }
+  
   return (
     <>
       <div className="w-full h-screen flex justify-center items-center fixed z-[110]" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
@@ -19,10 +21,10 @@ const LoginSixteenPage = ({ next,prev, formData, handlerChange, setUserRole }) =
           className="bg-[#fff] flex flex-col items-center justify-start p-[23px] md:px-5 w-[44%] sm:w-full sm:mx-2"
           style={{ borderRadius: "30px" }}
         >
-          <div className="flex flex-col items-start justify-start mb-[5px] mt-2.5 w-[98%] md:w-full">
-            {/* <div className="mb-3">
-              <FontAwesomeIcon icon={faArrowLeft} onClick={prev} />
-            </div> */}
+          <div className="flex flex-col items-start justify-start mb-[5px] mt-2.5 w-[98%] md:w-full transition-all">
+            <div className="mb-5 hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all" onClick={prev}>
+              <FontAwesomeIcon icon={faArrowLeft}  />
+            </div>
             <Text
               className="md:ml-[0] ml-[5px] sm:text-[29.6px] md:text-[31.6px] text-[35.6px] text-black-900"
               size="txtProximaSoftSemiBold456"

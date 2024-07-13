@@ -21,6 +21,9 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const [getQuesThree, setQuesThree] = useState('')
   const [getDate, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
   const [selectedDates, setSelectedDates] = useState([]);
+  const [startTime,setStartTime] = useState('')
+  const [endTime,setEndTime] = useState('')
+  const [selectItem,setSelectedItem] = useState(null)
 
   const handlerFilter = (val) => {
     let splitVal = val?.split(' ')
@@ -52,7 +55,6 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   // const gettimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   // console.log("gettimezone",gettimezone);
 
-  
 
   const handlerDurationChange = (e) => {
     setSelectDuration(e.target.id)
@@ -168,9 +170,15 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   ), [selectQTwo])
 
 
-  const formattedDate = moment(getDate)?.format('YYYY-MM-DD');
-  const startTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityStartTime?.slice(-13)}`)?.toISOString();
-  const endTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityEndTime?.slice(-13)}`)?.toISOString();
+  // const formattedDate = moment(getDate)?.format('YYYY-MM-DD');
+  // const startTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityStartTime?.slice(-13)}`)?.toISOString();
+  // const endTime = moment(`${formattedDate}T${filterAvailability[0]?.availabilityEndTime?.slice(-13)}`)?.toISOString();
+
+  const handlerTime = (start,end,index) => {
+    setStartTime(start)
+    setEndTime(end)
+    setSelectedItem(index)
+  }
 
   // useEffect(() => {
   //   console.log("filterAvailability",filterAvailability);
@@ -257,6 +265,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
     }
   }
   
+  // console.log(filterAvailability);
 
   return (
     <>
@@ -359,22 +368,24 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                       minDate={new Date()} 
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <div className="font-bold">Availability:</div>
+                  {filterAvailability.length > 0 && (<div className="flex flex-col">
+                    <div className="flex items-center gap-2 font-bold">Availability: <span className="text-[10px]">*please select the below option</span> </div>
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {location?.state?.available?.map((val) => {
+                      {filterAvailability?.map((val,index) => {
                         // const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                         const formattedDate = val?.availabilityStartTime.slice(0,10)
                         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                         const startTimeFormatted = moment(val?.availabilityStartTime).tz(timezone).format('HH:mm');
                         const endTimeFormatted = moment(val?.availabilityEndTime).tz(timezone).format('HH:mm');
-//                         console.log('Start Time:', startTimeFormatted);
-// console.log('End Time:', endTimeFormatted);
+                         //console.log('Start Time:', startTimeFormatted);
+                          // console.log('End Time:', endTimeFormatted);
                       return (
                         <>
-                          <div className="flex flex-col items-center justify-center border-2 px-2 rounded-md shadow hover:border-[#333] transition-all">
+                          <div className={`flex flex-col items-center justify-center border-2 px-2 rounded-md shadow hover:border-[#333] transition-all 
+                            ${selectItem === index ? "bg-[#00A884] text-[#fff]":""}`}
+                            onClick={() => handlerTime(val?.availabilityStartTime,val?.availabilityEndTime,index)}>
                             <div>{formattedDate}</div>
-                            <hr className="border border-[#333] w-full"/>
+                            <hr className={`border border-[#333] w-full ${selectItem === index ? 'border-[#fff]' : ''}`}/>
                             <div className="flex gap-1">
                               {startTimeFormatted} - {endTimeFormatted}
                             </div>
@@ -382,7 +393,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
                         </>
                       )})}
                     </div>
-                  </div>
+                  </div>)}
                   <Text
                     className="mt-[49px] sm:text-[25px] md:text-[27px] text-[29px] text-black-900_01 text-center"
                     size="txtPoppinsMedium29"
