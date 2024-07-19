@@ -49,8 +49,26 @@ export const mentorApi = createApi({
               body: data,
             };
           }
+        }),
+        createAvailability: builder.mutation({
+          query: (data) => {
+            const token = cookie.get("loungeToken");
+            return {
+              url: "mentorsAvailabilities/createMentorsAvailability",
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: data,
+            };
+          }
         })
     })
 })
 
-export const {useGetMentorByIdMutation,useUpdateMentorDetailMutation,useUpdateSessionRequestMutation} = mentorApi
+export const {
+  useGetMentorByIdMutation,
+  useUpdateMentorDetailMutation,
+  useUpdateSessionRequestMutation,
+useCreateAvailabilityMutation} = mentorApi

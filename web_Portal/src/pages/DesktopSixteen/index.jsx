@@ -36,7 +36,7 @@ const DesktopSixteenPage = ({ toggleSideBar, setToggleSidebar }) => {
       sessionRequestsLimit: 10,
       mentorsAvailabilityFields: "availabilityStartTime availabilityEndTime availabilityDuration availabilityBooked availabilityExpired availabilityRequested",
       mentorsAvailabilitySkip: 0,
-      mentorsAvailabilityLimit: 10,
+      mentorsAvailabilityLimit: 20,
       userCreditCardsFields: "creditCardType nameOnCard creditCardNumber expiryMonth expiryYear isCurrent active",
       userCreditCardsSkip: 0,
       userCreditCardsLimit: 10,

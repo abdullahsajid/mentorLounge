@@ -22,6 +22,19 @@ export const userApi = createApi({
         body: data,
       }),
     }),
+    findMeetingId: builder.mutation({
+      query: (data) => {
+        const token = cookie.get("loungeToken");
+        return {
+        url: "zoommeetingCtrs/findZoomMeetingById",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: data,
+      }},
+    }),
     logoutUser: builder.mutation({
       query: () => {
         const token = cookie.get("loungeToken");
@@ -41,6 +54,7 @@ export const {
   useSignUpUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useFindMeetingIdMutation
 } = userApi;
 
 

@@ -26,7 +26,7 @@ const RequestMentee = ({id, name, img, title, duration, startTime, endTime, ques
                 <div className="flex sm:flex-col flex-row gap-[15px] items-start mt-2.5 w-full relative">
                     <Img
                         className="h-[87px] rounded-[50%] w-[87px] object-cover"
-                        src={`${img ? `http://localhost:5873/${img}` : "images/default.png"}`}
+                        src={`${img ? `${process.env.REACT_APP_LOCAL_URL}${img}` : "images/default.png"}`}
                         alt="ellipseFortyThree"
                     />
                     <div className="flex flex-col items-center w-full">

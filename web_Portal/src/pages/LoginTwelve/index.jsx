@@ -30,6 +30,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
   const [userRole, setUserRole] = useState('')
   const [isProfileFormValid, setIsProfileFormValid] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
+  const [selectedDates, setSelectedDates] = useState([]);
   const [validation, setValidation] = useState({
     name: { isValid: true, errMessage: 'name is required' },
     email: { isValid: true, errMessage: 'enter valid email' },
@@ -257,7 +258,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
             mentorPrice: '',
             currency: 'USD',
             mentorsAvailabilities: [],
-            preSessionQuestions: [],
+            preSessionQuestions: [{ questionText: '' }],
             userCreditCard: {
               creditCardType: '',
               nameOnCard: '',
@@ -325,7 +326,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         };
   
         const { data } = await loginUser(userDetails);
-  
+        console.log("googleid",userData?.sub);
         if (data?.status === 'Success') {
           toast.success(data.message, {
             style: {
@@ -560,13 +561,13 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         <div className="flex flex-col font-poppins items-center justify-start mb-[174px] ml-[73px] mt-[50px] md:px-5 w-[23%] z-[1]
           sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5 sm:hidden">
           <div className="flex flex-col gap-[23px] items-start justify-start w-full">
-            <Text
+            {/* <Text
               className="text-base text-black-900_01 font-bold"
               size="txtPoppinsRegular16"
             >
               Login as
-            </Text>
-            <List
+            </Text> */}
+            {/* <List
               className="sm:flex-col flex-row gap-[31px] grid grid-cols-2 justify-center w-full"
               orientation="horizontal"
             >
@@ -637,7 +638,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
                   </div>
                 </div>
               </div>
-            </List>
+            </List> */}
           </div>
         </div>
         {toggleLogin && <LoginThirteenPage close={() => setToggleLogin(false)} />}
@@ -648,7 +649,9 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
            isProfileFormValid={isProfileFormValid} validationProfile={validationProfile} setSkillType={setSkillType} skillType={skillType} />}
         {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev}
            setPayment={setPayment} selectPayment={selectPayment} validationPayment={validationPayment} isPaymentFormValid={isPaymentFormValid} />}
-        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
+        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} 
+                selectedDates={selectedDates}
+                setSelectedDates={setSelectedDates} />}
         {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} prev={prev} />}
       </div>
     </>

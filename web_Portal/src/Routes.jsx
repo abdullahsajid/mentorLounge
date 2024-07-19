@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 // import Home from "pages/Home";
 import Loader from "pages/Loader";
@@ -60,6 +60,8 @@ const DesktopSixteen = React.lazy(() => import("pages/DesktopSixteen"));
 const FrameOne = React.lazy(() => import("pages/FrameOne"));
 const Availability = React.lazy(() => import("pages/Availability"));
 const PreQues = React.lazy(() => import('pages/PreSessionQues'))
+const Meeting =  React.lazy(() => import('pages/meeting'))
+
 
 const ProjectRoutes = () => {
   const [toggleSideBar, setToggleSidebar] = useState(false)
@@ -109,6 +111,7 @@ const ProjectRoutes = () => {
           <Route path="/mtrsettings" element={<DesktopTwentyEight toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
           <Route path="/mtr-Request-Session" element={<DesktopTwentyFive toggleSideBar={toggleSideBar} setToggleSidebar={setToggleSidebar} />} />
         </Route>
+        <Route path="/mtr-meeting/:id/:pass" element={<Meeting />}/>
         <Route path="/desktopnineteen" element={<DesktopNineteen />} />
         <Route path="/desktoptwenty" element={<DesktopTwenty />} />
         <Route path="/desktoptwentyone" element={<DesktopTwentyOne />} />

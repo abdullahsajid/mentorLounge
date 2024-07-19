@@ -60,7 +60,7 @@ const DesktopFourPage = ({ toggleSideBar, setToggleSidebar }) => {
               <div className="h-[167px] relative w-[167px]">
                 <Img
                   className="h-[167px] m-auto rounded-[50%] w-[167px] sm:w-[148px] sm:h-[148px]"
-                  src={`${location?.state?.img ? `http://localhost:5873/${location?.state?.img}` : "images/default.png"}`}
+                  src={`${location?.state?.img ? `${process.env.REACT_APP_LOCAL_URL}${location?.state?.img}` : "images/default.png"}`}
                   alt="ellipseTwentyFive"
                 />
                 <Img

@@ -22,9 +22,9 @@ const LoginSixteenPage = ({ next,prev, formData, handlerChange, setUserRole }) =
           style={{ borderRadius: "30px" }}
         >
           <div className="flex flex-col items-start justify-start mb-[5px] mt-2.5 w-[98%] md:w-full transition-all">
-            <div className="mb-5 hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all" onClick={prev}>
+            {!formData?.googleId && <div className="mb-5 hover:bg-[#F7F6F6] p-2 rounded-lg cursor-pointer transition-all" onClick={prev}>
               <FontAwesomeIcon icon={faArrowLeft}  />
-            </div>
+            </div>}
             <Text
               className="md:ml-[0] ml-[5px] sm:text-[29.6px] md:text-[31.6px] text-[35.6px] text-black-900"
               size="txtProximaSoftSemiBold456"

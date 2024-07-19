@@ -181,9 +181,9 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                                                 src={`${showAvatar ?
                                                     showAvatar :
                                                     menteeData?.data?.user?.profile_picture_url ?
-                                                        `http://localhost:5873${menteeData?.data?.user?.profile_picture_url}`
+                                                        `${process.env.REACT_APP_LOCAL_URL}${menteeData?.data?.user?.profile_picture_url}`
                                                         : mentorData?.data?.user?.profile_picture_url ?
-                                                            `http://localhost:5873${mentorData?.data?.user?.profile_picture_url}` : 'images/default.png'}`}
+                                                            `${process.env.REACT_APP_LOCAL_URL}${mentorData?.data?.user?.profile_picture_url}` : 'images/default.png'}`}
                                                 alt="ellipseTwentyFive"
                                             />
                                             <Button

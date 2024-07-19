@@ -6,9 +6,9 @@ import moment from 'moment';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-const Availability = ({ formData, handlerChange, next, prev }) => {
-    const [availData, setAvail] = useState([])
-    const [selectedDates, setSelectedDates] = useState([]);
+const Availability = ({ formData, handlerChange, next, prev,selectedDates,setSelectedDates}) => {
+    const [availData, setAvail] = useState(formData?.mentorAttributes?.mentorsAvailabilities)
+    // const [selectedDates, setSelectedDates] = useState([]);
     const [alert, setAlert] = useState([])
     const [alertDiffAvail, setAlertDiffAvail] = useState([])
     const [validateAvail, setValidateAvail] = useState()
@@ -82,8 +82,6 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
         }
     }
 
-
-
     const handleDateSelect = (date) => {
         if (selectedDates?.find(selectedDate => selectedDate?.getTime() === date?.getTime())) {
             setSelectedDates(selectedDates?.filter(selectedDate => selectedDate?.getTime() !== date?.getTime()));
@@ -115,6 +113,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
     // useEffect(() => {
     //     console.log("availData=> ", availData);
     // }, [availData]);
+
 
 
     return (
@@ -206,7 +205,7 @@ const Availability = ({ formData, handlerChange, next, prev }) => {
                                                 className="!placeholder:text-gray-900_7f !text-gray-900_7f leading-[normal] md:h-auto px[30px] px-[16px] sm:h-auto text-left text-xl w-[150px] border border-gray-900_1e border-solid rounded-[22px] cursor-not-allowed"
                                                 color="gray_100_03"
                                                 variant="fill"
-                                                placeholder='hh/mm/ss'
+                                                placeholder='hh/mm'
                                                 required
                                                 value={availData[i]?.availabilityDuration ? availData[i]?.availabilityDuration : 'Duration'}
                                                 disabled={true}

@@ -237,7 +237,7 @@ const DesktopTwentyEightPage = ({ toggleSideBar, setToggleSidebar }) => {
                     <div className="md:h-[147px] mt-[37px] relative w-full flex item-center justify-start">
                       <Img
                         className="h-[110px] rounded-[50%] w-[110px] object-cover border"
-                        src={`${mentorData?.data?.user?.profile_picture_url ? `http://localhost:5873/${mentorData?.data?.user?.profile_picture_url}` : "images/default.png"}`}
+                        src={`${mentorData?.data?.user?.profile_picture_url ? `${process.env.REACT_APP_LOCAL_URL}${mentorData?.data?.user?.profile_picture_url}` : "images/default.png"}`}
                         alt="ellipseTwentyFive"
                       />
                       <Button
