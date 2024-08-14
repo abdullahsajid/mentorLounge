@@ -7,95 +7,13 @@ import Sidebar5 from "components/Sidebar5";
 
 const SettingsOnePage = () => {
 
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-[27px] w-[27px]"
-          src="images/img_outlinemoney.svg"
-          alt="outlinemoney"
-        />
-      ),
-      label: "Finance",
-      href: "/finance",
-      active: window.location.pathname === "/finance",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_checkmark_purple_700.svg"
-          alt="checkmark"
-        />
-      ),
-      label: "Analytics",
-      href: "/analyticsandreporting",
-      active: window.location.pathname === "/analyticsandreporting",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[22px] w-[22px]"
-          src="images/img_vector_blue_gray_300.svg"
-          alt="vector"
-        />
-      ),
-      label: "Customer Services",
-      href: "/customerservice",
-      active: window.location.pathname === "/customerservice",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_search_blue_gray_300.svg"
-          alt="search"
-        />
-      ),
-      label: "Settings",
-      href: "/settingsone",
-      active: window.location.pathname === "/settingsone",
-    },
-  ];
-
   return (
     <>
-      <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-end ml-auto w-full sm:!w-full" style={{
+      <div className="bg-blue_gray-100_01 flex flex-col font-poppins ml-auto w-full sm:!w-full h-screen" style={{
         width: "calc(100% - 316px)"
       }}>
-        <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
+        <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full mt-[45px]">
           <div className="flex flex-col font-proximasoft gap-[42px] justify-start md:px-5 w-full sm:px-0">
-            <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
-              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
-                <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
-                  <Img
-                    className="h-[22px] w-[21px]"
-                    src="images/img_user.svg"
-                    alt="user"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-row gap-2.5 items-center justify-center mr-[27px] p-2.5 w-auto">
-                <Img
-                  className="h-[52px] md:h-auto rounded-[50%] w-[52px]"
-                  src="images/img_profilepic2.png"
-                  alt="profilepicTwo"
-                />
-                <div className="flex flex-row gap-2.5 items-center justify-center w-auto">
-                  <Text
-                    className="text-center text-gray-900 text-xl w-auto"
-                    size="txtProximaSoftSemiBold20"
-                  >
-                    Antonio
-                  </Text>
-                  <Img
-                    className="h-1.5 w-2"
-                    src="images/img_arrowup.svg"
-                    alt="arrowup"
-                  />
-                </div>
-              </div>
-            </div>
             <div className="flex flex-col gap-[13px] items-start justify-start md:ml-[0] ml-[27px] w-[95%] sm:w-full">
               <Text
                 className="sm:text-[31px] md:text-[33px] text-[35px] text-black-900_03"

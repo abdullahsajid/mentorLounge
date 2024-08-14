@@ -6,134 +6,15 @@ import { Button, Img, Input, Line, List, Text } from "components";
 import Sidebar4 from "components/Sidebar4";
 
 const SessionManagementPage = () => {
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-[27px] w-[27px]"
-          src="images/img_outlinemoney.svg"
-          alt="outlinemoney"
-        />
-      ),
-      label: "Finance",
-      href: "/finance",
-      active: window.location.pathname === "/finance",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_checkmark_blue_gray_300.svg"
-          alt="checkmark"
-        />
-      ),
-      label: "Analytics",
-      href: "/analyticsandreporting",
-      active: window.location.pathname === "/analyticsandreporting",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[22px] w-[22px]"
-          src="images/img_vector_blue_gray_300.svg"
-          alt="vector"
-        />
-      ),
-      label: "Customer Services",
-      href: "/customerservice",
-      active: window.location.pathname === "/customerservice",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_search_blue_gray_300.svg"
-          alt="search"
-        />
-      ),
-      label: "Settings",
-      href: "/settingsone",
-      active: window.location.pathname === "/settingsone",
-    },
-  ];
-  const sideBarMenu1 = [
-    {
-      label: (
-        <div className="text-sm">
-          <Text className="text-sm">User Management</Text>
-        </div>
-      ),
-      href: "/usermanagement",
-      active: window.location.pathname === "/usermanagement",
-    },
-    {
-      label: (
-        <div className="text-sm">
-          <Text className="text-sm">Mentor Management</Text>
-        </div>
-      ),
-      href: "/mentormanagement",
-      active: window.location.pathname === "/mentormanagement",
-    },
-    {
-      label: (
-        <div className="font-semibold text-purple-700">
-          <Text className="font-semibold text-purple-700">
-            Session Management
-          </Text>
-        </div>
-      ),
-      href: "/sessionmanagement",
-      active: window.location.pathname === "/sessionmanagement",
-    },
-    {
-      label: (
-        <div className="text-sm">
-          <Text className="text-sm">Content Management</Text>
-        </div>
-      ),
-      href: "/contentmanagement",
-      active: window.location.pathname === "/contentmanagement",
-    },
-  ];
 
   return (
     <>
-      <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-end mx-auto w-full">
+      <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center w-full ml-auto"
+      style={{
+        width: "calc(100% - 316px)"
+      }}>
         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
-          <Sidebar4 className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto md:px-5 top-[0]" />
-          <div className="flex flex-1 flex-col font-proximasoft gap-[31px] items-center justify-start md:px-5 sm:px-0 w-full">
-            <div className="bg-white-A700 flex flex-row gap-[17px] items-center justify-end p-[13px] shadow-bs18 w-full">
-              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end  p-[7px] rounded-[20px] w-[41px]">
-                <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
-                  <Img
-                    className="h-[22px] w-[21px]"
-                    src="images/img_user.svg"
-                    alt="user"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-row gap-2.5 items-center justify-center p-2.5 w-auto">
-                <Img
-                  className="h-[52px] md:h-auto rounded-[50%] w-[52px]"
-                  src="images/img_profilepic2.png"
-                  alt="profilepicTwo"
-                />
-                <div className="flex flex-row gap-2.5 items-center justify-center w-auto">
-                  <Text
-                    className="text-center text-gray-900 text-xl w-auto"
-                    size="txtProximaSoftSemiBold20"
-                  >
-                    Antonio
-                  </Text>
-                  <Img
-                    className="h-1.5 w-2"
-                    src="images/img_arrowup.svg"
-                    alt="arrowup"
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-1 flex-col font-proximasoft gap-[31px] items-center justify-start md:px-5 sm:px-0 w-full mt-5">
             <div className="flex md:flex-col flex-row font-poppins md:gap-5 items-center justify-between w-[95%] sm:px-2 md:w-full">
               <div className="w-full">
                 <Input
