@@ -125,12 +125,12 @@ const DesktopThreePage = ({ toggle }) => {
                           >
                             {moment(item?.requestStartTime)?.format('LT')} - {moment(item?.requestEndTime)?.format('LT')}
                           </Text>
-                          <Text
+                          {/* <Text
                             className="text-[9.84px] text-purple-700 underline"
                             size="txtPoppinsMedium984"
                           >
                             Join Now
-                          </Text>
+                          </Text> */}
                         </div>
                       </div>
                       </>
@@ -160,12 +160,12 @@ const DesktopThreePage = ({ toggle }) => {
                           >
                             {moment(item?.requestStartTime)?.format('LT')} - {moment(item?.requestEndTime)?.format('LT')}
                           </Text>
-                          <Text
+                          {/* <Text
                             className="text-[9.84px] text-purple-700 underline"
                             size="txtPoppinsMedium984"
                           >
                             Join Now
-                          </Text>
+                          </Text> */}
                         </div>
                       </div>
                       </>
@@ -195,12 +195,12 @@ const DesktopThreePage = ({ toggle }) => {
                           >
                             {moment(item?.requestStartTime)?.format('LT')} - {moment(item?.requestEndTime)?.format('LT')}
                           </Text>
-                          <Text
+                          {/* <Text
                             className="text-[9.84px] text-purple-700 underline"
                             size="txtPoppinsMedium984"
                           >
                             Join Now
-                          </Text>
+                          </Text> */}
                         </div>
                       </div>
                       </>

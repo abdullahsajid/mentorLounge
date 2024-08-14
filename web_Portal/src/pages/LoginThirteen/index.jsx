@@ -100,11 +100,6 @@ const LoginThirteenPage = ({ close }) => {
           onClick={e => { e.stopPropagation() }}>
           <div className=" bg-white-A700 flex flex-col font-proximasoft 
               h-full justify-center m-auto rounded-[26px] shadow-bs10 w-full items-center sm:p-[12px] p-[30px] gap-1">
-            {/* <Img
-              className="h-[209px] md:h-auto md:ml-[0] rounded-[50%] w-[209px] sm:w-[120px]"
-              src="images/img_ellipse19.png"
-              alt="ellipseNineteen"
-            /> */}
             <div className="w-full transition-all"onClick={() => close()}>
               <FontAwesomeIcon icon={faXmark} className="hover:bg-[#F7F6F6] px-3 py-2 rounded-lg cursor-pointer transition-all"/>
             </div>
@@ -113,7 +108,6 @@ const LoginThirteenPage = ({ close }) => {
                 className="md:ml-[0] sm:text-[30px] md:text-[34.91px] text-[36.91px] text-gray-900 mb-5"
                 size="txtProximaSoftSemiBold3691"
               >
-                {/* Welcome Back, Imani! */}
                 Login
               </Text>
               <div className="flex flex-col items-center justify-center w-full gap-3">

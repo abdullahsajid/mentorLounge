@@ -9,44 +9,45 @@ import Cookies from 'universal-cookie';
 const cookie = new Cookies()
 
 const PreQues = ({ formData, handlerChange,prev }) => {
-    const [addQues, setQues] = useState([{ questionText: '' }])
-    const [isFormValid, setIsFormValid] = useState(false)
-    const [validation, setValidation] = useState({
-        questionText: { isValid: true, errMessage: 'please add Question!' },
-    })
-    const [signUpUser] = useSignUpUserMutation()
-    const navigation = useNavigate()
+    const [addQues, setQues] = useState(formData?.mentorAttributes?.preSessionQuestions);
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [validation, setValidation] = useState(formData?.mentorAttributes?.preSessionQuestions?.map(() => ({
+        questionText: { isValid: true, errMessage: 'please add Question!' }
+    })));
+
+    const [signUpUser] = useSignUpUserMutation();
+    const navigate = useNavigate();
+
     const validationCondition = () => {
-        const updateValidation = addQues?.map((ques, index) => ({
+        const updateValidation = addQues.map((ques) => ({
             questionText: {
-                isValid: ques.questionText.trim() !== '' && true,
+                isValid: ques.questionText.trim() !== '',
                 errMessage: 'please add Question!'
             }
-        }))
+        }));
 
-        setValidation(updateValidation)
-        console.log(updateValidation)
-        const formValid = updateValidation?.every((item) => item.questionText.isValid)
-        setIsFormValid(formValid)
-        console.log(formValid)
-        return formValid
-    }
+        setValidation(updateValidation);
+        const formValid = updateValidation.every((item) => item.questionText.isValid);
+        setIsFormValid(formValid);
+        return formValid;
+    };
 
     const handlerAddInput = () => {
-        setQues([...addQues, { questionText: '' }])
-    }
+        setQues([...addQues, { questionText: '' }]);
+        setValidation([...validation, { questionText: { isValid: true, errMessage: 'please add Question!' } }]);
+    };
 
     const handlerInputChange = (e, index) => {
-        let { name, value } = e.target
-        let updateValues = [...addQues]
-        updateValues[index][name] = value
-        setQues(updateValues)
-    }
+        let { name, value } = e.target;
+        let updateValues = [...addQues];
+        updateValues[index][name] = value;
+        setQues(updateValues);
+    };
 
     const handleSignUp = async (e) => {
-        e.preventDefault()
-        if (formData) {
-            const { data } = await signUpUser(formData)
+        e.preventDefault();
+        if (validationCondition()) {
+            const { data } = await signUpUser(formData);
             if (data?.status === 'Success') {
                 toast.success(`${data?.message}`, {
                     style: {
@@ -54,38 +55,29 @@ const PreQues = ({ formData, handlerChange,prev }) => {
                         border: '3px solid #fff',
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                     }
-                })
+                });
                 if (data?.data?.role === 'mentor') {
-                    navigation('/mentor')
+                    navigate('/mentor');
                 } else if (data?.data?.role === 'mentee') {
-                    navigation('/mentee')
+                    navigate('/mentee');
                 }
-                cookie.set('loungeToken', data?.token, { path: '/' })
-                localStorage.setItem('loungeUser', JSON.stringify(data?.data))
-            } else if (data?.status === 'Fail') {
-                toast.error(`try again!`, {
-                    style: {
-                        backgroundColor: '#f6f6f7',
-                        border: '3px solid #fff',
-                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                    },
-                })
+                cookie.set('loungeToken', data?.token, { path: '/' });
+                localStorage.setItem('loungeUser', JSON.stringify(data?.data));
             } else {
                 toast.error(`try again!`, {
                     style: {
                         backgroundColor: '#f6f6f7',
                         border: '3px solid #fff',
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                    },
-                })
+                    }
+                });
             }
-            // console.log(data)
         }
-    }
+    };
 
     useEffect(() => {
-        handlerChange('mentorAttributes.preSessionQuestions', addQues)
-    }, [addQues])
+        handlerChange('mentorAttributes.preSessionQuestions', addQues);
+    }, [addQues]);
 
     return (
         <div className="w-full h-screen flex justify-center items-center fixed z-[110]" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
@@ -123,6 +115,7 @@ const PreQues = ({ formData, handlerChange,prev }) => {
                                         variant="fill"
                                         onChange={(e) => handlerInputChange(e, index)}
                                         onBlur={validationCondition}
+                                        value={item.questionText}
                                     />
                                 </div>
                                 <div>

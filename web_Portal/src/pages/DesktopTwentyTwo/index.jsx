@@ -3,6 +3,8 @@ import { Img, Text } from "components";
 import { Cross as Hamburger } from 'hamburger-react'
 import { FilterSessionsForMentor } from "utils"
 import { Oval } from 'react-loader-spinner'
+
+
 const SessionContainer = lazy(() => import('components/SessionContainer'))
 
 const DesktopTwentyTwoPage = ({ toggleSideBar, setToggleSidebar }) => {
@@ -12,6 +14,8 @@ const DesktopTwentyTwoPage = ({ toggleSideBar, setToggleSidebar }) => {
   useEffect(() => {
     setToggleSidebar(false)
   }, [])
+
+
 
 
   return (

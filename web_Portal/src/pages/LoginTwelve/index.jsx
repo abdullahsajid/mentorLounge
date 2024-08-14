@@ -2,12 +2,15 @@ import React, { lazy, useEffect, useRef, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "universal-cookie";
 import { Button, Img, List, Text } from "components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import { useCreditCardValidator } from "react-creditcard-validator";
 import { useLoginUserMutation } from "features/apis/user";
 import toast from 'react-hot-toast';
+import AdminSignIn from "pages/adminSignIn";
+import Verify from "pages/adminVerify";
+import { setToggleSignIn } from "features/admin/adminSlice";
 const LoginThirteenPage = lazy(() => import("pages/LoginThirteen"));
 const LoginFourteenPage = lazy(() => import("pages/LoginFourteen"));
 const LoginSixteenPage = lazy(() => import("pages/LoginSixteen"));
@@ -17,9 +20,10 @@ const Availability = lazy(() => import("pages/Availability"))
 const PreQues = lazy(() => import("pages/PreSessionQues"))
 const cookie = new Cookies()
 
-const LoginTwelvePage = ({ setToggleSidebar }) => {
+const LoginTwelvePage = () => {
   const navigation = useNavigate()
   const [loginUser] = useLoginUserMutation()
+  const dispatch = useDispatch()
   const { user } = useSelector((state) => state.user)
   const [skillType, setSkillType] = useState([])
   const [selectPayment, setPayment] = useState('')
@@ -30,6 +34,9 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
   const [userRole, setUserRole] = useState('')
   const [isProfileFormValid, setIsProfileFormValid] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
+  const [selectedDates, setSelectedDates] = useState([]);
+  const {toggleSignIn} = useSelector((state) => state.adminSlice)
+  const {verify} = useSelector((state) => state.adminSlice)
   const [validation, setValidation] = useState({
     name: { isValid: true, errMessage: 'name is required' },
     email: { isValid: true, errMessage: 'enter valid email' },
@@ -44,7 +51,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
     year: { isValid: true, errMessage: 'field is required' },
     cvv: {isValid:true, errMessage:'field is required' }
   })
-
+// "googleId": "108874833979133028660",
   const { getCardNumberProps, meta: { erroredInputs } } = useCreditCardValidator();
   const [formData, setFormData] = useState({
     name: '',
@@ -257,7 +264,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
             mentorPrice: '',
             currency: 'USD',
             mentorsAvailabilities: [],
-            preSessionQuestions: [],
+            preSessionQuestions: [{ questionText: '' }],
             userCreditCard: {
               creditCardType: '',
               nameOnCard: '',
@@ -325,7 +332,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         };
   
         const { data } = await loginUser(userDetails);
-  
+        console.log("googleid",userData?.sub);
         if (data?.status === 'Success') {
           toast.success(data.message, {
             style: {
@@ -418,9 +425,11 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
         return navigation('/mentor')
       } else if (user?.role === 'mentee') {
         return navigation('/mentee')
+      }else if (user?.role === 'superadmin') {
+        return navigation('/usermanagement')
       }
     }
-    setToggleSidebar(false)
+    // setToggleSidebar(false)
   }, [])
 
   console.log(formData)
@@ -541,32 +550,24 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
               Continue with Google
             </Text>
           </div>
-          {/* <div className="bg-white-A700 border border-gray-900_1e border-solid flex sm:flex-row
-           flex-row gap-[18px] h-[97px] md:h-auto items-center justify-start mb-[91px] mt-9 md:px-10
-            sm:px-5 px-[15px] py-[30.61px] pl-[25px] rounded-[48px] shadow-bs9 w-[100%] sm:w-full sm:h-[60px]">
-            <Img
-              className="h-[57px] w-[57px] sm:w-[47px] sm:h-[47px]"
-              src="images/img_logosfacebook.svg"
-              alt="logosfacebook"
-            />
-            <Text
-              className="sm:text-[18px] md:text-[26.81px] text-[28.01px] text-purple-700_87 w-auto"
-              size="txtPoppinsRegular2881"
+          <div>
+            <button className="text-lg border border-[#000] p-2 mt-5 rounded-md"
+              onClick={() => dispatch(setToggleSignIn(true))}
             >
-              Continue with Facebook
-            </Text>
-          </div> */}
+              Admin
+            </button>
+          </div>
         </div>
         <div className="flex flex-col font-poppins items-center justify-start mb-[174px] ml-[73px] mt-[50px] md:px-5 w-[23%] z-[1]
           sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5 sm:hidden">
           <div className="flex flex-col gap-[23px] items-start justify-start w-full">
-            <Text
+            {/* <Text
               className="text-base text-black-900_01 font-bold"
               size="txtPoppinsRegular16"
             >
               Login as
-            </Text>
-            <List
+            </Text> */}
+            {/* <List
               className="sm:flex-col flex-row gap-[31px] grid grid-cols-2 justify-center w-full"
               orientation="horizontal"
             >
@@ -637,7 +638,7 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
                   </div>
                 </div>
               </div>
-            </List>
+            </List> */}
           </div>
         </div>
         {toggleLogin && <LoginThirteenPage close={() => setToggleLogin(false)} />}
@@ -648,8 +649,12 @@ const LoginTwelvePage = ({ setToggleSidebar }) => {
            isProfileFormValid={isProfileFormValid} validationProfile={validationProfile} setSkillType={setSkillType} skillType={skillType} />}
         {multiStep == 4 && <LoginFifteenPage formData={formData} handlerChange={handlerChange} next={next} prev={prev}
            setPayment={setPayment} selectPayment={selectPayment} validationPayment={validationPayment} isPaymentFormValid={isPaymentFormValid} />}
-        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} />}
+        {(multiStep == 5 && userRole === 'mentor') && <Availability formData={formData} handlerChange={handlerChange} next={next} prev={prev} 
+                selectedDates={selectedDates}
+                setSelectedDates={setSelectedDates} />}
         {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} prev={prev} />}
+        {toggleSignIn && <AdminSignIn />}
+        {verify && <Verify/>}
       </div>
     </>
   );

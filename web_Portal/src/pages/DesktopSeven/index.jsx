@@ -4,7 +4,7 @@ import { Cross as Hamburger } from 'hamburger-react'
 import { FilterSessionsForMentee } from "utils";
 import { Oval } from 'react-loader-spinner'
 const SessionContainer = lazy(() => import('components/SessionContainer'))
-
+const SessionMenteeContainer = React.lazy(() => import('components/SessionMenteeContainer'))
 const DesktopSevenPage = ({ toggleSideBar, setToggleSidebar }) => {
   const filterItem = FilterSessionsForMentee()
   // console.log(filterItem);  
@@ -32,51 +32,6 @@ const DesktopSevenPage = ({ toggleSideBar, setToggleSidebar }) => {
                 Sessions
               </Text>
               <div className="bg-white-A700 flex flex-col font-poppins gap-[21px] items-center justify-center p-[30px] sm:px-0 sm:pt-0 rounded-[20px] shadow-bs3 w-full">
-                {/* <div className="w-full md:w-full flex items-center gap-5 border-2 border-gray-50 border-solid p-[21px] px-[6px] sm:px-5 rounded-[19px]">
-                  <div className="flex flex-col h-full items-center justify-start ml-[34px] sm:ml-0 w-[71px]">
-                    <Img
-                      className="md:h-auto rounded-[50%] w-[71px]"
-                      src="images/img_ellipse10_71x71.png"
-                      alt="ellipseTen_One"
-                    />
-                  </div>
-                  <div className="flex sm:justify-between w-full">
-                    <div className="flex items-center flex-col w-full">
-                      <Text
-                        className="text-[19.52px] text-black-900 w-full sm:text-[12px] sm:font-bold"
-                        size="txtPoppinsMedium1952"
-                      >
-                        Product Design As A Career
-                      </Text>
-                      <Text
-                        className="text-[12.83px] text-blue_gray-700 tracking-[0.13px] w-full sm:text-[10px]"
-                        size="txtPoppinsMedium1283"
-                      >
-                        Session with James Charles
-                      </Text>
-                      <div className="w-full">
-                        <Text
-                          name="group197"
-                          placeholder="Join Now"
-                          className="font-medium leading-[normal] text-[12.83px] flex justify-center items-center border border-solid border-green-600
-                            rounded-[13px] w-[15%] mt-[3px] text-green-600 px-3 py-[2px] sm:w-[80%] sm:text-[10px]"
-                          color="green_600_01"
-                          size="sm"
-                          variant="outline"
-                        >Join Now</Text>
-                      </div>
-                    </div>
-                    <div className="flex sm:justify-end w-40">
-                      <Text
-                        className="text-base text-green-600 sm:text-[12px] sm:justify-end"
-                        size="txtPoppinsMedium16Green600"
-                      >
-                        Starting in 1m
-                      </Text>
-                    </div>
-                  </div>
-                </div> */}
-
                 {!filterItem ? (
                   <div className="flex justify-center items-center w-full text-[24px] h-full">
                     <Oval
@@ -100,13 +55,15 @@ const DesktopSevenPage = ({ toggleSideBar, setToggleSidebar }) => {
                     {filterItem.length === 0 ? (
                       <div className="flex justify-center items-center w-full text-[24px] h-full">No Sessions at the Moment</div>
                     ) : (
-                      filterItem?.map((item) => (
-                        <SessionContainer
-                          startTime={item.requestStartTime}
-                          name={item.mentor.name}
-                          title={item.sessionRequestTitle}
-                          img={item.mentor.profile_picture_url}
-                          endTime={item.requestEndTime}
+                      filterItem?.map((item,index) => (
+                        <SessionMenteeContainer
+                          key={index}
+                          startTime={item?.requestStartTime}
+                          name={item?.mentor?.name}
+                          title={item?.sessionRequestTitle}
+                          img={item?.mentor?.profile_picture_url}
+                          endTime={item?.requestEndTime}
+                          meeting={item?.zoomMeeting}
                         />
                       ))
                     )}

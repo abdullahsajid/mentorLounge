@@ -64,7 +64,7 @@ const DesktopFivePage = ({ toggleSideBar, setToggleSidebar }) => {
   const handleFilterDate = (date) => {
     const formattedDate = moment(date)?.format('YYYY-MM-DD')
     // console.log("filterDate:",formattedDate);
-    const filterDate = filterData?.filter(item => item?.availabilityStartTime?.slice(0, 10) === formattedDate)
+    const filterDate = filterData?.filter(item => (new Date(item?.availabilityStartTime)?.toISOString()?.slice(0, 10) === formattedDate))
     // console.log("filterDate",filterDate);
     setFilterAvailability(filterDate)
   }

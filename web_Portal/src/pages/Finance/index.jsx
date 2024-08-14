@@ -1,17 +1,44 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from 'react-apexcharts'
 import { CircularProgressbar } from "react-circular-progressbar";
-import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
-
 import { Button, Img, Input, Line, List, Text } from "components";
-
 import "react-circular-progressbar/dist/styles.css";
+import { useGetFinanceDataMutation } from "features/apis/admin";
 
 const FinancePage = () => {
+  const [finance,setFinance] = useState([])
+  const [getFinanceData] = useGetFinanceDataMutation()
+  let payloadLoad = {
+    sortproperty: "createdAt",
+    sortorder: -1,
+    offset: 0,
+    limit: 50,
+    query: {
+        critarion: {active : true},
+        
+        addedby: "_id email name",
+        
+        lastModifiedBy: "_id email name"
+    }
+  }
+  const monthlyRevenue = [
+    { January: 0 },
+    { February: 0 },
+    { March: 0 },
+    { April: 0 },
+    { May: 0 },
+    { June: 0 },
+    { July: 0 },
+    { August: 0 },
+    { September: 0 },
+    { October: 0 },
+    { November: 0 },
+    { December: 0 }
+  ];
   const [revenue, setRevenue] = useState({
     series: [{
       name: "Revenue",
-      data: [100, 150, 250, 200, 210, 320, 210, 330, 400, 350, 290, 380]
+      data: []
     }],
     labels: ["Revenue"],
     options: {
@@ -79,141 +106,37 @@ const FinancePage = () => {
       },
     }
   })
-  const sideBarMenu = [
-    {
-      icon: (
-        <Img
-          className="h-[27px] w-[27px]"
-          src="images/img_outlinemoney_purple_700.svg"
-          alt="outlinemoney"
-        />
-      ),
-      label: "Finance",
-      href: "/finance",
-      active: window.location.pathname === "/finance",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_checkmark_blue_gray_300.svg"
-          alt="checkmark"
-        />
-      ),
-      label: "Analytics",
-      href: "/analyticsandreporting",
-      active: window.location.pathname === "/analyticsandreporting",
-    },
-    {
-      icon: (
-        <Img
-          className="h-[22px] w-[22px]"
-          src="images/img_vector_blue_gray_300.svg"
-          alt="vector"
-        />
-      ),
-      label: "Customer Services",
-      href: "/customerservice",
-      active: window.location.pathname === "/customerservice",
-    },
-    {
-      icon: (
-        <Img
-          className="h-6 w-6"
-          src="images/img_search_blue_gray_300.svg"
-          alt="search"
-        />
-      ),
-      label: "Settings",
-      href: "/settingsone",
-      active: window.location.pathname === "/settingsone",
-    },
-  ];
+
+  useEffect(() => {
+    const getData = async () => {
+      const {data} = await getFinanceData(payloadLoad)
+      if(data.status === 'Success'){
+        setFinance(data?.data)
+      }
+    }
+    getData()
+  },[])
+
+  useEffect(() => {
+    if(finance?.monthlyCommissions){
+      setRevenue((pre) => ({
+        ...pre,
+        series:[{
+          ...pre,
+          data:finance?.monthlyCommissions?.map(month => Object.values(month)[0])
+        }]
+      }))
+    }
+  },[finance])
+  
 
   return (
     <>
-      <div className="bg-blue_gray-100_01 flex flex-col font-poppins items-center justify-start mx-auto w-full">
+      <div className="bg-blue_gray-100_01 flex flex-col font-poppins ml-auto sm:!w-full md:!w-full w-full" style={{
+        width: "calc(100% - 316px)"
+      }}>
         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-evenly w-full">
-          <Sidebar className="!sticky !w-[316px] bg-white-A700 flex h-screen md:hidden justify-start overflow-auto md:px-5 top-[0]">
-            <Img
-              className="h-[173px] md:h-auto md:ml-[0] ml-[65px] mr-[84px] object-cover w-[53%]"
-              src="images/img_whatsappimage20231114.png"
-              alt="whatsappimageTwenty"
-            />
-            <Menu
-              menuItemStyles={{
-                button: {
-                  padding: "13px 13px 13px 46px",
-                  gap: "11px",
-                  marginTop: "20px",
-                  color: "#4c535f",
-                  fontSize: "18px",
-                  [`&:hover, &.ps-active`]: {
-                    color: "#743c95",
-                    fontWeight: "600 !important",
-                  },
-                },
-              }}
-              renderExpandIcon={() => (
-                <Img
-                  className="h-1.5 mt-3 w-2"
-                  src="images/img_arrowdown.svg"
-                  alt="arrowdown"
-                />
-              )}
-              className="flex flex-col items-center justify-start mb-[639px] mt-[37px] pt-0.5 w-full"
-            >
-              <SubMenu
-                icon={
-                  <Img
-                    className="h-6 w-6"
-                    src="images/img_grid_blue_gray_300.svg"
-                    alt="grid"
-                  />
-                }
-                label={<Text className="mb-[5px] mt-0.5">Management</Text>}
-              >
-                <MenuItem>Submenu Item</MenuItem>
-              </SubMenu>
-              {sideBarMenu?.map((menu, i) => (
-                <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
-                  {menu.label}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Sidebar>
           <div className="flex flex-1 flex-col font-proximasoft items-center justify-start md:px-5 sm:px-0 w-full">
-            <div className="bg-white-A700 flex flex-row gap-10 items-center justify-end p-[13px] shadow-bs18 w-full">
-              <div className="bg-white-A700 border border-gray-900_7f border-solid flex flex-col h-[41px] items-center justify-end mb-3.5 mt-[17px] p-[7px] rounded-[20px] w-[41px]">
-                <div className="bg-white-A700 flex flex-col h-[25px] items-center justify-start rounded-[5px] w-[25px]">
-                  <Img
-                    className="h-[22px] w-[21px]"
-                    src="images/img_user.svg"
-                    alt="user"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-row gap-2.5 items-center justify-center mr-[27px] p-2.5 w-auto">
-                <Img
-                  className="h-[52px] md:h-auto rounded-[50%] w-[52px]"
-                  src="images/img_profilepic2.png"
-                  alt="profilepicTwo"
-                />
-                <div className="flex flex-row gap-2.5 items-center justify-center w-auto">
-                  <Text
-                    className="text-center text-gray-900 text-xl w-auto"
-                    size="txtProximaSoftSemiBold20"
-                  >
-                    Antonio
-                  </Text>
-                  <Img
-                    className="h-1.5 w-2"
-                    src="images/img_arrowup.svg"
-                    alt="arrowup"
-                  />
-                </div>
-              </div>
-            </div>
             <div className="flex sm:flex-col flex-row font-poppins md:gap-10 sm:gap-[17px] items-center justify-between mt-[31px] w-[96%]
              md:w-full sm:px-2">
               <Input
@@ -291,7 +214,7 @@ const FinancePage = () => {
                         className="mt-3 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
                         size="txtInterBold2603"
                       >
-                        $100
+                        ${finance?.totalUsersEarned}
                       </Text>
                       <Button
                         className="border border-lime-700 border-solid cursor-pointer flex items-center justify-center min-w-[61px] mt-[9px] rounded-md"
@@ -304,7 +227,7 @@ const FinancePage = () => {
                         size="sm"
                       >
                         <div className="font-inter font-medium leading-[normal] text-left text-xs">
-                          18%
+                          {finance?.comparedToLastMonth?.value}%
                         </div>
                       </Button>
                       <Text
@@ -336,7 +259,7 @@ const FinancePage = () => {
                             size="txtDMSansBold12"
                           >
                             <span className="text-blue_gray-900 font-dmsans text-left font-bold">
-                              $70.
+                              ${finance?.totalMentorCommission}.
                             </span>
                             <span className="text-blue_gray-300_01 font-dmsans text-left text-[10px] font-normal">
                               00
@@ -362,7 +285,7 @@ const FinancePage = () => {
                             size="txtDMSansBold12"
                           >
                             <span className="text-blue_gray-900 font-dmsans text-left font-bold">
-                              $30.
+                              ${finance?.totalReferrerCommission}.
                             </span>
                             <span className="text-blue_gray-300_01 font-dmsans text-left text-[10px] font-normal">
                               00
