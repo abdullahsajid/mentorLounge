@@ -166,7 +166,7 @@ const Sidebar1 = (props) => {
         />
       ),
       label: "Settings",
-      href: "/settingsone",
+      href: "/adminsettings/adminprofile",
       onClick: () => handleMenuClick(4)
     },
   ];

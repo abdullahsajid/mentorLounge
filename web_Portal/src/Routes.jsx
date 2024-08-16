@@ -65,6 +65,7 @@ const Meeting =  React.lazy(() => import('pages/meeting'))
 const AdminSignIn = React.lazy(() => import('pages/adminSignIn'))
 const ViewProfile = React.lazy(() => import('pages/adminViewUserProfile'))
 const ViewMenteeProfile = React.lazy(() => import("pages/adminMenteeViewProfile"))
+const SettingsProfile = React.lazy(() => import("components/Admin/SettingsProfile"))
 // const ProjectRoutes = () => {
 //   const [toggleSideBar, setToggleSidebar] = useState(false)
 //   const router = createBrowserRouter([
@@ -180,13 +181,15 @@ const ProjectRoutes = () => {
           />
           <Route path="/finance" element={<Finance />} />
           <Route path="/customerservice" element={<CustomerService />} />
-          <Route path="/settingsone" element={<SettingsOne />} />
           <Route path="/mentormanagement" element={<MentorManagement />} />
           <Route path="/sessionmanagement" element={<SessionManagement />} />
           <Route path="/contentmanagement" element={<ContentManagement />} />
           <Route path="/notifications" element={<Notifications />} />
-          <Route path="/settingss" element={<Settings />} />
-          <Route path="/settingstwo" element={<SettingsTwo />} />
+          <Route path="/adminsettings" element={<SettingsOne />} >
+            <Route path="adminprofile" element={<SettingsProfile/>} />
+            <Route path="adminsecurity" element={<Settings />} />
+            <Route path="adminnotification" element={<SettingsTwo />} />
+          </Route>
         </Route>
         {/* <Route element={<Admin/>}> */}  
         
