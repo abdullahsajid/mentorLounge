@@ -181,7 +181,7 @@ const FinancePage = () => {
                     <tr
                       style={{ borderBottom: "2px solid #BA35351A" }}>
                       <th className="p-3 px-7">Sender</th>
-                      <th className="p-3 px-7">Reciever</th>
+                      <th className="p-3 px-7">Receiver</th>
                       <th className="p-3 px-7">Amount</th>
                       <th className="p-3 px-7">Date</th>
                       <th className="p-3 px-7">Commission</th>
@@ -204,14 +204,14 @@ const FinancePage = () => {
                     <div className="flex flex-col items-start justify-start w-full sm:w-full">
                       <div className="flex flex-col font-poppins h-[21px] md:h-auto items-start justify-start w-auto">
                         <Text
-                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto"
+                          className="text-black-900_b2 text-sm tracking-[-0.17px] !font-poppins w-auto"
                           size="txtPoppinsMedium14Black900b2"
                         >
                           Total Commission Earned
                         </Text>
                       </div>
                       <Text
-                        className="mt-3 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
+                        className="mt-3 sm:text-[22.03px] md:text-[24.03px] !font-poppins text-[26.03px] text-black-900_01"
                         size="txtInterBold2603"
                       >
                         ${finance?.totalUsersEarned}
@@ -226,12 +226,12 @@ const FinancePage = () => {
                         color="light_green_700_4c"
                         size="sm"
                       >
-                        <div className="font-inter font-medium leading-[normal] text-left text-xs">
+                        <div className="font-inter font-medium leading-[normal] !font-poppins text-left text-xs">
                           {finance?.comparedToLastMonth?.value}%
                         </div>
                       </Button>
                       <Text
-                        className="mt-[11px] text-[10px] text-gray-500_02 tracking-[-0.17px]"
+                        className="mt-[11px] text-[10px] text-gray-500_02 tracking-[-0.17px] !font-poppins"
                         size="txtPoppinsMedium10Gray50002"
                       >
                         Compared to $80 last month
@@ -248,7 +248,7 @@ const FinancePage = () => {
                               alt="user"
                             />
                             <Text
-                              className="text-[10px] text-blue_gray-300_01 w-auto"
+                              className="text-[10px] text-blue_gray-300_01 w-auto !font-poppins"
                               size="txtDMSansRegular10"
                             >
                               Mentor
@@ -258,10 +258,10 @@ const FinancePage = () => {
                             className="text-blue_gray-900 text-xs w-auto"
                             size="txtDMSansBold12"
                           >
-                            <span className="text-blue_gray-900 font-dmsans text-left font-bold">
+                            <span className="text-blue_gray-900 font-dmsans text-left font-bold !font-poppins">
                               ${finance?.totalMentorCommission}.
                             </span>
-                            <span className="text-blue_gray-300_01 font-dmsans text-left text-[10px] font-normal">
+                            <span className="text-blue_gray-300_01 font-dmsans text-left text-[10px] font-normal !font-poppins">
                               00
                             </span>
                           </Text>
@@ -274,7 +274,7 @@ const FinancePage = () => {
                               alt="user"
                             />
                             <Text
-                              className="text-[10px] text-blue_gray-300_01 w-auto"
+                              className="text-[10px] text-blue_gray-300_01 w-auto !font-poppins"
                               size="txtDMSansRegular10"
                             >
                               Mentees
@@ -284,7 +284,7 @@ const FinancePage = () => {
                             className="text-blue_gray-900 text-xs w-auto"
                             size="txtDMSansBold12"
                           >
-                            <span className="text-blue_gray-900 font-dmsans text-left font-bold">
+                            <span className="text-blue_gray-900 font-dmsans text-left font-bold !font-poppins">
                               ${finance?.totalReferrerCommission}.
                             </span>
                             <span className="text-blue_gray-300_01 font-dmsans text-left text-[10px] font-normal">
@@ -326,7 +326,7 @@ const FinancePage = () => {
                 </div>
                 <div className="bg-white-A700 border border-blue_gray-50 border-solid flex flex-col font-proximasoft gap-[25px] items-start justify-start p-4 rounded-[18px] shadow-bs21 w-full">
                   <Text
-                    className="md:ml-[0] ml-[3px] text-black-900_01 text-xl"
+                    className="md:ml-[0] ml-[3px] text-black-900_01 text-xl !font-poppins"
                     size="txtProximaSoftSemiBold20Black90001"
                   >
                     Commission Earned

@@ -3,7 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "universal-cookie";
 import { Button, Img, List, Text } from "components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import validator from "validator";
 import { useCreditCardValidator } from "react-creditcard-validator";
 import { useLoginUserMutation } from "features/apis/user";
@@ -22,6 +22,7 @@ const cookie = new Cookies()
 
 const LoginTwelvePage = () => {
   const navigation = useNavigate()
+  const location = useLocation()
   const [loginUser] = useLoginUserMutation()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.user)
@@ -60,8 +61,8 @@ const LoginTwelvePage = () => {
     phone: '',
     role: '',
     active: true,
-    is_verified: true,
-    approved: true,
+    is_verified: false,
+    approved: false,
     signuptype: "web",
     platform: "email",
   })
@@ -432,7 +433,7 @@ const LoginTwelvePage = () => {
     // setToggleSidebar(false)
   }, [])
 
-  console.log(formData)
+  // console.log(formData)
 
   return (
     <>
@@ -550,13 +551,16 @@ const LoginTwelvePage = () => {
               Continue with Google
             </Text>
           </div>
-          <div>
-            <button className="text-lg border border-[#000] p-2 mt-5 rounded-md"
+          {/* <div className="w-full">
+            <Button className="!text-gray-900_99 border border-gray-900_1e border-solid sm:h-[60px] cursor-pointer h-[97px] leading-[normal] mt-11 
+            rounded-[48px] shadow-bs9 sm:text-[32.01px] md:text-[34.01px] text-[28.01px] text-center w-[100%] sm:w-full flex items-center justify-center"
               onClick={() => dispatch(setToggleSignIn(true))}
+              color="white_A700"
+            size="3xl"
             >
               Admin
-            </button>
-          </div>
+            </Button>
+          </div> */}
         </div>
         <div className="flex flex-col font-poppins items-center justify-start mb-[174px] ml-[73px] mt-[50px] md:px-5 w-[23%] z-[1]
           sm:ml-0 sm:w-full sm:absolute sm:top-[85rem] sm:mb-5 sm:hidden">
@@ -641,6 +645,7 @@ const LoginTwelvePage = () => {
             </List> */}
           </div>
         </div>
+        <Outlet/>
         {toggleLogin && <LoginThirteenPage close={() => setToggleLogin(false)} />}
         {toggleSignUp && <LoginFourteenPage close={() => setToggleSignUp(false)} next={next} handlerChange={handlerChange} 
           formData={formData} validation={validation} isFormValid={isFormValid}/>}
@@ -653,7 +658,8 @@ const LoginTwelvePage = () => {
                 selectedDates={selectedDates}
                 setSelectedDates={setSelectedDates} />}
         {(multiStep == 6 && userRole === 'mentor') && <PreQues formData={formData} handlerChange={handlerChange} prev={prev} />}
-        {toggleSignIn && <AdminSignIn />}
+        {/* {toggleSignIn && <AdminSignIn />} */}
+        {/* {location.pathname === '/admin-signin' && <AdminSignIn />} */}
         {verify && <Verify/>}
       </div>
     </>

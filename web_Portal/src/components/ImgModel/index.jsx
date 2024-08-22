@@ -8,6 +8,7 @@ import { ExclamationTriangleIcon, FlagIcon } from '@heroicons/react/24/outline'
 import { Button } from 'components';
 import { useGetMenteeByIdMutation, useUploadAvatarMutation } from 'features/apis/mentee';
 import { useGetMentorByIdMutation } from 'features/apis/mentor';
+import { useGetAdminProfileQuery } from 'features/apis/admin';
 // import axios from 'axios';
 // import Cookies from "universal-cookie";
 // const cookie = new Cookies();
@@ -23,6 +24,10 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
     const { menteeData } = useSelector((state) => state.menteeData)
     const { mentorData } = useSelector((state) => state.mentorData)
     const { user } = useSelector((state) => state.user)
+    const shouldFetch = user?.role === 'superadmin' || user?.data?.role === 'superadmin' 
+    const {data} = useGetAdminProfileQuery(user?._id || user?.data?.id,{
+        skip:!shouldFetch
+    })
     // const [imageSrc, setImageSrc] = useState('images/default.png');
     let menteePayloadData = {
         critarion: { _id: `${user?.menteeModel?._id || user?.data?.menteeModel?._id}` },
@@ -101,6 +106,8 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
             } else if (user?.role === 'mentee' || user?.data?.role === 'mentee') {
                 setOpen(false)
                 getMenteeById(menteePayloadData)
+            } else if(user?.role === 'superadmin' || user?.data?.role === 'superadmin'){
+                setOpen(false)
             }
         } else if (data?.status === 'Fail') {
             toast.error(`try again!`, {
@@ -183,7 +190,10 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                                                     menteeData?.data?.user?.profile_picture_url ?
                                                         `${process.env.REACT_APP_LOCAL_URL}${menteeData?.data?.user?.profile_picture_url}`
                                                         : mentorData?.data?.user?.profile_picture_url ?
-                                                            `${process.env.REACT_APP_LOCAL_URL}${mentorData?.data?.user?.profile_picture_url}` : 'images/default.png'}`}
+                                                            `${process.env.REACT_APP_LOCAL_URL}${mentorData?.data?.user?.profile_picture_url}` :
+                                                            data?.data?.profile_picture_url ? 
+                                                            `${process.env.REACT_APP_LOCAL_URL}${data?.data?.profile_picture_url}`
+                                                             : 'images/default.png'}`}
                                                 alt="ellipseTwentyFive"
                                             />
                                             <Button
@@ -195,7 +205,7 @@ export default function ImgModel({ setToggleModel, toggleModel }) {
                                                 <label htmlFor="avatarImg">
                                                     <Img
                                                         className="h-[19px]"
-                                                        src="images/img_fluentedit20filled.svg"
+                                                        src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_fluentedit20filled.svg`}
                                                         alt="fluentedit20fil"
                                                     />
                                                 </label>
