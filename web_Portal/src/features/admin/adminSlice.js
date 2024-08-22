@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     toggleSignIn : false,
     adminEmail: '',
-    verify:false
+    verify:false,
+    forgetVerify:false,
+    forgetFields:false
 }
 
 export const adminSlice = createSlice({
@@ -18,11 +20,17 @@ export const adminSlice = createSlice({
         },
         setVerify : (state,action) => {
             state.verify = action.payload
+        },
+        setVerifyForPassword : (state,action) => {
+            state.forgetVerify = action.payload
+        },
+        setForgetFields : (state,action) => {
+            state.forgetFields = action.payload
         }
     }
 })
 
 export default adminSlice.reducer
 
-export const {setToggleSignIn,setAdminMail,setVerify} = adminSlice.actions
+export const {setToggleSignIn,setAdminMail,setVerify,setVerifyForPassword,setForgetFields} = adminSlice.actions
 

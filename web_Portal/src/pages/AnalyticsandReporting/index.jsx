@@ -127,14 +127,14 @@ const AnalyticsandReportingPage = () => {
                     <div className="flex flex-col gap-[27px] items-start justify-start mt-[23px] pb-1.5 px-1.5 w-[97%] md:w-full">
                       <div className="flex flex-col font-poppins items-start justify-start w-auto">
                         <Text
-                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto"
+                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto !font-poppins"
                           size="txtPoppinsMedium14Black900b2"
                         >
                           Registered Mentors
                         </Text>
                       </div>
                       <Text
-                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
+                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01 !font-poppins"
                         size="txtInterBold2603"
                       >
                         {analytics?.data?.totalMentors}
@@ -145,14 +145,14 @@ const AnalyticsandReportingPage = () => {
                     <div className="flex flex-col gap-[27px] items-start justify-start mt-[23px] pb-1.5 px-1.5 w-[97%] md:w-full">
                       <div className="flex flex-col font-poppins items-start justify-start w-auto">
                         <Text
-                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto"
+                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto !font-poppins"
                           size="txtPoppinsMedium14Black900b2"
                         >
                           Registered Mentees
                         </Text>
                       </div>
                       <Text
-                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
+                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01 !font-poppins"
                         size="txtInterBold2603"
                       >
                         {analytics?.data?.totalMentees}
@@ -163,7 +163,7 @@ const AnalyticsandReportingPage = () => {
                     <div className="flex flex-col gap-[34px] items-start justify-start mb-1 mt-[13px] pb-1.5 px-1.5 w-[99%] md:w-full">
                       <div className="flex flex-col font-poppins items-start justify-start w-auto">
                         <Text
-                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto"
+                          className="text-black-900_b2 text-sm tracking-[-0.17px] w-auto !font-poppins"
                           size="txtPoppinsMedium14Black900b2"
                         >
                           Active Users
@@ -173,10 +173,10 @@ const AnalyticsandReportingPage = () => {
                         className="mb-5 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
                         size="txtInterBold2603"
                       >
-                        <span className="text-black-900_01 font-inter text-left font-bold">
+                        <span className="text-black-900_01 text-left font-bold !font-poppins">
                           {analytics?.data?.totalActiveUsers}
                         </span>
-                        <span className="text-black-900_7f font-inter text-left text-[18.44px] font-semibold">
+                        <span className="text-black-900_7f text-left text-[18.44px] font-semibold !font-poppins">
                           /{analytics?.data?.totalNoOfUsers}
                         </span>
                       </Text>
@@ -186,14 +186,14 @@ const AnalyticsandReportingPage = () => {
                     <div className="flex flex-col gap-[27px] items-start justify-start mt-[23px] pb-1.5 px-1.5 w-[97%] md:w-full">
                       <div className="flex flex-col font-poppins items-start justify-start w-auto">
                         <Text
-                          className="text-black-900_b2 text-xs tracking-[-0.17px] w-auto"
+                          className="text-black-900_b2  tracking-[-0.17px] w-auto !font-poppins"
                           size="txtPoppinsMedium14Black900b2"
                         >
                           Av. Session Length
                         </Text>
                       </div>
                       <Text
-                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01"
+                        className="mb-7 sm:text-[22.03px] md:text-[24.03px] text-[26.03px] text-black-900_01 !font-poppins"
                         size="txtInterBold2603"
                       >
                         {analytics?.data?.avSessionLength}
@@ -204,7 +204,7 @@ const AnalyticsandReportingPage = () => {
               </div>
               <div className="bg-white-A700 border border-blue_gray-50 border-solid flex flex-col gap-[26px] items-start justify-start p-[17px] rounded-[20px] shadow-bs20 w-[59%] md:w-full">
                 <Text
-                  className="text-black-900_01 text-xl"
+                  className="text-black-900_01 text-xl !font-poppins"
                   size="txtProximaSoftSemiBold20Black90001"
                 >
                   Activity
@@ -215,7 +215,7 @@ const AnalyticsandReportingPage = () => {
               </div>
             </div>
             <div className="w-[96%] sm:px-2 sm:w-full overflow-auto">
-            <table className="table-auto bg-white-A700  font-poppins 
+            <table className="table-auto bg-white-A700  !font-poppins
                  rounded-[24px] shadow-bs19 w-full sm:w-full overflow-hidden my-6">
                   <thead>
                     <tr

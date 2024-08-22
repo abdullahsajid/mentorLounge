@@ -8,8 +8,10 @@ import toast from 'react-hot-toast';
 import { useAdminSignInMutation } from 'features/apis/admin'
 import { setToggleSignIn,setAdminMail,setVerify } from 'features/admin/adminSlice'
 import { useDispatch } from 'react-redux'
+import Loaders from 'components/Loaders'
 
 const AdminSignIn = () => {
+    const [loading,setLoading] = useState(false)
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [adminSignIn] = useAdminSignInMutation()
@@ -17,7 +19,9 @@ const AdminSignIn = () => {
 
     const handlerSignIn = async (e) => {
         e.preventDefault()
+        setLoading(true)
         if(email === '' && password === ''){
+          setLoading(false)
             return toast.error(`Please fill the all fields`, {
                 style: {
                   backgroundColor: '#f6f6f7',
@@ -32,6 +36,7 @@ const AdminSignIn = () => {
                 dispatch(setAdminMail(email))
                 dispatch(setToggleSignIn(false))
                 dispatch(setVerify(true))
+                setLoading(false)
                 return toast.success(`${data?.message}`, {
                     style: {
                       backgroundColor: '#f6f6f7',
@@ -40,6 +45,7 @@ const AdminSignIn = () => {
                     }
                   })
             }else{
+              setLoading(false)
                 return toast.error(`${data?.message}`, {
                     style: {
                       backgroundColor: '#f6f6f7',
@@ -93,11 +99,12 @@ const AdminSignIn = () => {
                 />
             </div>
           </div>
-          <Button className={`!text-gray-100 bottom-[0] cursor-pointer font-poppins h-[66px] 
+          <Button className={`!text-gray-100 flex justify-center items-center gap-3 bottom-[0] cursor-pointer font-poppins h-[66px] 
                 leading-[normal] mx-auto rounded-[33px] shadow-bs5 sm:text-[20.61px] md:text-[22.61px]
-                text-[24.61px] text-center w-full sm:w-full mt-3 `} 
+                text-[24.61px] text-center w-full sm:w-full mt-3 ${loading && "opacity-50 cursor-not-allowed"} `} 
+                disabled={loading}
             >
-            Login
+            Login {loading && <Loaders/>}
           </Button>
         </form>
 

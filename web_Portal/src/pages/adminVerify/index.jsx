@@ -7,9 +7,11 @@ import { useAdminVerifyMutation } from 'features/apis/admin'
 import { useNavigate } from "react-router-dom";
 import { setVerify } from 'features/admin/adminSlice';
 import Cookies from 'universal-cookie';
+import Loaders from 'components/Loaders';
 const cookie = new Cookies()
 
 const Verify = () => {
+    const [loading,setLoading] = useState(false)
     const dispatch = useDispatch()
     const [code,setCode] = useState('')
     const getMail = useSelector((state) => state.adminSlice)
@@ -18,7 +20,9 @@ const Verify = () => {
 
     const handlerVerify = async (e) => {
         e.preventDefault()
+        setLoading(true)
         if(code === ''){
+            setLoading(false)
             return toast.error(`Please fill field`, {
                 style: {
                   backgroundColor: '#f6f6f7',
@@ -34,6 +38,7 @@ const Verify = () => {
                 localStorage.setItem('loungeUser', JSON.stringify(data?.data))
                 navigation('/usermanagement')
                 dispatch(setVerify(false))
+                setLoading(false)
                 return toast.success(`${data?.message}`, {
                     style: {
                       backgroundColor: '#f6f6f7',
@@ -42,6 +47,7 @@ const Verify = () => {
                     }
                 })
             }else{
+                setLoading(false)
                 return toast.error(`Please fill field`, {
                     style: {
                       backgroundColor: '#f6f6f7',
@@ -80,10 +86,13 @@ const Verify = () => {
                             />
                         </div>
                     </div>
-                    <Button className={`!text-gray-100 bottom-[0] cursor-pointer font-poppins h-[66px] 
+                    <Button 
+                        className={`!text-gray-100 bottom-[0] flex justify-center items-center gap-3 cursor-pointer font-poppins h-[66px] 
                         leading-[normal] mx-auto rounded-[33px] shadow-bs5 sm:text-[20.61px] md:text-[22.61px]
-                        text-[24.61px] text-center w-full sm:w-full mt-3 `}>
-                        Verify
+                        text-[24.61px] text-center w-full sm:w-full mt-3 ${loading && "opacity-50 cursor-not-allowed"}`}
+                        disabled={loading}
+                    >
+                        Verify {loading && <Loaders/>}
                     </Button>
                 </form>
             </div>

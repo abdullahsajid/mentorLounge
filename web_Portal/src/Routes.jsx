@@ -4,6 +4,7 @@ import Loader from "pages/Loader";
 import ProtectedRoutes from "utils/ProtectedRoutes";
 import Navbar from 'components/Navbar'
 import { useSelector } from "react-redux";
+import ForgetPassVerify from "pages/adminVerify/ForgetPassVerify";
 const Layout = React.lazy(() => import("Layout"))
 const NotFound = React.lazy(() => import("pages/NotFound"));
 const Sidebar1 = React.lazy(() => import("components/Sidebar1"));
@@ -110,14 +111,18 @@ const SettingsProfile = React.lazy(() => import("components/Admin/SettingsProfil
 const ProjectRoutes = () => {
   const [toggleSideBar, setToggleSidebar] = useState(false)
   const { user } = useSelector((state) => state.user)
+  const forgetVerify = useSelector((state) => state.adminSlice.forgetVerify)
 
   return (
     <React.Suspense fallback={<><Loader /></>}>
       <Sidebar1 className={`!fixed !w-[316px] bg-white-A700 flex font-poppins inset-y-[0] justify-start left-[0]
           my-auto overflow-auto md:px-5 shadow-2xl top-[0] !transition-all sm:hidden md:hidden ${toggleSideBar && "!flex z-[999]"}`} />
       {(user?.role === 'superadmin' || user?.data?.role === 'superadmin') && <Navbar/>}
+      {forgetVerify && <ForgetPassVerify/>}
       <Routes>
-        <Route path="/" element={<LoginTwelve setToggleSidebar={setToggleSidebar} />} />
+        <Route path="/" element={<LoginTwelve setToggleSidebar={setToggleSidebar} />} >
+          <Route path="/admin-signin" element={<AdminSignIn/>}/>
+        </Route>
         <Route path="/cal" element={<Availability />} />
         <Route path='/preques' element={<PreQues />} />
         <Route element={<ProtectedRoutes userRole={['mentee']} />}>

@@ -7,7 +7,7 @@ export const adminApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.REACT_APP_LOCAL_URL}`,
     }),
-    tagTypes:['faqs','announcement'],
+    tagTypes:['faqs','announcement','adminprofile'],
     endpoints: (builder) => ({
         adminSignIn: builder.mutation({
             query: (data) => {
@@ -208,12 +208,146 @@ export const adminApi = createApi({
                     body:data
                 }
             }
+        }),
+        getAdminById : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : "superAdmins/findSuperAdminById",
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body:data
+                }
+            }
+        }),
+        updateAdminProfile : builder.mutation({
+            query: (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url: "users/update-profile",
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            },
+            invalidatesTags:['adminprofile']
+        }),
+        getAdminProfile : builder.query({
+            query: (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url: `users/getprofilefromid?uid=${data}`,
+                    method:"GET",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    }
+                }
+            },
+            providesTags:['adminprofile']
+        }),
+        getAllListOfUser : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : 'users/listAllUsers',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            }
+        }),
+        getAllSession : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : 'sessionRequests/getSessionRequestsWithFullDetails',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            }
+        }),
+        updateAnyField : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : 'users/editUser',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            },
+        }),
+        getSettings : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : 'userSettings/findUserSettingById',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            },
+        }),
+        forgetPassword : builder.mutation({
+            query : (data) => {
+                const token = cookie.get('loungeToken')
+                return {
+                    url : 'users/forgot-password',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            },
+        }),
+        changePassword : builder.mutation({
+            query : (data) => {
+                const token = localStorage.getItem('loungeForgetCookie').replace(/"/g, '')
+                return {
+                    url : 'users/changePassword',
+                    method: 'POST',
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization : `Bearer ${token}`
+                    },
+                    body:data
+                }
+            },
         })
     })
 })
 
 export const 
-{useAdminSignInMutation,
+{
+useChangePasswordMutation,
+useForgetPasswordMutation,
+useGetSettingsMutation,
+useUpdateAnyFieldMutation,
+useGetAllSessionMutation,
+useGetAllListOfUserMutation,
+useAdminSignInMutation,
 useAdminVerifyMutation,
 useAdminAnalyticsMutation,
 useGetAllMentorsMutation,
@@ -226,5 +360,9 @@ useCreateAnnouncementMutation,
 useGetAnnouncementMutation,
 useUpdateAnnouncementMutation,
 useRemoveAnnouncementMutation,
-useGetFinanceDataMutation} 
+useGetFinanceDataMutation,
+useGetAdminByIdMutation,
+useUpdateAdminProfileMutation,
+useGetAdminProfileQuery
+} 
 = adminApi

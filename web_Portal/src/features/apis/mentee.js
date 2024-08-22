@@ -95,11 +95,27 @@ export const menteeApi = createApi({
           body: data
         }
       }
+    }),
+    updateAnyField : builder.mutation({
+      query : (data) => {
+          const token = cookie.get('loungeToken')
+          return {
+              url : 'users/editUser',
+              method: 'POST',
+              headers:{
+                  "Content-Type":"application/json",
+                  Authorization : `Bearer ${token}`
+              },
+              body:data
+          }
+      },
+      invalidatesTags: ["getMentee"],
     })
   }),
 });
 
 export const {
+  useUpdateAnyFieldMutation,
   useGetMenteeByIdMutation,
   useGetAllMentorMutation,
   useUpdateMenteeDetailMutation,

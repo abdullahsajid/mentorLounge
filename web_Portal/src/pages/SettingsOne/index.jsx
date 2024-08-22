@@ -15,7 +15,7 @@ const SettingsOnePage = () => {
           <div className="flex flex-col font-proximasoft gap-[42px] justify-start md:px-5 w-full sm:px-0">
             <div className="flex flex-col gap-[13px] items-start justify-start md:ml-[0] ml-[27px] w-[95%] sm:w-full">
               <Text
-                className="sm:text-[31px] md:text-[33px] text-[35px] text-black-900_03"
+                className="sm:text-[31px] md:text-[33px] text-[35px] text-black-900_03 !font-poppins"
                 size="txtProximaSoftSemiBold35"
               >
                 Account Settings
@@ -28,8 +28,8 @@ const SettingsOnePage = () => {
                     <div className="flex flex-col gap-[20px] sm:flex-row w-full">
                       <Link
                       to={'/adminsettings/adminprofile'}
-                        className={`cursor-pointer font-extrabold leading-[normal] rounded-[10px] py-3 px-2
-                         shadow-bs23 sm:text-[14px] md:text-[18.38px] text-[20.38px] text-center w-full text-gray-900_87
+                        className={`cursor-pointer !font-poppins leading-[normal] rounded-[10px] py-3 px-2
+                         shadow-bs23 sm:text-[14px] md:text-[18.38px] text-[20.38px] text-center w-full text-gray-900_87 
                         ${location.pathname === '/adminsettings/adminprofile' && "!bg-[#743C95] !text-[#fff]"}`}
                       >
                         My Profile
@@ -39,7 +39,7 @@ const SettingsOnePage = () => {
                       <Link
                         to={'/adminsettings/adminsecurity'}
                         className={`sm:text-[14px] md:text-[18.38px] text-[20.38px] text-gray-900_87
-                          bg-[#fff] w-auto font-extrabold py-3 px-2 text-center
+                          bg-[#fff] w-auto !font-poppins py-3 px-2 text-center
                           rounded-[10px] shadow-bs23
                           ${location.pathname === '/adminsettings/adminsecurity' && "!bg-[#743C95] !text-[#fff]"}
                         `}
@@ -52,7 +52,7 @@ const SettingsOnePage = () => {
                       <Link
                         to={'/adminsettings/adminnotification'}
                         className={`sm:text-[14px] md:text-[18.38px] text-[20.38px] text-gray-900_87 
-                          bg-[#fff] w-auto font-extrabold py-3 px-2 text-center
+                          bg-[#fff] w-auto !font-poppins py-3 px-2 text-center
                           rounded-[10px] shadow-bs23
                           ${location.pathname === '/adminsettings/adminnotification' && "!bg-[#743C95] !text-[#fff]"}
                           `}

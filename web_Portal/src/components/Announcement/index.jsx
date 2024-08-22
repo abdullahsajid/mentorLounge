@@ -152,7 +152,7 @@ const Announcement = () => {
         <div className="flex flex-col gap-[22px] items-center justify-start mt-[26px] w-full">
             <div className="flex flex-row items-center px-2 justify-between pb-3 border-b border-solid border-[#000] w-full md:w-full">
                 <Text
-                    className="text-3xl sm:text-[26px] pl-7 md:text-[28px] text-black-900_01"
+                    className="text-3xl sm:text-[26px] pl-7 md:text-[28px] text-black-900_01 !font-poppins"
                     size="txtProximaSoftSemiBold30"
                 >
                     Announcements
@@ -182,7 +182,7 @@ const Announcement = () => {
                             ></CheckBox>
                             <Input 
                                 wrapClassName="w-full"
-                                className="text-[22px] text-black-900_01 sm:text-lg md:text-xl !border !border-solid !w-full"
+                                className="text-[22px] text-black-900_01 sm:text-lg md:text-xl !font-poppins rounded-lg !border !border-solid !w-full"
                                 type="text" 
                                 placeholder="Exciting App Update!"
                                 value={item?.anncTitle}
@@ -201,7 +201,7 @@ const Announcement = () => {
                         </div>
                         <div className='mb-2'>
                             <textarea
-                                className="m-auto text-black-900_01 text-lg w-full sm:w-full"
+                                className="m-auto text-black-900_01 text-lg rounded-lg !font-poppins w-full sm:w-full"
                                 size="txtProximaSoftRegular18"
                                 placeholder="The app uses a smart algorithm to match mentors and mentees based on shared interests, expertise, and goals,
                                     ensuring a compatible and fruitful mentorship."
@@ -210,8 +210,8 @@ const Announcement = () => {
                             >
                             </textarea>
                         </div>
-                        <div className="flex justify-end items-center w-full mb-2">
-                          <Button className="rounded-md !p-3" 
+                        <div className="flex justify-end items-center w-full  mb-2">
+                          <Button className="rounded-md !p-3 !font-poppins" 
                             onClick={item?._id ? (e) => handlerUpdateAnn(index,item?._id) : (e) => handlerCreateAnnouncement(e,index)}
                           >
                             {item?._id ? "Update Announcement" : "Add Announcement"}

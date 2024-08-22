@@ -162,10 +162,10 @@ const ContentManagementPage = () => {
                   <div className="flex flex-col gap-[23px] justify-center items-center w-full">
                     <div className="flex justify-between w-full px-3 border-b border-solid border-[#000] pb-3">
                       <Text
-                        className="text-3xl sm:text-[26px] pl-7 md:text-[28px] text-black-900_01"
+                        className="text-3xl sm:text-[26px] pl-7 md:text-[28px] text-black-900_01 !font-poppins"
                         size="txtProximaSoftSemiBold30"
                       >
-                        FAQ’s
+                        Faq’s
                       </Text>
                       <Button
                         className="flex items-center justify-center rounded-xl w-max h-[29px]"
@@ -190,7 +190,7 @@ const ContentManagementPage = () => {
                             ></CheckBox>
                             <Input 
                               wrapClassName="w-full"
-                              className="ml-4 md:ml-[0] text-[22px] text-black-900_01 sm:text-lg md:text-xl !border !border-solid !w-full"
+                              className="ml-4 md:ml-[0] text-[22px] text-black-900_01 sm:text-lg !font-poppins md:text-xl rounded-lg !border !border-solid !w-full"
                               type="text" 
                               placeholder="How does the app match mentors and mentees?"
                               value={item?.faqQuestion}
@@ -210,7 +210,7 @@ const ContentManagementPage = () => {
                         </div>
                         <div className="my-5 mb-3 w-full">
                           <textarea
-                            className="m-auto text-black-900_01 text-lg w-[98%] sm:w-full"
+                            className="m-auto text-black-900_01 text-lg w-[98%] rounded-lg !font-poppins sm:w-full"
                             size="txtProximaSoftRegular18"
                             placeholder="The app uses a smart algorithm to match mentors and
                             mentees based on shared interests, expertise, and
@@ -221,7 +221,7 @@ const ContentManagementPage = () => {
                           </textarea>
                         </div>
                         <div className="flex justify-end items-center w-full mb-2">
-                          <Button className="rounded-md !p-3" 
+                          <Button className="rounded-md !p-3 !font-poppins" 
                             onClick={item?._id ? (e) => handlerUpdateFaq(index,item?._id) : (e) => handlerCreateFaq(e,index)}
                           >
                             {item?._id ? "update faq" : "Add Faq"}

@@ -3,7 +3,7 @@ import { Sidebar } from "react-pro-sidebar";
 import { Img, Text } from "components";
 import Cookies from "universal-cookie";
 import { useLogoutUserMutation } from "features/apis/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -11,11 +11,12 @@ const cookie = new Cookies()
 
 const Sidebar1 = (props) => {
   const navigation = useNavigate()
+  const location = useLocation()
   const { user } = useSelector((state) => state.user)
   const [logoutUser] = useLogoutUserMutation()
   const [activeMenu, setActiveMenu] = useState(null);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  console.log(isSubMenuOpen)
+
   const handlerLogout = async () => {
     const { data } = await logoutUser()
     if (data.status === 'Success') {
@@ -78,7 +79,7 @@ const Sidebar1 = (props) => {
       icon: (
         <Img
           className="h-6 mt-[3px] w-6"
-          src="images/img_grid.svg"
+          src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_grid.svg`}
           alt="grid"
         />
       ),
@@ -89,31 +90,35 @@ const Sidebar1 = (props) => {
         </div>
       ),
       href: "#",
+      active: (location.pathname === '/usermanagement' || location.pathname === '/mentormanagement' ||
+        location.pathname === '/sessionmanagement' || location.pathname === '/contentmanagement'
+      ),
       onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
       subMenu: [
         {
           id:5,
           label: "User Management",
           href: "/usermanagement",
-          onClick: () => handleMenuClick(5)
+          active : location.pathname === '/usermanagement'
+          // onClick: () => handleMenuClick(5)
         },
         {
           id:6,
           label: "Mentor Management",
           href: "/mentormanagement",
-          onClick: () => handleMenuClick(6)
+          active : location.pathname === '/mentormanagement'
         },
         {
           id:7,
           label: "Session Management",
           href: "/sessionmanagement",
-          onClick: () => handleMenuClick(7)
+          active : location.pathname === '/sessionmanagement'
         },
         {
           id:8,
           label: "Content Management",
           href: "/contentmanagement",
-          onClick: () => handleMenuClick(8)
+          active : location.pathname === '/contentmanagement'
         },
       ],
     },
@@ -122,52 +127,58 @@ const Sidebar1 = (props) => {
       icon: (
         <Img
           className="h-[27px] mt-1.5 w-[27px]"
-          src="images/img_outlinemoney.svg"
+          src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_outlinemoney.svg`}
           alt="outlinemoney"
         />
       ),
       label: "Finance",
       href: "/finance",
-      onClick: () => handleMenuClick(1)
+      active : location.pathname === '/finance'
+      // onClick: () => handleMenuClick(1)
     },
     {
       id:2,
       icon: (
         <Img
           className="h-6 w-6"
-          src="images/img_checkmark_blue_gray_300.svg"
+          src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_checkmark_blue_gray_300.svg`}
           alt="checkmark"
         />
       ),
       label: "Analytics",
       href: "/analyticsandreporting",
-      onClick: () => handleMenuClick(2)
+      active : location.pathname === '/analyticsandreporting'
+      // onClick: () => handleMenuClick(2)
     },
     {
       id:3,
       icon: (
         <Img
           className="h-[22px] w-[22px]"
-          src="images/img_vector_blue_gray_300.svg"
+          src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_vector_blue_gray_300.svg`}
           alt="vector"
         />
       ),
       label: "Customer Services",
       href: "/customerservice",
-      onClick: () => handleMenuClick(3)
+      active : location.pathname === '/customerservice'
+      // onClick: () => handleMenuClick(3)
     },
     {
       id:4,
       icon: (
         <Img
           className="h-6 w-6"
-          src="images/img_search_blue_gray_300.svg"
+          src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_search_blue_gray_300.svg`}
           alt="search"
         />
       ),
       label: "Settings",
-      href: "/adminsettings/adminprofile",
-      onClick: () => handleMenuClick(4)
+      href : "/adminsettings/adminprofile" ,
+      active: (location.pathname === "/adminsettings/adminprofile" || location.pathname === "/adminsettings/adminsecurity" ||
+        location.pathname === "/adminsettings/adminnotification"
+      ),
+      // onClick: () => handleMenuClick(4)
     },
   ];
 
@@ -182,7 +193,7 @@ const Sidebar1 = (props) => {
         <div className="flex items-center justify-center w-full">
           <Img
             className="h-[173px] flex items-center justify-center md:h-auto mt-[25px] object-cover"
-            src="images/img_whatsappimage20231114.png"
+            src={`${process.env.REACT_APP_FRONTEND_URL}/images/img_whatsappimage20231114.png`}
             alt="whatsappimageTwenty"
           />
         </div>
@@ -191,7 +202,7 @@ const Sidebar1 = (props) => {
             <div key={`sideBarMenuItem${i}`}>
               <Link
                 to={menu.href}
-                className={`p-[21px] pl-[41px] text-[20px] flex gap-[22px] items-center mt-[10px] cursor-pointer ${activeMenu === i ? 'text-purple-700 font-semibold' : 'text-[#535353]'}`}
+                className={`p-[21px] pl-[41px] text-[20px] flex gap-[22px] items-center mt-[10px] cursor-pointer ${menu.active ? 'text-purple-700 font-semibold' : 'text-[#535353]'}`}
                 onClick={menu.onClick}
               >
                 {menu.icon} {menu.label}
@@ -202,7 +213,7 @@ const Sidebar1 = (props) => {
                     <Link
                       key={`subMenuItem${j}`}
                       to={subMenu.href}
-                      className={`p-[10px] text-[16px] flex gap-[22px] items-center mt-[5px] cursor-pointer ${activeMenu === subMenu.id ? 'text-purple-700 font-semibold' : 'text-[#535353]'}`}
+                      className={`p-[10px] text-[16px] flex gap-[22px] items-center mt-[5px] cursor-pointer ${subMenu.active ? 'text-purple-700 font-semibold' : 'text-[#535353]'}`}
                       onClick={subMenu.onClick}
                     >
                       {subMenu.label}
